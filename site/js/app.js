@@ -333,8 +333,9 @@ function renderBuildingPage(building, suites, contacts) {
 function imgSrc(filename) {
   if (!filename) return "";
   if (filename.startsWith("http://") || filename.startsWith("https://")) {
-    if (filename.includes("lh3.googleusercontent.com") && !filename.includes("=")) {
-      return filename + "=w1600";
+    const driveMatch = filename.match(/(?:\/d\/|[?&]id=)([a-zA-Z0-9_-]+)/);
+    if (driveMatch) {
+      return `https://drive.google.com/thumbnail?id=${driveMatch[1]}&sz=w2000`;
     }
     return filename;
   }
