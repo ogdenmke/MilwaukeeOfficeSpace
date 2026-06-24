@@ -440,6 +440,18 @@ img {
   color: #92400e;
 }
 
+.badge-sale {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.building-price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--near-black);
+  margin-bottom: 0.75rem;
+}
+
 .suite-floor-plan {
   margin-top: 0.5rem;
 }

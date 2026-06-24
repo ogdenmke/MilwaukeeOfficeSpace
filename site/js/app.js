@@ -257,7 +257,9 @@ function renderBuildingPage(building, suites, contacts) {
         </div>
         <div class="building-details">
           <h1>${escapeHtml(building.building_name)}</h1>
+          ${building.listing_type && building.listing_type.toLowerCase() === "sale" ? '<span class="suite-badge badge-sale">For Sale</span>' : ""}
           <div class="building-address">${escapeHtml(building.address)}, ${escapeHtml(building.city)}, ${escapeHtml(building.state)} ${escapeHtml(building.zip)}</div>
+          ${building.asking_price ? `<div class="building-price">Asking Price: $${escapeHtml(building.asking_price)}</div>` : ""}
           <p class="building-description">${escapeHtml(building.description || "")}</p>
         </div>
       </div>
@@ -266,6 +268,12 @@ function renderBuildingPage(building, suites, contacts) {
 
   const suitesEl = document.getElementById("suites-list");
   if (!suitesEl) return;
+
+  const isSale = building.listing_type && building.listing_type.toLowerCase() === "sale";
+  const suitesHeading = document.getElementById("suites-heading");
+  if (suitesHeading) {
+    suitesHeading.textContent = isSale ? "Building Details" : "Available Suites";
+  }
 
   const buildingSuites = suites.filter((s) => s.building_id === building.building_id);
 
