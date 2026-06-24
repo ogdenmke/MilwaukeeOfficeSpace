@@ -325,6 +325,7 @@ function renderBuildingPage(building, suites, contacts) {
             ${s.floor ? `<span>Floor ${escapeHtml(s.floor)}</span>` : ""}
             ${s.square_feet ? `<span>${Number(s.square_feet).toLocaleString()} SF</span>` : ""}
             ${s.lease_rate ? `<span>$${escapeHtml(s.lease_rate)}${escapeHtml(s.rate_unit || "")}</span>` : ""}
+            ${s.lease_type ? `<span>${escapeHtml(s.lease_type)}</span>` : ""}
             ${s.available_date && s.status === "Available" ? `<span>Available ${escapeHtml(s.available_date)}</span>` : ""}
           </div>
           ${s.notes ? `<div class="suite-notes">${escapeHtml(s.notes)}</div>` : ""}
