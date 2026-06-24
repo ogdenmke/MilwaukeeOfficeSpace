@@ -5,9 +5,12 @@ const CONFIG = {
   SHOW_LEASED: true,
 
   // ── Google Sheets live data ──
-  // Paste your Google Sheet ID here. Leave blank to use local JSON files instead.
-  // Find the ID in your sheet URL: https://docs.google.com/spreadsheets/d/SHEET_ID_HERE/edit
-  GOOGLE_SHEET_ID: "",
+  // Paste your Google Sheet ID or the full URL from your browser's address bar.
+  // Example URL: https://docs.google.com/spreadsheets/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ/edit
+  // Example ID:  1aBcDeFgHiJkLmNoPqRsTuVwXyZ
+  // DO NOT use the "Publish to web" link (the one with /e/2PACX-...) — use the
+  // normal URL from your browser bar when you have the sheet open.
+  GOOGLE_SHEET_ID: "1pnKTusIbZuhHyzjUn5lHtUoLHR6kNnybQPc-RrqPqBU",
 };
 
 /* ── Data loading ── */
@@ -70,15 +73,25 @@ async function loadJSON(path) {
   return resp.json();
 }
 
+function extractSheetId(input) {
+  if (!input) return "";
+  const match = input.match(/\/spreadsheets\/d\/([^/]+)/);
+  if (match && !match[1].startsWith("e")) return match[1];
+  if (!input.includes("/")) return input;
+  return "";
+}
+
 async function loadAllData() {
-  if (CONFIG.GOOGLE_SHEET_ID) {
-    const id = CONFIG.GOOGLE_SHEET_ID;
+  const id = extractSheetId(CONFIG.GOOGLE_SHEET_ID);
+  if (id) {
     const [buildings, suites, contacts] = await Promise.all([
       loadSheetCSV(id, "Buildings"),
       loadSheetCSV(id, "Suites"),
       loadSheetCSV(id, "Contacts"),
     ]);
     return { buildings, suites, contacts };
+  } else if (CONFIG.GOOGLE_SHEET_ID) {
+    console.error("Invalid Google Sheet ID. Use the URL from your browser bar (not the Publish to web link). It should look like: https://docs.google.com/spreadsheets/d/YOUR_ID/edit");
   }
   const [buildings, suites, contacts] = await Promise.all([
     loadJSON("data/buildings.json"),
@@ -182,7 +195,7 @@ function renderContacts(contacts, containerId) {
     <div class="contact-card">
       ${
         c.photo_filename
-          ? `<img class="contact-photo" src="images/${escapeHtml(c.photo_filename)}" alt="${escapeHtml(c.name)}" onerror="this.outerHTML='<div class=\\'contact-photo-placeholder\\'>${escapeHtml(c.name[0])}</div>'">`
+          ? `<img class="contact-photo" src="${imgSrc(c.photo_filename)}" alt="${escapeHtml(c.name)}" onerror="this.outerHTML='<div class=\\'contact-photo-placeholder\\'>${escapeHtml(c.name[0])}</div>'">`
           : `<div class="contact-photo-placeholder">${escapeHtml(c.name[0])}</div>`
       }
       <div class="contact-info">
@@ -238,7 +251,7 @@ function renderBuildingPage(building, suites, contacts) {
         <div>
           ${
             building.photo_filename
-              ? `<img class="building-photo" src="images/${escapeHtml(building.photo_filename)}" alt="${escapeHtml(building.building_name)}" onerror="this.outerHTML='<div class=\\'building-photo-placeholder\\'>Photo coming soon</div>'">`
+              ? `<img class="building-photo" src="${imgSrc(building.photo_filename)}" alt="${escapeHtml(building.building_name)}" onerror="this.outerHTML='<div class=\\'building-photo-placeholder\\'>Photo coming soon</div>'">`
               : `<div class="building-photo-placeholder">Photo coming soon</div>`
           }
         </div>
@@ -307,7 +320,7 @@ function renderBuildingPage(building, suites, contacts) {
             ${s.available_date && s.status === "Available" ? `<span>Available ${escapeHtml(s.available_date)}</span>` : ""}
           </div>
           ${s.notes ? `<div class="suite-notes">${escapeHtml(s.notes)}</div>` : ""}
-          ${s.floor_plan_filename ? `<div class="suite-floor-plan"><a href="images/${escapeHtml(s.floor_plan_filename)}" target="_blank">View Floor Plan</a></div>` : ""}
+          ${s.floor_plan_filename ? `<div class="suite-floor-plan"><a href="${imgSrc(s.floor_plan_filename)}" target="_blank">View Floor Plan</a></div>` : ""}
         </div>
         <span class="suite-badge ${badgeClass}">${escapeHtml(s.status)}</span>
       </div>
@@ -317,6 +330,12 @@ function renderBuildingPage(building, suites, contacts) {
 }
 
 /* ── Utilities ── */
+function imgSrc(filename) {
+  if (!filename) return "";
+  if (filename.startsWith("http://") || filename.startsWith("https://")) return filename;
+  return `images/${filename}`;
+}
+
 function escapeHtml(str) {
   if (!str) return "";
   const div = document.createElement("div");
