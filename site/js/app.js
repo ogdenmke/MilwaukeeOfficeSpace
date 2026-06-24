@@ -2,10 +2,68 @@
 
 /* ── Config ── */
 const CONFIG = {
-  SHOW_LEASED: true, // set false to completely hide leased suites
+  SHOW_LEASED: true,
+
+  // ── Google Sheets live data ──
+  // Paste your Google Sheet ID here. Leave blank to use local JSON files instead.
+  // Find the ID in your sheet URL: https://docs.google.com/spreadsheets/d/SHEET_ID_HERE/edit
+  GOOGLE_SHEET_ID: "",
 };
 
 /* ── Data loading ── */
+function parseCSV(text) {
+  const rows = [];
+  let current = "";
+  let inQuotes = false;
+  const lines = [];
+
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === '"') {
+      if (inQuotes && text[i + 1] === '"') {
+        current += '"';
+        i++;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (ch === "," && !inQuotes) {
+      rows.push(current);
+      current = "";
+    } else if ((ch === "\n" || ch === "\r") && !inQuotes) {
+      if (ch === "\r" && text[i + 1] === "\n") i++;
+      rows.push(current);
+      current = "";
+      lines.push(rows.splice(0));
+    } else {
+      current += ch;
+    }
+  }
+  if (current || rows.length) {
+    rows.push(current);
+    lines.push(rows.splice(0));
+  }
+
+  if (lines.length < 2) return [];
+  const headers = lines[0];
+  return lines.slice(1)
+    .filter((row) => row.some((cell) => cell.trim() !== ""))
+    .map((row) => {
+      const obj = {};
+      headers.forEach((h, i) => {
+        const val = (row[i] || "").trim();
+        obj[h.trim()] = val === "" ? null : val;
+      });
+      return obj;
+    });
+}
+
+async function loadSheetCSV(sheetId, tabName) {
+  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
+  const resp = await fetch(url);
+  if (!resp.ok) throw new Error(`Failed to load sheet "${tabName}"`);
+  return parseCSV(await resp.text());
+}
+
 async function loadJSON(path) {
   const resp = await fetch(path);
   if (!resp.ok) throw new Error(`Failed to load ${path}`);
@@ -13,6 +71,15 @@ async function loadJSON(path) {
 }
 
 async function loadAllData() {
+  if (CONFIG.GOOGLE_SHEET_ID) {
+    const id = CONFIG.GOOGLE_SHEET_ID;
+    const [buildings, suites, contacts] = await Promise.all([
+      loadSheetCSV(id, "Buildings"),
+      loadSheetCSV(id, "Suites"),
+      loadSheetCSV(id, "Contacts"),
+    ]);
+    return { buildings, suites, contacts };
+  }
   const [buildings, suites, contacts] = await Promise.all([
     loadJSON("data/buildings.json"),
     loadJSON("data/suites.json"),

@@ -6,18 +6,37 @@ People will mostly reach it by scanning a QR code on their phone. It works great
 
 ---
 
-## How to update listings
+## How to update listings (Google Sheets — recommended)
 
-All listing data lives in **one spreadsheet**: `Ogden_Office_Listings.xlsx` (in the root of this project).
+The easiest way: use a **Google Sheet** as the live data source. You edit the sheet, and the website updates automatically — no rebuilding, no redeploying.
 
-Open it in Excel or Google Sheets and edit the tabs described below. When you're done, save the file and redeploy (see "How to redeploy" below).
+### One-time setup
+
+1. Go to [Google Sheets](https://sheets.google.com) and create a new spreadsheet
+2. Create three tabs named exactly: **Buildings**, **Suites**, **Contacts**
+3. Copy the column headers and data from `Ogden_Office_Listings.xlsx` into each tab
+4. Click **File -> Share -> Publish to web** -> choose "Entire document" -> click **Publish**
+5. Click **Share** (top right) -> change to **"Anyone with the link"** can view
+6. Copy the Sheet ID from the URL — it's the long string between `/d/` and `/edit`:
+   `https://docs.google.com/spreadsheets/d/`**YOUR_SHEET_ID**`/edit`
+7. Open `site/js/app.js` and paste the ID into the config at the top:
+   ```js
+   GOOGLE_SHEET_ID: "YOUR_SHEET_ID",
+   ```
+8. Deploy the site once (see "How to redeploy" below)
+
+After that, just edit the Google Sheet — the site pulls fresh data every time someone visits.
+
+### Updating via the Excel file (alternative)
+
+If you prefer to skip Google Sheets, the site can also read from local JSON files generated from the Excel file `Ogden_Office_Listings.xlsx`. Leave `GOOGLE_SHEET_ID` blank in the config and follow the "Running the build" section below after each spreadsheet edit.
 
 ### Mark a suite as leased
 
-1. Open the **Suites** tab.
+1. Open the **Suites** tab (in Google Sheets or Excel).
 2. Find the suite row.
 3. Change the **status** column from `Available` to `Leased`.
-4. Save and redeploy.
+4. If using Google Sheets, you're done. If using Excel, save and rebuild/redeploy.
 
 ### Add a new suite
 
@@ -118,12 +137,14 @@ site/                        <- deploy this folder
 
 ## Config
 
-In `site/js/app.js`, near the top, there's a config flag:
+In `site/js/app.js`, near the top:
 
 ```js
 const CONFIG = {
-  SHOW_LEASED: true, // set false to completely hide leased suites
+  SHOW_LEASED: true,
+  GOOGLE_SHEET_ID: "",  // paste your Google Sheet ID here
 };
 ```
 
-Set `SHOW_LEASED` to `false` if you want leased suites hidden entirely instead of greyed out.
+- **SHOW_LEASED** — set `false` to hide leased suites entirely instead of greying them out
+- **GOOGLE_SHEET_ID** — paste your Sheet ID here to pull live data from Google Sheets (no rebuild needed). Leave blank to use local JSON files.
