@@ -396,7 +396,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
       renderBuildingPage(building, suites, contacts);
-      renderBuildingCTA(contacts, "building-cta");
+      const buildingContacts = contacts.filter((c) => !c.building_id || c.building_id === buildingId);
+      renderBuildingCTA(buildingContacts, "building-cta");
     }
   } catch (err) {
     console.error("Failed to load site data:", err);
