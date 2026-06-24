@@ -182,7 +182,7 @@ function renderContacts(contacts, containerId) {
     <div class="contact-card">
       ${
         c.photo_filename
-          ? `<img class="contact-photo" src="images/${escapeHtml(c.photo_filename)}" alt="${escapeHtml(c.name)}" onerror="this.outerHTML='<div class=\\'contact-photo-placeholder\\'>${escapeHtml(c.name[0])}</div>'">`
+          ? `<img class="contact-photo" src="${imgSrc(c.photo_filename)}" alt="${escapeHtml(c.name)}" onerror="this.outerHTML='<div class=\\'contact-photo-placeholder\\'>${escapeHtml(c.name[0])}</div>'">`
           : `<div class="contact-photo-placeholder">${escapeHtml(c.name[0])}</div>`
       }
       <div class="contact-info">
@@ -238,7 +238,7 @@ function renderBuildingPage(building, suites, contacts) {
         <div>
           ${
             building.photo_filename
-              ? `<img class="building-photo" src="images/${escapeHtml(building.photo_filename)}" alt="${escapeHtml(building.building_name)}" onerror="this.outerHTML='<div class=\\'building-photo-placeholder\\'>Photo coming soon</div>'">`
+              ? `<img class="building-photo" src="${imgSrc(building.photo_filename)}" alt="${escapeHtml(building.building_name)}" onerror="this.outerHTML='<div class=\\'building-photo-placeholder\\'>Photo coming soon</div>'">`
               : `<div class="building-photo-placeholder">Photo coming soon</div>`
           }
         </div>
@@ -307,7 +307,7 @@ function renderBuildingPage(building, suites, contacts) {
             ${s.available_date && s.status === "Available" ? `<span>Available ${escapeHtml(s.available_date)}</span>` : ""}
           </div>
           ${s.notes ? `<div class="suite-notes">${escapeHtml(s.notes)}</div>` : ""}
-          ${s.floor_plan_filename ? `<div class="suite-floor-plan"><a href="images/${escapeHtml(s.floor_plan_filename)}" target="_blank">View Floor Plan</a></div>` : ""}
+          ${s.floor_plan_filename ? `<div class="suite-floor-plan"><a href="${imgSrc(s.floor_plan_filename)}" target="_blank">View Floor Plan</a></div>` : ""}
         </div>
         <span class="suite-badge ${badgeClass}">${escapeHtml(s.status)}</span>
       </div>
@@ -317,6 +317,12 @@ function renderBuildingPage(building, suites, contacts) {
 }
 
 /* ── Utilities ── */
+function imgSrc(filename) {
+  if (!filename) return "";
+  if (filename.startsWith("http://") || filename.startsWith("https://")) return filename;
+  return `images/${filename}`;
+}
+
 function escapeHtml(str) {
   if (!str) return "";
   const div = document.createElement("div");
