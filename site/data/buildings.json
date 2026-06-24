@@ -1,0 +1,110 @@
+[
+  {
+    "building_id": "NLB",
+    "building_name": "The Northern Lights Building",
+    "address": "1661 N Water St",
+    "city": "Milwaukee",
+    "state": "WI",
+    "zip": "53202",
+    "latitude": "43.0455",
+    "longitude": "-87.9103",
+    "description": "Class office space on the Milwaukee River in the East Town district.",
+    "photo_filename": "northern-lights.jpg"
+  },
+  {
+    "building_id": "BWY",
+    "building_name": "Broadway Office Building",
+    "address": "757-765 N Broadway & E Mason St",
+    "city": "Milwaukee",
+    "state": "WI",
+    "zip": "53202",
+    "latitude": "43.0408",
+    "longitude": "-87.9085",
+    "description": "Historic office building in the heart of downtown Milwaukee.",
+    "photo_filename": "broadway.jpg"
+  },
+  {
+    "building_id": "FIVE9",
+    "building_name": "Five Nine Building",
+    "address": "5555 N Port Washington Rd",
+    "city": "Glendale",
+    "state": "WI",
+    "zip": "53217",
+    "latitude": "43.1132",
+    "longitude": "-87.9105",
+    "description": "Suburban office building with convenient highway access in Glendale.",
+    "photo_filename": "five-nine.jpg"
+  },
+  {
+    "building_id": "STN",
+    "building_name": "The Steinmeyer Building",
+    "address": "205 W Highland Ave & N Old World Third St",
+    "city": "Milwaukee",
+    "state": "WI",
+    "zip": "53203",
+    "latitude": "43.0443",
+    "longitude": "-87.9147",
+    "description": "Landmark building in Milwaukee's Old World Third Street district.",
+    "photo_filename": "steinmeyer.jpg"
+  },
+  {
+    "building_id": "VVC",
+    "building_name": "The Valley View Commons",
+    "address": "3600 W Pierce St",
+    "city": "Milwaukee",
+    "state": "WI",
+    "zip": "53215",
+    "latitude": "43.0156",
+    "longitude": "-87.9553",
+    "description": "Office commons on Milwaukee's near south side.",
+    "photo_filename": "valley-view.jpg"
+  },
+  {
+    "building_id": "WSB",
+    "building_name": "Water Street Building",
+    "address": "753-757 N Water St",
+    "city": "Milwaukee",
+    "state": "WI",
+    "zip": "53202",
+    "latitude": "43.0395",
+    "longitude": "-87.9105",
+    "description": "Riverfront office building in downtown Milwaukee.",
+    "photo_filename": "water-street.jpg"
+  },
+  {
+    "building_id": "IRON",
+    "building_name": "Ironwood Office Park",
+    "address": "5205 N Ironwood Ln",
+    "city": "Milwaukee",
+    "state": "WI",
+    "zip": "53217",
+    "latitude": "43.107",
+    "longitude": "-87.9186",
+    "description": "Office park setting with surface parking on the north side.",
+    "photo_filename": "ironwood.jpg"
+  },
+  {
+    "building_id": "GH",
+    "building_name": "Good Hope Medical/Dental Office",
+    "address": "7810 W Good Hope Rd",
+    "city": "Milwaukee",
+    "state": "WI",
+    "zip": "53223",
+    "latitude": "43.1512",
+    "longitude": "-87.9946",
+    "description": "Medical and dental office space on Good Hope Road.",
+    "photo_filename": "good-hope.jpg"
+  },
+  {
+    "building_id": "NAO",
+    "building_name": "North Ave Offices",
+    "address": "1730 W North Ave",
+    "city": "Milwaukee",
+    "state": "WI",
+    "zip": "53205",
+    "latitude": "43.0559",
+    "longitude": "-87.931",
+    "description": "Office space on West North Avenue.",
+    "photo_filename": "north-ave.jpg"
+  }
+]
