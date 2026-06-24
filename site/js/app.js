@@ -332,7 +332,12 @@ function renderBuildingPage(building, suites, contacts) {
 /* ── Utilities ── */
 function imgSrc(filename) {
   if (!filename) return "";
-  if (filename.startsWith("http://") || filename.startsWith("https://")) return filename;
+  if (filename.startsWith("http://") || filename.startsWith("https://")) {
+    if (filename.includes("lh3.googleusercontent.com") && !filename.includes("=")) {
+      return filename + "=w1600";
+    }
+    return filename;
+  }
   return `images/${filename}`;
 }
 

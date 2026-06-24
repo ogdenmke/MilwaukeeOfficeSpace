@@ -310,6 +310,7 @@ img {
   object-fit: cover;
   max-height: 340px;
   background: var(--gray-100);
+  image-rendering: -webkit-optimize-contrast;
 }
 
 .building-photo-placeholder {
