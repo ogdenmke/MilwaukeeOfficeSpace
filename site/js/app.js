@@ -5,9 +5,12 @@ const CONFIG = {
   SHOW_LEASED: true,
 
   // ── Google Sheets live data ──
-  // Paste your Google Sheet ID here. Leave blank to use local JSON files instead.
-  // Find the ID in your sheet URL: https://docs.google.com/spreadsheets/d/SHEET_ID_HERE/edit
-  GOOGLE_SHEET_ID: "https://docs.google.com/spreadsheets/d/e/2PACX-1vToPKhxUttexl345aFBR_QE8BTGZ1CU4OI4lqmgVgVjV-qggY8JvF3hSTB1X7omR5Q3o7l51ezd70nQ/pubhtml",
+  // Paste your Google Sheet ID or the full URL from your browser's address bar.
+  // Example URL: https://docs.google.com/spreadsheets/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ/edit
+  // Example ID:  1aBcDeFgHiJkLmNoPqRsTuVwXyZ
+  // DO NOT use the "Publish to web" link (the one with /e/2PACX-...) — use the
+  // normal URL from your browser bar when you have the sheet open.
+  GOOGLE_SHEET_ID: "",
 };
 
 /* ── Data loading ── */
@@ -70,15 +73,25 @@ async function loadJSON(path) {
   return resp.json();
 }
 
+function extractSheetId(input) {
+  if (!input) return "";
+  const match = input.match(/\/spreadsheets\/d\/([^/]+)/);
+  if (match && !match[1].startsWith("e")) return match[1];
+  if (!input.includes("/")) return input;
+  return "";
+}
+
 async function loadAllData() {
-  if (CONFIG.GOOGLE_SHEET_ID) {
-    const id = CONFIG.GOOGLE_SHEET_ID;
+  const id = extractSheetId(CONFIG.GOOGLE_SHEET_ID);
+  if (id) {
     const [buildings, suites, contacts] = await Promise.all([
       loadSheetCSV(id, "Buildings"),
       loadSheetCSV(id, "Suites"),
       loadSheetCSV(id, "Contacts"),
     ]);
     return { buildings, suites, contacts };
+  } else if (CONFIG.GOOGLE_SHEET_ID) {
+    console.error("Invalid Google Sheet ID. Use the URL from your browser bar (not the Publish to web link). It should look like: https://docs.google.com/spreadsheets/d/YOUR_ID/edit");
   }
   const [buildings, suites, contacts] = await Promise.all([
     loadJSON("data/buildings.json"),
