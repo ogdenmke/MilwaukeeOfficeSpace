@@ -153,16 +153,7 @@ function initMap(buildings) {
     subdomains: "abcd",
   }).addTo(map);
 
-  const pinIcon = L.divIcon({
-    className: "custom-pin",
-    html: `<svg width="28" height="36" viewBox="0 0 28 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M14 0C6.268 0 0 6.268 0 14c0 10.5 14 22 14 22s14-11.5 14-22C28 6.268 21.732 0 14 0z" fill="#CF152D"/>
-      <circle cx="14" cy="14" r="6" fill="white"/>
-    </svg>`,
-    iconSize: [28, 36],
-    iconAnchor: [14, 36],
-    popupAnchor: [0, -36],
-  });
+  let pinNumber = 0;
 
   const groups = {};
   validBuildings.forEach((b) => {
@@ -178,7 +169,16 @@ function initMap(buildings) {
     const lng = parseFloat(first.longitude);
     if (isNaN(lat) || isNaN(lng)) return;
 
-    const marker = L.marker([lat, lng], { icon: pinIcon }).addTo(map);
+    pinNumber++;
+    const tagIcon = L.divIcon({
+      className: "map-tag-icon",
+      html: `<div class="map-tag-wrapper"><div class="map-tag-label">${pinNumber}</div><div class="map-tag-line"></div><div class="map-tag-dot"></div></div>`,
+      iconSize: [30, 52],
+      iconAnchor: [15, 52],
+      popupAnchor: [0, -52],
+    });
+
+    const marker = L.marker([lat, lng], { icon: tagIcon }).addTo(map);
     if (buildings.length === 1) {
       marker.bindPopup(`
         <div class="popup-title">${escapeHtml(first.building_name)}</div>
@@ -198,6 +198,23 @@ function initMap(buildings) {
   if (markers.length > 0) {
     const group = L.featureGroup(markers);
     map.fitBounds(group.getBounds().pad(0.15));
+  }
+
+  const legendEl = document.getElementById("map-legend-grid");
+  if (legendEl) {
+    let num = 0;
+    Object.values(groups).forEach((buildings) => {
+      const first = buildings[0];
+      if (isNaN(parseFloat(first.latitude))) return;
+      num++;
+      if (buildings.length === 1) {
+        legendEl.innerHTML += `<a class="map-legend-item" href="building.html?id=${first.building_id}"><span class="map-legend-num">${num}</span><span class="map-legend-name">${escapeHtml(first.building_name)}</span><span class="map-legend-address">${escapeHtml(first.address)}, ${escapeHtml(first.city)}</span></a>`;
+      } else {
+        buildings.forEach((b, j) => {
+          legendEl.innerHTML += `<a class="map-legend-item" href="building.html?id=${b.building_id}"><span class="map-legend-num" ${j > 0 ? 'style="visibility:hidden"' : ''}>${num}</span><span class="map-legend-name">${escapeHtml(b.building_name)}</span><span class="map-legend-address">${escapeHtml(b.address)}, ${escapeHtml(b.city)}</span></a>`;
+        });
+      }
+    });
   }
 }
 
