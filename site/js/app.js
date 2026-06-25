@@ -164,18 +164,34 @@ function initMap(buildings) {
     popupAnchor: [0, -36],
   });
 
-  const markers = [];
+  const groups = {};
   validBuildings.forEach((b) => {
-    const lat = parseFloat(b.latitude);
-    const lng = parseFloat(b.longitude);
+    const key = b.map_group || b.building_id;
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(b);
+  });
+
+  const markers = [];
+  Object.values(groups).forEach((buildings) => {
+    const first = buildings[0];
+    const lat = parseFloat(first.latitude);
+    const lng = parseFloat(first.longitude);
     if (isNaN(lat) || isNaN(lng)) return;
 
     const marker = L.marker([lat, lng], { icon: pinIcon }).addTo(map);
-    marker.bindPopup(`
-      <div class="popup-title">${escapeHtml(b.building_name)}</div>
-      <div class="popup-address">${escapeHtml(b.address)}, ${escapeHtml(b.city)}</div>
-      <a class="popup-link" href="building.html?id=${b.building_id}">View Suites</a>
-    `);
+    if (buildings.length === 1) {
+      marker.bindPopup(`
+        <div class="popup-title">${escapeHtml(first.building_name)}</div>
+        <div class="popup-address">${escapeHtml(first.address)}, ${escapeHtml(first.city)}</div>
+        <a class="popup-link" href="building.html?id=${first.building_id}">View Suites</a>
+      `);
+    } else {
+      marker.bindPopup(`
+        <div class="popup-title">${escapeHtml(first.map_group)}</div>
+        <div class="popup-address">${escapeHtml(first.address)}, ${escapeHtml(first.city)}</div>
+        ${buildings.map((b) => `<a class="popup-link" style="margin:4px 4px 0 0;" href="building.html?id=${b.building_id}">${escapeHtml(b.building_name)}</a>`).join("")}
+      `);
+    }
     markers.push(marker);
   });
 
