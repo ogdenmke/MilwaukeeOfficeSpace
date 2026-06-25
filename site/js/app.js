@@ -188,23 +188,22 @@ function initMap(buildings) {
   pinData.forEach((pin, idx) => {
     pinNumber++;
     const off = tagOffsets[idx % tagOffsets.length];
-    const w = 140;
-    const h = 90;
-    const cx = w / 2;
-    const cy = h - 6;
-    const lx = cx + off.tx;
-    const ly = cy + off.ty;
+    const s = 10;
+    const cx = 0;
+    const cy = 0;
+    const lx = off.tx;
+    const ly = off.ty;
 
     const tagIcon = L.divIcon({
       className: "map-tag-icon",
-      html: `<svg class="map-tag-svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+      html: `<svg class="map-tag-svg" width="${s}" height="${s}" viewBox="${-s/2} ${-s/2} ${s} ${s}" style="overflow:visible">
         <line x1="${cx}" y1="${cy}" x2="${lx}" y2="${ly + 13}" stroke="#131210" stroke-width="1.5"/>
         <circle cx="${cx}" cy="${cy}" r="3.5" fill="#CF152D"/>
         <rect x="${lx - 13}" y="${ly}" width="26" height="26" rx="4" fill="#131210"/>
         <text x="${lx}" y="${ly + 18}" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,sans-serif">${pinNumber}</text>
       </svg>`,
-      iconSize: [w, h],
-      iconAnchor: [cx, cy],
+      iconSize: [s, s],
+      iconAnchor: [s / 2, s / 2],
       popupAnchor: [off.tx, off.ty - 5],
     });
 
