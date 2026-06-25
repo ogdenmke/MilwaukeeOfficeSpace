@@ -3,7 +3,9 @@
   --red-dark: #a8112a;
   --black: #221F1F;
   --near-black: #131210;
+  --charcoal: #2d2d2d;
   --white: #ffffff;
+  --off-white: #f5f5f5;
   --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
   --gray-200: #e5e7eb;
@@ -13,7 +15,7 @@
   --gray-600: #4b5563;
   --gray-700: #374151;
   --sidebar-width: 280px;
-  --header-height: 64px;
+  --header-height: 72px;
 }
 
 *,
@@ -30,7 +32,7 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: "Georgia", "Times New Roman", serif;
   color: var(--black);
   background: var(--white);
   line-height: 1.6;
@@ -60,16 +62,16 @@ img {
   left: 0;
   right: 0;
   height: var(--header-height);
-  background: var(--white);
-  border-bottom: 1px solid var(--gray-200);
+  background: var(--near-black);
+  border-bottom: 3px solid var(--red);
   display: flex;
   align-items: center;
-  padding: 0 1.25rem;
+  padding: 0 1.5rem;
   z-index: 1000;
 }
 
 .header-logo img {
-  height: 40px;
+  height: 44px;
   width: auto;
 }
 
@@ -86,7 +88,7 @@ img {
   display: block;
   width: 22px;
   height: 2px;
-  background: var(--black);
+  background: var(--white);
   margin: 5px 0;
   transition: 0.3s;
   border-radius: 2px;
@@ -111,8 +113,8 @@ img {
   left: 0;
   bottom: 0;
   width: var(--sidebar-width);
-  background: var(--gray-50);
-  border-right: 1px solid var(--gray-200);
+  background: var(--charcoal);
+  border-right: none;
   overflow-y: auto;
   z-index: 900;
   padding: 1.25rem 0;
@@ -120,10 +122,11 @@ img {
 }
 
 .sidebar-title {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   color: var(--gray-400);
   padding: 0 1.25rem;
   margin-bottom: 0.5rem;
@@ -132,22 +135,23 @@ img {
 .sidebar-nav a {
   display: block;
   padding: 0.6rem 1.25rem;
-  color: var(--gray-700);
+  color: var(--gray-300);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.9rem;
   border-left: 3px solid transparent;
   transition: all 0.15s;
 }
 
 .sidebar-nav a:hover {
-  background: var(--gray-100);
-  color: var(--red);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--white);
   text-decoration: none;
 }
 
 .sidebar-nav a.active {
-  color: var(--red);
+  color: var(--white);
   border-left-color: var(--red);
-  background: var(--white);
+  background: rgba(207, 21, 45, 0.1);
   font-weight: 600;
 }
 
@@ -155,7 +159,7 @@ img {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 899;
 }
 
@@ -164,6 +168,8 @@ img {
   margin-left: var(--sidebar-width);
   margin-top: var(--header-height);
   min-height: calc(100vh - var(--header-height));
+  display: flex;
+  flex-direction: column;
 }
 
 .page-section {
@@ -178,24 +184,40 @@ img {
 }
 
 .hero h1 {
-  font-size: 1.75rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.1rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--near-black);
   margin-bottom: 0.5rem;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.hero h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--red);
 }
 
 .hero p {
   color: var(--gray-500);
-  font-size: 1.05rem;
+  font-size: 1rem;
+  margin-top: 0.75rem;
 }
 
 .map-container {
   margin: 0 2.5rem 2.5rem;
   max-width: 1100px;
-  border-radius: 12px;
+  border-radius: 4px;
   overflow: hidden;
   border: 1px solid var(--gray-200);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 #map {
@@ -205,15 +227,30 @@ img {
 
 /* ── Contact cards ── */
 .contacts-section {
-  padding: 2rem 2.5rem 3rem;
+  padding: 2.5rem 2.5rem 3rem;
   max-width: 1100px;
 }
 
 .contacts-section h2 {
-  font-size: 1.15rem;
-  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--near-black);
   margin-bottom: 1.25rem;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.contacts-section h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--red);
 }
 
 .contacts-grid {
@@ -227,9 +264,10 @@ img {
   align-items: center;
   gap: 1rem;
   padding: 1.25rem;
-  background: var(--gray-50);
-  border-radius: 10px;
+  background: var(--white);
+  border-radius: 4px;
   border: 1px solid var(--gray-200);
+  border-top: 3px solid var(--red);
 }
 
 .contact-photo {
@@ -251,17 +289,20 @@ img {
   justify-content: center;
   flex-shrink: 0;
   color: var(--gray-400);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 1.5rem;
   font-weight: 600;
 }
 
 .contact-info h3 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--near-black);
 }
 
 .contact-info .contact-title {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.8rem;
   color: var(--gray-500);
   margin-bottom: 0.35rem;
@@ -271,6 +312,7 @@ img {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.85rem;
 }
 
@@ -288,9 +330,12 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.85rem;
   color: var(--gray-500);
   margin-bottom: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .back-link:hover {
@@ -306,7 +351,7 @@ img {
 
 .building-photo {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 4px;
   object-fit: cover;
   max-height: 340px;
   background: var(--gray-100);
@@ -316,23 +361,28 @@ img {
 .building-photo-placeholder {
   width: 100%;
   height: 220px;
-  border-radius: 10px;
+  border-radius: 4px;
   background: var(--gray-100);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--gray-400);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.9rem;
 }
 
 .building-details h1 {
-  font-size: 1.6rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.4rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--near-black);
   margin-bottom: 0.35rem;
 }
 
 .building-address {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: var(--gray-500);
   font-size: 0.95rem;
   margin-bottom: 1rem;
@@ -341,7 +391,7 @@ img {
 .building-description {
   color: var(--gray-600);
   font-size: 0.95rem;
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 /* ── Suites ── */
@@ -351,10 +401,25 @@ img {
 }
 
 .suites-section h2 {
-  font-size: 1.15rem;
-  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--near-black);
   margin-bottom: 1rem;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.suites-section h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--red);
 }
 
 .suites-grid {
@@ -366,7 +431,8 @@ img {
   padding: 1.25rem 1.5rem;
   background: var(--white);
   border: 1px solid var(--gray-200);
-  border-radius: 10px;
+  border-left: 4px solid var(--red);
+  border-radius: 4px;
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 0.75rem;
@@ -375,19 +441,21 @@ img {
 }
 
 .suite-card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .suite-card.leased {
   opacity: 0.5;
   background: var(--gray-50);
+  border-left-color: var(--gray-300);
 }
 
 .suite-card.pending {
-  border-color: #f59e0b;
+  border-left-color: #f59e0b;
 }
 
 .suite-name {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-weight: 600;
   font-size: 1rem;
   color: var(--near-black);
@@ -398,6 +466,7 @@ img {
   flex-wrap: wrap;
   gap: 1.25rem;
   margin-top: 0.35rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.85rem;
   color: var(--gray-500);
 }
@@ -417,11 +486,12 @@ img {
   display: inline-flex;
   align-items: center;
   padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  border-radius: 3px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.06em;
   white-space: nowrap;
 }
 
@@ -446,6 +516,7 @@ img {
 }
 
 .building-price {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--near-black);
@@ -457,6 +528,7 @@ img {
 }
 
 .suite-floor-plan a {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.8rem;
   font-weight: 500;
 }
@@ -465,9 +537,10 @@ img {
   padding: 2rem;
   text-align: center;
   background: var(--gray-50);
-  border-radius: 10px;
+  border-radius: 4px;
   border: 1px dashed var(--gray-300);
   color: var(--gray-500);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .no-suites p {
@@ -481,17 +554,20 @@ img {
 }
 
 .cta-box {
-  background: var(--gray-50);
-  border: 1px solid var(--gray-200);
-  border-radius: 10px;
+  background: var(--near-black);
+  border: none;
+  border-radius: 4px;
   padding: 1.5rem;
 }
 
 .cta-box h3 {
-  font-size: 1rem;
-  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   margin-bottom: 1rem;
-  color: var(--near-black);
+  color: var(--white);
 }
 
 .cta-contacts {
@@ -501,17 +577,18 @@ img {
 }
 
 .cta-contact {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.9rem;
 }
 
 .cta-contact strong {
   display: block;
-  color: var(--near-black);
+  color: var(--white);
 }
 
 .cta-contact span {
   display: block;
-  color: var(--gray-500);
+  color: var(--gray-400);
   font-size: 0.8rem;
   margin-bottom: 0.25rem;
 }
@@ -522,24 +599,35 @@ img {
   font-size: 0.85rem;
 }
 
+.cta-contact .cta-links a {
+  color: var(--red);
+}
+
+.cta-contact .cta-links a:hover {
+  color: #ff3b54;
+}
+
 /* ── Footer ── */
 .site-footer {
   padding: 1.5rem 2.5rem;
-  max-width: 1100px;
-  border-top: 1px solid var(--gray-200);
+  max-width: none;
+  background: var(--near-black);
+  border-top: 3px solid var(--red);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.8rem;
   color: var(--gray-400);
+  margin-top: auto;
 }
 
 /* ── Leaflet popup overrides ── */
 .leaflet-popup-content-wrapper {
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
 .leaflet-popup-content {
   margin: 0.75rem 1rem;
-  font-family: inherit;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.9rem;
   line-height: 1.5;
 }
@@ -561,9 +649,11 @@ img {
   background: var(--red);
   color: var(--white) !important;
   padding: 0.3rem 0.75rem;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 500;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   text-decoration: none !important;
 }
 
@@ -580,7 +670,7 @@ img {
   .sidebar {
     transform: translateX(-100%);
     width: 280px;
-    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.2);
   }
 
   .sidebar.open {
@@ -600,7 +690,7 @@ img {
   }
 
   .hero h1 {
-    font-size: 1.4rem;
+    font-size: 1rem;
   }
 
   .map-container {
@@ -615,8 +705,12 @@ img {
   .building-header,
   .suites-section,
   .building-cta,
-  .site-footer,
   .page-section {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .site-footer {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
   }
@@ -644,7 +738,7 @@ img {
 
 @media (max-width: 480px) {
   .hero h1 {
-    font-size: 1.25rem;
+    font-size: 0.9rem;
   }
 
   .suite-meta {
