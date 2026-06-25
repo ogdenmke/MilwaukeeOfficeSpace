@@ -607,6 +607,64 @@ img {
   color: #ff3b54;
 }
 
+/* ── Document modal ── */
+.doc-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+
+.doc-modal-overlay.open {
+  display: flex;
+}
+
+.doc-modal {
+  position: relative;
+  width: 90vw;
+  height: 85vh;
+  max-width: 1000px;
+  background: var(--white);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+}
+
+.doc-modal iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.doc-modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 36px;
+  height: 36px;
+  background: var(--near-black);
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2001;
+  line-height: 1;
+}
+
+.doc-modal-close:hover {
+  background: var(--red);
+}
+
 /* ── Footer ── */
 .site-footer {
   padding: 1.5rem 2.5rem;

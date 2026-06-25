@@ -346,7 +346,7 @@ function renderBuildingPage(building, suites, contacts) {
             ${s.available_date && s.status === "Available" ? `<span>Available ${escapeHtml(s.available_date)}</span>` : ""}
           </div>
           ${s.notes ? `<div class="suite-notes">${escapeHtml(s.notes)}</div>` : ""}
-          ${s.floor_plan_filename ? `<div class="suite-floor-plan"><a href="${fileSrc(s.floor_plan_filename)}" target="_blank">View Floor Plan</a></div>` : ""}
+          ${s.floor_plan_filename ? `<div class="suite-floor-plan"><a href="#" data-doc-src="${fileSrc(s.floor_plan_filename)}" onclick="openDocModal(this.dataset.docSrc);return false;">View Floor Plan</a></div>` : ""}
         </div>
         <span class="suite-badge ${badgeClass}">${escapeHtml(s.status)}</span>
       </div>
@@ -390,6 +390,35 @@ function escapeHtml(str) {
 function getQueryParam(key) {
   return new URLSearchParams(window.location.search).get(key);
 }
+
+/* ── Document modal ── */
+function openDocModal(src) {
+  const overlay = document.getElementById("doc-modal-overlay");
+  const iframe = document.getElementById("doc-modal-iframe");
+  if (!overlay || !iframe) return;
+  iframe.src = src;
+  overlay.classList.add("open");
+}
+
+function closeDocModal() {
+  const overlay = document.getElementById("doc-modal-overlay");
+  const iframe = document.getElementById("doc-modal-iframe");
+  if (!overlay || !iframe) return;
+  overlay.classList.remove("open");
+  iframe.src = "about:blank";
+}
+
+(function () {
+  const overlay = document.getElementById("doc-modal-overlay");
+  const closeBtn = document.getElementById("doc-modal-close");
+  if (closeBtn) closeBtn.addEventListener("click", closeDocModal);
+  if (overlay) overlay.addEventListener("click", function (e) {
+    if (e.target === overlay) closeDocModal();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeDocModal();
+  });
+})();
 
 /* ── Page init ── */
 document.addEventListener("DOMContentLoaded", async () => {
