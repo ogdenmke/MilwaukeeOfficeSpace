@@ -156,7 +156,7 @@ function initMap(buildings) {
   let pinNumber = 0;
 
   const tagOffsets = [
-    { tx: 0, ty: -50 },
+    { tx: 55, ty: -35 },
     { tx: -40, ty: -40 },
     { tx: 40, ty: -40 },
     { tx: -55, ty: -25 },
@@ -207,7 +207,7 @@ function initMap(buildings) {
       popupAnchor: [off.tx, off.ty - 5],
     });
 
-    const marker = L.marker([pin.lat, pin.lng], { icon: tagIcon }).addTo(map);
+    const marker = L.marker([pin.lat, pin.lng], { icon: tagIcon, zIndexOffset: (pinData.length - idx) * 1000 }).addTo(map);
     const buildings = pin.buildings;
     const first = buildings[0];
     if (buildings.length === 1) {

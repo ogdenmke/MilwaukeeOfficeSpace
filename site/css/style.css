@@ -744,19 +744,26 @@ img {
 }
 
 /* ── Map tag pins ── */
-.map-tag-icon {
+.leaflet-marker-icon.map-tag-icon {
   background: none !important;
   border: none !important;
   overflow: visible !important;
+  clip: unset !important;
+  clip-path: none !important;
 }
 
 .map-tag-svg {
   overflow: visible;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.25));
   pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .map-tag-svg rect,
+.map-tag-svg text,
 .map-tag-svg circle {
   pointer-events: auto;
   cursor: pointer;
