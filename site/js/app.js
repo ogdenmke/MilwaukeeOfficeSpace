@@ -394,8 +394,11 @@ function renderBuildingPage(building, suites, contacts) {
             ${s.available_date && s.status === "Available" ? `<span>Available ${escapeHtml(s.available_date)}</span>` : ""}
           </div>
           ${s.notes ? `<div class="suite-notes">${escapeHtml(s.notes)}</div>` : ""}
-          ${s.floor_plan_filename ? `<div class="suite-floor-plan"><a href="#" data-doc-src="${fileSrc(s.floor_plan_filename)}" onclick="openDocModal(this.dataset.docSrc);return false;">View Floor Plan</a></div>` : ""}
-          ${s.brochure_filename ? `<div class="suite-floor-plan"><a href="#" data-doc-src="${fileSrc(s.brochure_filename)}" onclick="openDocModal(this.dataset.docSrc);return false;">View Brochure</a></div>` : ""}
+          <div class="suite-links">
+            ${s.floor_plan_filename ? `<a href="#" data-doc-src="${fileSrc(s.floor_plan_filename)}" onclick="openDocModal(this.dataset.docSrc);return false;">View Floor Plan</a>` : ""}
+            ${s.brochure_filename ? `<a href="#" data-doc-src="${fileSrc(s.brochure_filename)}" onclick="openDocModal(this.dataset.docSrc);return false;">View Brochure</a>` : ""}
+            ${s.photos ? `<a href="#" data-doc-src="${fileSrc(s.photos)}" onclick="openDocModal(this.dataset.docSrc);return false;">View Photos</a>` : ""}
+          </div>
         </div>
         <span class="suite-badge ${badgeClass}">${escapeHtml(s.status)}</span>
       </div>
