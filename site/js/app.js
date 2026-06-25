@@ -155,6 +155,19 @@ function initMap(buildings) {
 
   let pinNumber = 0;
 
+  const tagOffsets = [
+    { tx: 0, ty: -50 },
+    { tx: -40, ty: -40 },
+    { tx: 40, ty: -40 },
+    { tx: -55, ty: -25 },
+    { tx: 55, ty: -25 },
+    { tx: 0, ty: -65 },
+    { tx: -35, ty: -55 },
+    { tx: 35, ty: -55 },
+    { tx: -60, ty: -45 },
+    { tx: 60, ty: -45 },
+  ];
+
   const groups = {};
   validBuildings.forEach((b) => {
     const key = b.map_group || b.building_id;
@@ -162,23 +175,42 @@ function initMap(buildings) {
     groups[key].push(b);
   });
 
-  const markers = [];
+  const pinData = [];
   Object.values(groups).forEach((buildings) => {
     const first = buildings[0];
     const lat = parseFloat(first.latitude);
     const lng = parseFloat(first.longitude);
     if (isNaN(lat) || isNaN(lng)) return;
+    pinData.push({ lat, lng, buildings });
+  });
 
+  const markers = [];
+  pinData.forEach((pin, idx) => {
     pinNumber++;
+    const off = tagOffsets[idx % tagOffsets.length];
+    const w = 140;
+    const h = 90;
+    const cx = w / 2;
+    const cy = h - 6;
+    const lx = cx + off.tx;
+    const ly = cy + off.ty;
+
     const tagIcon = L.divIcon({
       className: "map-tag-icon",
-      html: `<div class="map-tag-wrapper"><div class="map-tag-label">${pinNumber}</div><div class="map-tag-line"></div><div class="map-tag-dot"></div></div>`,
-      iconSize: [30, 52],
-      iconAnchor: [15, 52],
-      popupAnchor: [0, -52],
+      html: `<svg class="map-tag-svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+        <line x1="${cx}" y1="${cy}" x2="${lx}" y2="${ly + 13}" stroke="#131210" stroke-width="1.5"/>
+        <circle cx="${cx}" cy="${cy}" r="3.5" fill="#CF152D"/>
+        <rect x="${lx - 13}" y="${ly}" width="26" height="26" rx="4" fill="#131210"/>
+        <text x="${lx}" y="${ly + 18}" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,sans-serif">${pinNumber}</text>
+      </svg>`,
+      iconSize: [w, h],
+      iconAnchor: [cx, cy],
+      popupAnchor: [off.tx, off.ty - 5],
     });
 
-    const marker = L.marker([lat, lng], { icon: tagIcon }).addTo(map);
+    const marker = L.marker([pin.lat, pin.lng], { icon: tagIcon }).addTo(map);
+    const buildings = pin.buildings;
+    const first = buildings[0];
     if (buildings.length === 1) {
       marker.bindPopup(`
         <div class="popup-title">${escapeHtml(first.building_name)}</div>
