@@ -156,7 +156,7 @@ function initMap(buildings) {
   let pinNumber = 0;
 
   const tagOffsets = [
-    { tx: -55, ty: -35 },
+    { tx: 55, ty: -35 },
     { tx: -40, ty: -40 },
     { tx: 40, ty: -40 },
     { tx: -55, ty: -25 },
