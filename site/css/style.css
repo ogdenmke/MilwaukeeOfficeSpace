@@ -692,16 +692,16 @@ img {
 
 .map-legend-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 8px 32px;
+  grid-template-columns: 1fr;
+  gap: 0;
+  max-width: 600px;
 }
 
 .map-legend-item {
   display: flex;
   align-items: center;
-  padding: 10px 8px;
+  padding: 14px 12px;
   border-bottom: 1px solid var(--gray-200);
-  border-radius: 4px;
   text-decoration: none;
   color: inherit;
   transition: background 0.15s;
