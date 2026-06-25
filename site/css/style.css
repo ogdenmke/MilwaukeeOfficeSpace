@@ -15,7 +15,7 @@
   --gray-600: #4b5563;
   --gray-700: #374151;
   --sidebar-width: 280px;
-  --header-height: 80px;
+  --header-height: 95px;
 }
 
 *,
@@ -71,7 +71,7 @@ img {
 }
 
 .header-logo img {
-  height: 56px;
+  height: 75px;
   width: auto;
 }
 
