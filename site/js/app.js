@@ -239,10 +239,10 @@ function initMap(buildings) {
       if (isNaN(parseFloat(first.latitude))) return;
       num++;
       if (buildings.length === 1) {
-        legendEl.innerHTML += `<a class="map-legend-item" href="building.html?id=${first.building_id}"><span class="map-legend-num">${num}</span><span class="map-legend-name">${escapeHtml(first.building_name)}</span><span class="map-legend-address">${escapeHtml(first.address)}, ${escapeHtml(first.city)}</span></a>`;
+        legendEl.innerHTML += `<a class="map-legend-item" href="building.html?id=${first.building_id}"><span class="map-legend-num">${num}</span><div class="map-legend-text"><span class="map-legend-name">${escapeHtml(first.building_name)}</span><span class="map-legend-address">${escapeHtml(first.address)}, ${escapeHtml(first.city)}</span></div></a>`;
       } else {
         buildings.forEach((b, j) => {
-          legendEl.innerHTML += `<a class="map-legend-item" href="building.html?id=${b.building_id}"><span class="map-legend-num" ${j > 0 ? 'style="visibility:hidden"' : ''}>${num}</span><span class="map-legend-name">${escapeHtml(b.building_name)}</span><span class="map-legend-address">${escapeHtml(b.address)}, ${escapeHtml(b.city)}</span></a>`;
+          legendEl.innerHTML += `<a class="map-legend-item" href="building.html?id=${b.building_id}"><span class="map-legend-num" ${j > 0 ? 'style="visibility:hidden"' : ''}>${num}</span><div class="map-legend-text"><span class="map-legend-name">${escapeHtml(b.building_name)}</span><span class="map-legend-address">${escapeHtml(b.address)}, ${escapeHtml(b.city)}</span></div></a>`;
         });
       }
     });

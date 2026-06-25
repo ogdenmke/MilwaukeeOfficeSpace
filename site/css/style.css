@@ -692,15 +692,16 @@ img {
 
 .map-legend-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 0 24px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 8px 32px;
 }
 
 .map-legend-item {
   display: flex;
   align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--gray-100);
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--gray-200);
+  border-radius: 4px;
   text-decoration: none;
   color: inherit;
   transition: background 0.15s;
@@ -715,32 +716,36 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 24px;
-  height: 24px;
+  min-width: 28px;
+  height: 28px;
   background: var(--near-black);
   color: var(--white);
   border-radius: 4px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  margin-right: 10px;
+  margin-right: 12px;
   flex-shrink: 0;
+}
+
+.map-legend-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .map-legend-name {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--near-black);
-  margin-right: 8px;
-  white-space: nowrap;
+  line-height: 1.3;
 }
 
 .map-legend-address {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.8rem;
   color: var(--gray-500);
-  white-space: nowrap;
+  line-height: 1.3;
 }
 
 /* ── Map tag pins ── */
