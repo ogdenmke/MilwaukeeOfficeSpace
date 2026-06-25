@@ -145,7 +145,7 @@ function initMap(buildings) {
   const validBuildings = buildings.filter((b) => b.latitude && b.longitude);
   if (validBuildings.length === 0) return;
 
-  const map = L.map("map", { scrollWheelZoom: false });
+  const map = L.map("map", { scrollWheelZoom: false, attributionControl: false });
 
   L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
