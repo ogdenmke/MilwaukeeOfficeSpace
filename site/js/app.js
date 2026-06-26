@@ -919,6 +919,12 @@ function showCompareModal() {
     <div class="compare-modal">
       <button class="doc-modal-close" onclick="closeCompareModal()">&times;</button>
       <h3 class="compare-modal-title">Suite Comparison</h3>
+      <div class="compare-modal-header">
+        <button class="compare-print-btn" onclick="printComparison()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print / Save
+        </button>
+      </div>
       <div class="compare-table-wrap">
         <table class="compare-table">
           <thead>
@@ -942,6 +948,10 @@ function showCompareModal() {
   overlay.classList.add("open");
 
   if (typeof gtag === "function") gtag("event", "compare_suites", { count: compareList.length });
+}
+
+function printComparison() {
+  window.print();
 }
 
 function closeCompareModal() {
@@ -1057,6 +1067,7 @@ function initFindSpace(buildings, suites) {
           ${s.lease_type ? `<span>${escapeHtml(s.lease_type)}</span>` : ""}
           ${s.floor ? `<span>Floor ${escapeHtml(s.floor)}</span>` : ""}
         </div>
+        ${s.notes ? `<div class="find-space-card-notes">${escapeHtml(s.notes)}</div>` : ""}
         <div class="find-space-card-actions">
           <a class="view-btn" href="building.html?id=${b.building_id}">View Building</a>
           <label class="compare-label-btn"><input type="checkbox" class="compare-cb" data-suite="${s.suite_id}"> Compare</label>
@@ -1070,6 +1081,58 @@ function initFindSpace(buildings, suites) {
   });
 }
 
+/* ── Loading helpers ── */
+function showSkeletons(page) {
+  const main = document.querySelector(".main-content");
+  if (!main) return;
+  const container = document.createElement("div");
+  container.id = "loading-skeletons";
+
+  if (page === "home") {
+    container.innerHTML = `
+      <div class="skeleton-map skeleton-pulse"></div>
+      <div class="skeleton-grid">
+        <div class="skeleton-card skeleton-pulse"></div>
+        <div class="skeleton-card skeleton-pulse"></div>
+        <div class="skeleton-card skeleton-pulse"></div>
+        <div class="skeleton-card skeleton-pulse"></div>
+      </div>`;
+  } else if (page === "building") {
+    container.innerHTML = `
+      <div style="padding:0 2.5rem">
+        <div class="skeleton-hero skeleton-pulse" style="margin-bottom:1.5rem"></div>
+        <div class="skeleton-line wide skeleton-pulse"></div>
+        <div class="skeleton-line skeleton-pulse"></div>
+        <div class="skeleton-line short skeleton-pulse"></div>
+        <div style="margin-top:1.5rem">
+          <div class="skeleton-card skeleton-pulse"></div>
+          <div class="skeleton-card skeleton-pulse"></div>
+          <div class="skeleton-card skeleton-pulse"></div>
+        </div>
+      </div>`;
+  } else if (page === "find-space") {
+    container.innerHTML = `
+      <div style="padding:0 2.5rem;margin-top:1rem">
+        <div class="skeleton-line wide skeleton-pulse"></div>
+        <div class="skeleton-line skeleton-pulse"></div>
+      </div>`;
+  }
+
+  const hero = main.querySelector(".hero, .building-header, .find-space-section");
+  if (hero) hero.before(container);
+  else main.prepend(container);
+}
+
+function hideSkeletons() {
+  const el = document.getElementById("loading-skeletons");
+  if (el) el.remove();
+}
+
+function hideSplash() {
+  const splash = document.getElementById("loading-splash");
+  if (splash) splash.classList.add("hidden");
+}
+
 /* ── Page init ── */
 document.addEventListener("DOMContentLoaded", async () => {
   setupMobileMenu();
@@ -1080,8 +1143,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     else if (page === "home" && a.href.includes("#suite-search")) a.classList.add("nav-active");
   });
 
+  showSkeletons(page);
+
   try {
     const { buildings, suites, contacts } = await loadAllData();
+    hideSkeletons();
+    hideSplash();
     const page = document.body.dataset.page;
     const buildingId = getQueryParam("id");
 
@@ -1135,5 +1202,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   } catch (err) {
     console.error("Failed to load site data:", err);
+    hideSkeletons();
+    hideSplash();
   }
 });
