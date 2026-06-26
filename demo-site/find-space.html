@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Your Space — Lakeshore Property Group</title>
+  <meta name="description" content="Tell us what you need and we'll match you with available office space. Managed by Lakeshore Property Group — Your next move starts here..">
+  <meta property="og:title" content="Find Your Space — Lakeshore Property Group">
+  <meta property="og:description" content="Tell us what you need and we'll match you with available office space.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://caseyski.github.io/office-space-demo/find-space.html">
+  <meta property="og:image" content="https://caseyski.github.io/office-space-demo/images/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Find Your Space — Lakeshore Property Group">
+  <meta name="twitter:description" content="Tell us what you need and we'll match you with available office space.">
+  <meta name="twitter:image" content="https://caseyski.github.io/office-space-demo/images/og-image.jpg">
+  <link rel="icon" href="images/logos/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="images/logos/favicon.png" type="image/png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="find-space">
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <!-- Loading splash -->
+  <div class="loading-splash" id="loading-splash">
+    <img src="images/logos/logo-white.svg" alt="Lakeshore Property Group">
+    <div class="loading-splash-spinner"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="header-logo" href="index.html">
+      <img src="images/logos/logo-white.svg" alt="Lakeshore Property Group">
+    </a>
+    <nav class="header-nav" id="header-nav">
+      <a href="find-space.html">Find Your Space</a>
+      <a href="index.html#suite-search-section">Browse All Suites</a>
+      <a href="index.html#contacts-section">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Sidebar overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-title">Buildings</div>
+    <nav class="sidebar-nav" id="sidebar-nav">
+      <!-- Populated by JS -->
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main-content" id="main-content">
+    <div class="find-space-hero">
+      <h1>Find Your Space</h1>
+      <p>Not sure what you need? Tell us a little about your business and we'll show you spaces that fit. Fill in as much or as little as you'd like.</p>
+    </div>
+
+    <section class="find-space-section" id="find-space-section">
+      <form class="find-space-form" id="find-space-form">
+        <div class="find-space-field">
+          <label for="fs-people">How many people?</label>
+          <input type="number" id="fs-people" placeholder="e.g. 10" min="1">
+        </div>
+        <div class="find-space-field">
+          <label for="fs-sqft">Desired square footage</label>
+          <input type="number" id="fs-sqft" placeholder="Leave blank to estimate from people" min="0">
+        </div>
+        <div class="find-space-field">
+          <label for="fs-budget">Max budget ($/SF)</label>
+          <input type="number" id="fs-budget" placeholder="e.g. 15" min="0" step="0.01">
+        </div>
+        <div class="find-space-field">
+          <label for="fs-timeline">When do you need it?</label>
+          <select id="fs-timeline">
+            <option value="">No preference</option>
+            <option value="now">Immediately</option>
+            <option value="1-3">1–3 months</option>
+            <option value="3-6">3–6 months</option>
+            <option value="6+">6+ months</option>
+          </select>
+        </div>
+        <button type="submit" class="find-space-submit">Find Spaces</button>
+      </form>
+
+      <div class="find-space-results" id="find-space-results" style="display:none">
+        <h3 id="find-space-results-heading"></h3>
+        <div class="find-space-results-grid" id="find-space-results-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      &copy; Lakeshore Property Group, LLC &middot; Your next move starts here.
+    </footer>
+  </main>
+
+  <!-- Dark mode toggle -->
+  <button class="dark-mode-toggle" id="dark-mode-toggle" aria-label="Toggle dark mode">
+    <svg class="dm-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    <svg class="dm-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">&uarr;</button>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '');
+  </script>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
