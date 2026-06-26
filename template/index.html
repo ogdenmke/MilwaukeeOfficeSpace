@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Available Office Space — Ogden &amp; Company</title>
-  <meta name="description" content="Commercial office space available for lease in the Milwaukee area. Managed by Ogden &amp; Company — Real Estate without Boundary.">
-  <meta property="og:title" content="Available Office Space — Ogden &amp; Company">
-  <meta property="og:description" content="Commercial office space available for lease in the Milwaukee area. Explore properties, view floor plans, and schedule a tour.">
+  <title>Available Office Space — __COMPANY_NAME__</title>
+  <meta name="description" content="Commercial office space available for lease. Managed by __COMPANY_NAME__ — __COMPANY_TAGLINE__.">
+  <meta property="og:title" content="Available Office Space — __COMPANY_NAME__">
+  <meta property="og:description" content="Commercial office space available for lease. Explore properties, view floor plans, and schedule a tour.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://caseyski.github.io/MKE-Office-Space/">
-  <meta property="og:image" content="https://caseyski.github.io/MKE-Office-Space/images/og-image.jpg">
+  <meta property="og:url" content="__SITE_URL__">
+  <meta property="og:image" content="__SITE_URL__images/og-image.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Available Office Space — Ogden &amp; Company">
-  <meta name="twitter:description" content="Commercial office space available for lease in the Milwaukee area. Explore properties, view floor plans, and schedule a tour.">
-  <meta name="twitter:image" content="https://caseyski.github.io/MKE-Office-Space/images/og-image.jpg">
+  <meta name="twitter:title" content="Available Office Space — __COMPANY_NAME__">
+  <meta name="twitter:description" content="Commercial office space available for lease. Explore properties, view floor plans, and schedule a tour.">
+  <meta name="twitter:image" content="__SITE_URL__images/og-image.jpg">
   <link rel="icon" href="images/logos/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="images/logos/favicon.png" type="image/png">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
@@ -24,7 +24,7 @@
 
   <!-- Loading splash -->
   <div class="loading-splash" id="loading-splash">
-    <img src="images/logos/ogden-logo-white.svg" alt="Ogden &amp; Company">
+    <img src="images/logos/logo-white.svg" alt="__COMPANY_NAME__">
     <div class="loading-splash-spinner"></div>
   </div>
 
@@ -34,7 +34,7 @@
       <span></span><span></span><span></span>
     </button>
     <a class="header-logo" href="index.html">
-      <img src="images/logos/ogden-logo-white.svg" alt="Ogden &amp; Company">
+      <img src="images/logos/logo-white.svg" alt="__COMPANY_NAME__">
     </a>
     <nav class="header-nav" id="header-nav">
       <a href="find-space.html">Find Your Space</a>
@@ -58,7 +58,7 @@
   <main class="main-content" id="main-content">
     <div class="hero">
       <h1>Available Office Space</h1>
-      <p>Ogden &amp; Company has multiple office properties currently available throughout the Milwaukee area &mdash; from historic downtown buildings to suburban office parks. Explore our interactive map to see where each property is located, click on any building to view photos, floor plans, and current availability, or reach out directly to schedule a tour.</p>
+      <p>__COMPANY_NAME__ has multiple office properties currently available. Explore our interactive map to see where each property is located, click on any building to view photos, floor plans, and current availability, or reach out directly to schedule a tour.</p>
     </div>
 
     <div class="map-container">
@@ -128,7 +128,7 @@
     </section>
 
     <footer class="site-footer">
-      &copy; Ogden &amp; Company, Inc. &middot; Real Estate without Boundary&reg;
+      &copy; __COMPANY_NAME_FULL__ &middot; __COMPANY_TAGLINE__
     </footer>
   </main>
 
@@ -141,16 +141,17 @@
   <!-- Back to top -->
   <button class="back-to-top" id="back-to-top" aria-label="Back to top">&uarr;</button>
 
-  <!-- Google Analytics — replace G-7SJYYVJB87 with your Measurement ID -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJYYVJB87"></script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=__GA_ID__"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-7SJYYVJB87');
+    gtag('config', '__GA_ID__');
   </script>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="js/config.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -1,45 +1,25 @@
 #!/usr/bin/env python3
 """
-Rebrand the office-space site for a new client.
+Set up a new client site from the template.
 
-Reads current values from site/js/config.js, prompts for replacements,
-then updates config.js, all HTML files, and the CSS variables.
+Copies template/ to a target directory, prompts for client-specific values,
+then fills in config.js, replaces __PLACEHOLDER__ tokens in HTML files,
+and swaps CSS color variables.
 
 Usage:
-    python3 setup.py
+    python3 setup.py                  # outputs to new-site/
+    python3 setup.py ./my-client      # outputs to ./my-client/
 """
 
 import json
 import os
 import re
+import shutil
 import sys
 import textwrap
 
-SITE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "site")
-CONFIG_PATH = os.path.join(SITE_DIR, "js", "config.js")
-CSS_PATH = os.path.join(SITE_DIR, "css", "style.css")
-
-HTML_FILES = [
-    os.path.join(SITE_DIR, f)
-    for f in ("index.html", "building.html", "find-space.html", "404.html", "map-print.html")
-]
-
-
-def read_current_config():
-    """Parse SITE_CONFIG values from config.js."""
-    with open(CONFIG_PATH, "r") as f:
-        text = f.read()
-    cfg = {}
-    for m in re.finditer(r'(\w+):\s*"([^"]*)"', text):
-        cfg[m.group(1)] = m.group(2)
-    arr_match = re.search(r'INQUIRY_EMAILS:\s*\[([^\]]+)\]', text)
-    if arr_match:
-        cfg["INQUIRY_EMAILS"] = [
-            e.strip().strip('"').strip("'") for e in arr_match.group(1).split(",")
-        ]
-    for m in re.finditer(r'(\w+):\s*(true|false)', text):
-        cfg[m.group(1)] = m.group(2) == "true"
-    return cfg
+ROOT = os.path.dirname(os.path.abspath(__file__))
+TEMPLATE_DIR = os.path.join(ROOT, "template")
 
 
 def prompt(label, default=""):
@@ -49,7 +29,6 @@ def prompt(label, default=""):
 
 
 def darken_hex(hex_color, factor=0.82):
-    """Darken a hex color for hover states."""
     hex_color = hex_color.lstrip("#")
     r, g, b = int(hex_color[0:2], 16), int(hex_color[2:4], 16), int(hex_color[4:6], 16)
     r, g, b = int(r * factor), int(g * factor), int(b * factor)
@@ -68,7 +47,7 @@ def replace_in_file(path, old, new):
     return count
 
 
-def write_config(cfg):
+def write_config(path, cfg):
     emails_js = json.dumps(cfg["INQUIRY_EMAILS"])
     content = textwrap.dedent(f"""\
         /* Site configuration — all client-specific values in one place.
@@ -96,127 +75,114 @@ def write_config(cfg):
           STORAGE_PREFIX: "{cfg['STORAGE_PREFIX']}",
         }};
     """)
-    with open(CONFIG_PATH, "w") as f:
+    with open(path, "w") as f:
         f.write(content)
 
 
 def main():
-    print("\n=== Office Space Site — Setup ===\n")
+    print("\n=== Office Space Site — New Client Setup ===\n")
 
-    if not os.path.exists(CONFIG_PATH):
-        print(f"Error: {CONFIG_PATH} not found.")
+    if not os.path.isdir(TEMPLATE_DIR):
+        print(f"Error: template/ directory not found at {TEMPLATE_DIR}")
         sys.exit(1)
 
-    old = read_current_config()
-    old_name = old.get("COMPANY_NAME", "")
-    old_name_full = old.get("COMPANY_NAME_FULL", "")
-    old_tagline = old.get("COMPANY_TAGLINE", "")
-    old_url = old.get("SITE_URL", "")
-    old_color = old.get("BRAND_COLOR", "#CF152D")
-    old_color_dark = old.get("BRAND_COLOR_DARK", darken_hex(old_color))
+    out_dir = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "new-site")
 
-    print(f"Current branding: {old_name}")
-    print(f"Enter new values (press Enter to keep current):\n")
+    if os.path.exists(out_dir):
+        resp = input(f"  {out_dir} already exists. Overwrite? [y/N]: ").strip().lower()
+        if resp != "y":
+            print("  Aborted.")
+            sys.exit(0)
+        shutil.rmtree(out_dir)
 
-    new_name = prompt("Company name", old_name)
-    new_name_full = prompt("Company name (legal)", old_name_full)
-    new_tagline = prompt("Tagline", old_tagline)
-    new_url = prompt("Site URL", old_url)
-    new_sheet = prompt("Google Sheet ID", old.get("GOOGLE_SHEET_ID", ""))
-    new_color = prompt("Brand color (hex)", old_color)
-    new_color_dark_default = darken_hex(new_color) if new_color != old_color else old_color_dark
-    new_color_dark = prompt("Brand color dark (hex)", new_color_dark_default)
-    new_logo_white = prompt("Logo (white, for header)", old.get("LOGO_WHITE", "images/logos/logo-white.svg"))
-    new_logo_dark = prompt("Logo (dark, for print)", old.get("LOGO_DARK", "images/logos/logo-dark.svg"))
+    print(f"  Output directory: {out_dir}\n")
+    print("Enter client values:\n")
 
-    emails_default = ", ".join(old.get("INQUIRY_EMAILS", []))
-    new_emails_str = prompt("Inquiry emails (comma-separated)", emails_default)
-    new_emails = [e.strip() for e in new_emails_str.split(",") if e.strip()]
+    name = prompt("Company name")
+    name_full = prompt("Company name (legal)", name)
+    tagline = prompt("Tagline", "")
+    site_url = prompt("Site URL")
+    sheet_id = prompt("Google Sheet ID")
+    color = prompt("Brand color (hex)", "#CF152D")
+    color_dark = prompt("Brand color dark (hex)", darken_hex(color))
+    logo_white = prompt("Logo filename (white, for header)", "images/logos/logo-white.svg")
+    logo_dark = prompt("Logo filename (dark, for print)", "images/logos/logo-dark.svg")
 
-    new_ga = prompt("Google Analytics ID", old.get("GA_ID", ""))
-    new_prefix = prompt("Storage prefix", old.get("STORAGE_PREFIX", "office"))
+    emails_str = prompt("Inquiry emails (comma-separated)")
+    emails = [e.strip() for e in emails_str.split(",") if e.strip()]
 
-    new_cfg = {
-        "COMPANY_NAME": new_name,
-        "COMPANY_NAME_FULL": new_name_full,
-        "COMPANY_TAGLINE": new_tagline,
-        "SITE_URL": new_url,
-        "GOOGLE_SHEET_ID": new_sheet,
-        "SHOW_LEASED": old.get("SHOW_LEASED", True),
-        "BRAND_COLOR": new_color,
-        "BRAND_COLOR_DARK": new_color_dark,
-        "LOGO_WHITE": new_logo_white,
-        "LOGO_DARK": new_logo_dark,
-        "INQUIRY_EMAILS": new_emails,
-        "GA_ID": new_ga,
-        "STORAGE_PREFIX": new_prefix,
+    ga_id = prompt("Google Analytics ID", "")
+    prefix = prompt("Storage prefix", name.lower().split()[0] if name else "office")
+
+    cfg = {
+        "COMPANY_NAME": name,
+        "COMPANY_NAME_FULL": name_full,
+        "COMPANY_TAGLINE": tagline,
+        "SITE_URL": site_url.rstrip("/") + "/" if site_url else "",
+        "GOOGLE_SHEET_ID": sheet_id,
+        "SHOW_LEASED": True,
+        "BRAND_COLOR": color,
+        "BRAND_COLOR_DARK": color_dark,
+        "LOGO_WHITE": logo_white,
+        "LOGO_DARK": logo_dark,
+        "INQUIRY_EMAILS": emails,
+        "GA_ID": ga_id,
+        "STORAGE_PREFIX": prefix,
     }
 
-    print("\n--- Applying changes ---\n")
+    # Copy template
+    print("\n--- Setting up site ---\n")
+    shutil.copytree(TEMPLATE_DIR, out_dir)
+    print(f"  Copied template/ -> {out_dir}")
 
-    write_config(new_cfg)
-    print(f"  Updated config.js")
+    # Write config.js
+    config_path = os.path.join(out_dir, "js", "config.js")
+    write_config(config_path, cfg)
+    print(f"  Wrote config.js")
 
-    # Replace company name in HTML files
-    replacements = []
-    if old_name and new_name != old_name:
-        replacements.append((old_name, new_name))
-    if old_name_full and new_name_full != old_name_full:
-        replacements.append((old_name_full, new_name_full))
-    if old_tagline and new_tagline != old_tagline:
-        replacements.append((old_tagline, new_tagline))
-    if old_url and new_url != old_url:
-        replacements.append((old_url, new_url))
+    # Replace placeholders in HTML files
+    placeholders = {
+        "__COMPANY_NAME_FULL__": name_full,
+        "__COMPANY_NAME__": name,
+        "__COMPANY_TAGLINE__": tagline,
+        "__SITE_URL__": cfg["SITE_URL"],
+        "__GA_ID__": ga_id,
+    }
 
-    # Replace logo references in HTML
-    old_logo_white = old.get("LOGO_WHITE", "")
-    old_logo_dark = old.get("LOGO_DARK", "")
-    if old_logo_white and new_logo_white != old_logo_white:
-        replacements.append((old_logo_white, new_logo_white))
-    if old_logo_dark and new_logo_dark != old_logo_dark:
-        replacements.append((old_logo_dark, new_logo_dark))
+    html_files = []
+    for f in os.listdir(out_dir):
+        if f.endswith(".html"):
+            html_files.append(os.path.join(out_dir, f))
 
-    # Replace GA ID in HTML
-    old_ga = old.get("GA_ID", "")
-    if old_ga and new_ga != old_ga:
-        replacements.append((old_ga, new_ga))
-
-    for filepath in HTML_FILES:
-        if not os.path.exists(filepath):
-            continue
+    for filepath in html_files:
         fname = os.path.basename(filepath)
         total = 0
-        for old_val, new_val in replacements:
-            total += replace_in_file(filepath, old_val, new_val)
+        for placeholder, value in placeholders.items():
+            total += replace_in_file(filepath, placeholder, value)
         if total:
-            print(f"  {fname}: {total} replacement(s)")
+            print(f"  {fname}: {total} placeholder(s) filled")
 
-    # Update CSS variables
-    if new_color != old_color or new_color_dark != old_color_dark:
-        count = 0
-        if old_color and new_color != old_color:
-            count += replace_in_file(CSS_PATH, old_color, new_color)
-        if old_color_dark and new_color_dark != old_color_dark:
-            count += replace_in_file(CSS_PATH, old_color_dark, new_color_dark)
+    # Swap CSS brand colors (template ships with #CF152D default)
+    css_path = os.path.join(out_dir, "css", "style.css")
+    if color != "#CF152D":
+        count = replace_in_file(css_path, "#CF152D", color)
         if count:
             print(f"  style.css: {count} color replacement(s)")
-
-    # Also replace hardcoded brand color in map-print.html inline styles
-    map_print = os.path.join(SITE_DIR, "map-print.html")
-    if os.path.exists(map_print) and old_color and new_color != old_color:
-        count = replace_in_file(map_print, old_color, new_color)
+    if color_dark != "#a8112a":
+        count = replace_in_file(css_path, "#a8112a", color_dark)
         if count:
-            print(f"  map-print.html: {count} inline color replacement(s)")
+            print(f"  style.css: {count} dark color replacement(s)")
 
-    print(f"\n  Done! Don't forget to:")
+    print(f"\n  Done! Next steps:")
     print(f"  1. Place your logo files at:")
-    print(f"     - site/{new_logo_white}")
-    print(f"     - site/{new_logo_dark}")
-    print(f"     - site/images/logos/favicon.svg")
-    print(f"     - site/images/logos/favicon.png")
-    print(f"  2. Place your OG image at site/images/og-image.jpg")
-    print(f"  3. Update the hero text in site/index.html if needed")
-    print(f"  4. Push to deploy\n")
+    print(f"     - {out_dir}/{logo_white}")
+    print(f"     - {out_dir}/{logo_dark}")
+    print(f"     - {out_dir}/images/logos/favicon.svg")
+    print(f"     - {out_dir}/images/logos/favicon.png")
+    print(f"  2. Place your OG image at {out_dir}/images/og-image.jpg")
+    print(f"  3. Update the hero text in {out_dir}/index.html if needed")
+    print(f"  4. Add building photos to {out_dir}/images/")
+    print(f"  5. Deploy the {out_dir}/ folder\n")
 
 
 if __name__ == "__main__":

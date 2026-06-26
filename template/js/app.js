@@ -1,16 +1,9 @@
-/* Ogden Office Space — Site JS */
+/* Site JS — reads branding from SITE_CONFIG (config.js) */
 
 /* ── Config ── */
 const CONFIG = {
-  SHOW_LEASED: true,
-
-  // ── Google Sheets live data ──
-  // Paste your Google Sheet ID or the full URL from your browser's address bar.
-  // Example URL: https://docs.google.com/spreadsheets/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ/edit
-  // Example ID:  1aBcDeFgHiJkLmNoPqRsTuVwXyZ
-  // DO NOT use the "Publish to web" link (the one with /e/2PACX-...) — use the
-  // normal URL from your browser bar when you have the sheet open.
-  GOOGLE_SHEET_ID: "1pnKTusIbZuhHyzjUn5lHtUoLHR6kNnybQPc-RrqPqBU",
+  SHOW_LEASED: SITE_CONFIG.SHOW_LEASED,
+  GOOGLE_SHEET_ID: SITE_CONFIG.GOOGLE_SHEET_ID,
 };
 
 /* ── Data loading ── */
@@ -246,7 +239,7 @@ function initMap(buildings, suites) {
     const ly = off.ty;
 
     const animDelay = idx * 0.12;
-    const leaseColor = "#CF152D";
+    const leaseColor = SITE_CONFIG.BRAND_COLOR;
     const saleColor = "#1e40af";
     let dotSvg, tagBg;
     if (pin.pinType === "mixed") {
@@ -443,7 +436,7 @@ function renderBuildingPage(building, suites, contacts) {
   const buildingSuites = suites.filter((s) => s.building_id === building.building_id);
   const availCount = buildingSuites.filter((s) => s.status === "Available").length;
 
-  document.title = `${building.building_name} — ${isSale ? "For Sale" : "Office Space for Lease"} | Ogden & Company`;
+  document.title = `${building.building_name} — ${isSale ? "For Sale" : "Office Space for Lease"} | ${SITE_CONFIG.COMPANY_NAME}`;
 
   const metaDesc = document.querySelector('meta[name="description"]');
   let desc = `${building.address}, ${building.city}. `;
@@ -803,7 +796,7 @@ function addShareButton() {
 /* ── Suite share ── */
 function shareSuite(buildingName, suiteNumber, el) {
   const url = window.location.href;
-  const text = `${suiteNumber} at ${buildingName} — Ogden & Company`;
+  const text = `${suiteNumber} at ${buildingName} — ${SITE_CONFIG.COMPANY_NAME}`;
   if (navigator.share) {
     navigator.share({ title: text, text: text, url: url }).catch(() => {});
   } else {
@@ -818,12 +811,12 @@ function shareSuite(buildingName, suiteNumber, el) {
 
 /* ── Favorites ── */
 function getFavorites() {
-  try { return JSON.parse(localStorage.getItem("ogden_favorites") || "[]"); }
+  try { return JSON.parse(localStorage.getItem(SITE_CONFIG.STORAGE_PREFIX + "_favorites") || "[]"); }
   catch { return []; }
 }
 
 function saveFavorites(favs) {
-  localStorage.setItem("ogden_favorites", JSON.stringify(favs));
+  localStorage.setItem(SITE_CONFIG.STORAGE_PREFIX + "_favorites", JSON.stringify(favs));
 }
 
 function isFavorite(suiteId) {
@@ -921,11 +914,11 @@ function initInquiryForm(buildingName) {
       });
     }
 
-    const subject = encodeURIComponent(`Space Inquiry — ${data.building || "Ogden Office Space"}`);
+    const subject = encodeURIComponent(`Space Inquiry — ${data.building || SITE_CONFIG.COMPANY_NAME}`);
     const body = encodeURIComponent(
       `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nPhone: ${data.phone || "N/A"}\n\nBuilding: ${data.building || "N/A"}\n\nMessage:\n${data.message || "N/A"}`
     );
-    window.location.href = `mailto:rreinders@ogdenre.com,lfehrenbach@ogdenre.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${SITE_CONFIG.INQUIRY_EMAILS.join(",")}?subject=${subject}&body=${body}`;
 
     form.style.display = "none";
     successEl.style.display = "flex";
@@ -945,12 +938,12 @@ function trackSuiteClick(suiteId, buildingName) {
 let compareList = [];
 
 function loadCompareList() {
-  try { compareList = JSON.parse(sessionStorage.getItem("ogden_compare") || "[]"); }
+  try { compareList = JSON.parse(sessionStorage.getItem(SITE_CONFIG.STORAGE_PREFIX + "_compare") || "[]"); }
   catch { compareList = []; }
 }
 
 function saveCompareList() {
-  sessionStorage.setItem("ogden_compare", JSON.stringify(compareList));
+  sessionStorage.setItem(SITE_CONFIG.STORAGE_PREFIX + "_compare", JSON.stringify(compareList));
 }
 
 function syncCompareCheckboxes() {
@@ -1103,10 +1096,10 @@ function shareComparison() {
     const cells = Array.from(tr.querySelectorAll("th, td")).map((c) => c.textContent.trim());
     rows.push(cells.join(" | "));
   });
-  const text = "Suite Comparison — Ogden & Company\n\n" + rows.join("\n") + "\n\nView properties: " + window.location.origin + window.location.pathname;
+  const text = `Suite Comparison — ${SITE_CONFIG.COMPANY_NAME}\n\n` + rows.join("\n") + "\n\nView properties: " + window.location.origin + window.location.pathname;
   const btn = document.querySelector(".compare-share-btn");
   if (navigator.share) {
-    navigator.share({ title: "Suite Comparison — Ogden & Company", text }).catch(() => {});
+    navigator.share({ title: `Suite Comparison — ${SITE_CONFIG.COMPANY_NAME}`, text }).catch(() => {});
   } else {
     navigator.clipboard.writeText(text).then(() => {
       if (btn) {
@@ -1322,7 +1315,7 @@ function initScrollAnimations() {
 
 /* ── Recently viewed ── */
 function getRecentlyViewed() {
-  try { return JSON.parse(localStorage.getItem("ogden_recent") || "[]"); }
+  try { return JSON.parse(localStorage.getItem(SITE_CONFIG.STORAGE_PREFIX + "_recent") || "[]"); }
   catch { return []; }
 }
 
@@ -1338,7 +1331,7 @@ function saveRecentView(building) {
     timestamp: Date.now(),
   });
   if (recent.length > 4) recent = recent.slice(0, 4);
-  localStorage.setItem("ogden_recent", JSON.stringify(recent));
+  localStorage.setItem(SITE_CONFIG.STORAGE_PREFIX + "_recent", JSON.stringify(recent));
 }
 
 function renderRecentlyViewed() {
@@ -1376,7 +1369,7 @@ function initPrefetch() {
 /* ── Scroll position memory ── */
 function initScrollMemory() {
   const page = document.body.dataset.page;
-  const key = "ogden_scroll_" + page;
+  const key = SITE_CONFIG.STORAGE_PREFIX + "_scroll_" + page;
   const saved = sessionStorage.getItem(key);
   if (saved) {
     requestAnimationFrame(() => window.scrollTo(0, parseInt(saved)));

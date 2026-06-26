@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Office Space Map — Ogden &amp; Company</title>
+  <title>Office Space Map — __COMPANY_NAME__</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -56,7 +56,7 @@
       color: #131210;
       margin-bottom: 10px;
       padding-bottom: 6px;
-      border-bottom: 3px solid #CF152D;
+      border-bottom: 3px solid var(--brand-color, #CF152D);
       display: inline-block;
     }
 
@@ -79,7 +79,7 @@
       justify-content: center;
       min-width: 24px;
       height: 24px;
-      background: #CF152D;
+      background: var(--brand-color, #CF152D);
       color: #fff;
       border-radius: 50%;
       font-size: 0.7rem;
@@ -113,7 +113,7 @@
       justify-content: center;
       width: 28px;
       height: 28px;
-      background: #CF152D;
+      background: var(--brand-color, #CF152D);
       color: #fff;
       border-radius: 50%;
       font-size: 11px;
@@ -132,9 +132,9 @@
 <body>
   <div class="page">
     <div class="header">
-      <img src="images/logos/ogden-logo-dark.svg" alt="Ogden &amp; Company">
+      <img src="images/logos/logo-dark.svg" alt="__COMPANY_NAME__">
       <h1>Available Office Space</h1>
-      <p>Milwaukee Area Properties Managed by Ogden &amp; Company</p>
+      <p>Properties Managed by __COMPANY_NAME__</p>
     </div>
 
     <div id="map"></div>
@@ -145,13 +145,15 @@
     </div>
 
     <div class="footer">
-      &copy; Ogden &amp; Company, Inc. &middot; Real Estate without Boundary&reg;
+      &copy; __COMPANY_NAME_FULL__ &middot; __COMPANY_TAGLINE__
     </div>
   </div>
 
+  <script src="js/config.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script>
-    const SHEET_ID = "1pnKTusIbZuhHyzjUn5lHtUoLHR6kNnybQPc-RrqPqBU";
+    const SHEET_ID = SITE_CONFIG.GOOGLE_SHEET_ID;
+    document.documentElement.style.setProperty("--brand-color", SITE_CONFIG.BRAND_COLOR);
 
     function parseCSV(text) {
       const rows = [];

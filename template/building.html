@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Building Details — Ogden &amp; Company</title>
-  <meta name="description" content="Commercial office space available for lease. Managed by Ogden &amp; Company — Real Estate without Boundary.">
-  <meta property="og:title" content="Building Details — Ogden &amp; Company">
-  <meta property="og:description" content="View available suites, floor plans, and schedule a tour. Managed by Ogden &amp; Company.">
+  <title>Building Details — __COMPANY_NAME__</title>
+  <meta name="description" content="Commercial office space available for lease. Managed by __COMPANY_NAME__ — __COMPANY_TAGLINE__.">
+  <meta property="og:title" content="Building Details — __COMPANY_NAME__">
+  <meta property="og:description" content="View available suites, floor plans, and schedule a tour. Managed by __COMPANY_NAME__.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://caseyski.github.io/MKE-Office-Space/images/og-image.jpg">
+  <meta property="og:image" content="__SITE_URL__images/og-image.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Building Details — Ogden &amp; Company">
-  <meta name="twitter:description" content="View available suites, floor plans, and schedule a tour. Managed by Ogden &amp; Company.">
-  <meta name="twitter:image" content="https://caseyski.github.io/MKE-Office-Space/images/og-image.jpg">
+  <meta name="twitter:title" content="Building Details — __COMPANY_NAME__">
+  <meta name="twitter:description" content="View available suites, floor plans, and schedule a tour. Managed by __COMPANY_NAME__.">
+  <meta name="twitter:image" content="__SITE_URL__images/og-image.jpg">
   <link rel="icon" href="images/logos/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="images/logos/favicon.png" type="image/png">
   <link rel="stylesheet" href="css/style.css">
@@ -22,7 +22,7 @@
 
   <!-- Loading splash -->
   <div class="loading-splash" id="loading-splash">
-    <img src="images/logos/ogden-logo-white.svg" alt="Ogden &amp; Company">
+    <img src="images/logos/logo-white.svg" alt="__COMPANY_NAME__">
     <div class="loading-splash-spinner"></div>
   </div>
 
@@ -32,7 +32,7 @@
       <span></span><span></span><span></span>
     </button>
     <a class="header-logo" href="index.html">
-      <img src="images/logos/ogden-logo-white.svg" alt="Ogden &amp; Company">
+      <img src="images/logos/logo-white.svg" alt="__COMPANY_NAME__">
     </a>
     <nav class="header-nav" id="header-nav">
       <a href="find-space.html">Find Your Space</a>
@@ -88,7 +88,7 @@
     </section>
 
     <footer class="site-footer">
-      &copy; Ogden &amp; Company, Inc. &middot; Real Estate without Boundary&reg;
+      &copy; __COMPANY_NAME_FULL__ &middot; __COMPANY_TAGLINE__
     </footer>
   </main>
 
@@ -110,15 +110,16 @@
     </div>
   </div>
 
-  <!-- Google Analytics — replace G-7SJYYVJB87 with your Measurement ID -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7SJYYVJB87"></script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=__GA_ID__"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-7SJYYVJB87');
+    gtag('config', '__GA_ID__');
   </script>
 
+  <script src="js/config.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
