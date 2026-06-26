@@ -555,7 +555,7 @@ function initSuiteSearch(buildings, suites) {
     const cb = document.createElement("input");
     cb.type = "checkbox";
     cb.value = b.building_id;
-    cb.checked = true;
+    cb.checked = false;
     cb.addEventListener("change", () => { updateBtnLabel(); render(); });
     label.appendChild(cb);
     label.appendChild(document.createTextNode(" " + b.building_name));
