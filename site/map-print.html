@@ -149,9 +149,10 @@
     </div>
   </div>
 
+  <script src="js/config.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script>
-    const SHEET_ID = "1pnKTusIbZuhHyzjUn5lHtUoLHR6kNnybQPc-RrqPqBU";
+    const SHEET_ID = SITE_CONFIG.GOOGLE_SHEET_ID;
 
     function parseCSV(text) {
       const rows = [];
