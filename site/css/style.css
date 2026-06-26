@@ -809,6 +809,10 @@ img {
   margin-top: 2px;
 }
 
+.map-legend-avail.for-sale {
+  color: #1e40af;
+}
+
 /* ── Map tag pins ── */
 @keyframes pinDrop {
   0% {
