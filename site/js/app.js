@@ -238,7 +238,7 @@ function initMap(buildings, suites) {
     const allSuites = suites || [];
 
     function legendCard(b, num, showNum) {
-      const isSale = b.listing_type && b.listing_type.toLowerCase() === "sale";
+      const isSale = (b.listing_type && b.listing_type.toLowerCase() === "sale") || b.asking_price || (b.building_name && b.building_name.toLowerCase().includes("for sale"));
       const bSuites = allSuites.filter((s) => s.building_id === b.building_id);
       const availCount = bSuites.filter((s) => s.status === "Available").length;
       const availText = isSale
