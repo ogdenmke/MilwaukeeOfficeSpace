@@ -110,19 +110,12 @@ function buildSidebar(buildings, activeBuildingId) {
   const page = document.body.dataset.page;
   const quickLinks = document.createElement("div");
   quickLinks.className = "sidebar-quick-links";
-  if (page === "home") {
-    quickLinks.innerHTML = `
-      <a href="#find-space-section">Find Your Space</a>
-      <a href="#suite-search-section">Browse All Suites</a>
-      <a href="#contacts-section">Contact</a>
-    `;
-  } else {
-    quickLinks.innerHTML = `
-      <a href="index.html#find-space-section">Find Your Space</a>
-      <a href="index.html#suite-search-section">Browse All Suites</a>
-      <a href="#inquiry-section">Contact</a>
-    `;
-  }
+  const contactLink = page === "home" ? "#contacts-section" : page === "building" ? "#inquiry-section" : "index.html#contacts-section";
+  quickLinks.innerHTML = `
+    <a href="find-space.html">Find Your Space</a>
+    <a href="index.html#suite-search-section">Browse All Suites</a>
+    <a href="${contactLink}">Contact</a>
+  `;
   nav.appendChild(quickLinks);
 
   buildings.forEach((b) => {
@@ -1046,7 +1039,7 @@ function initFindSpace(buildings, suites) {
       listEl.innerHTML = `
         <div class="find-space-no-match">
           <p>No suites match your criteria right now, but our brokers can help you find the right space.</p>
-          <a href="#contacts-section">Talk to a Broker</a>
+          <a href="index.html#contacts-section">Talk to a Broker</a>
         </div>`;
       resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
@@ -1055,18 +1048,17 @@ function initFindSpace(buildings, suites) {
     headingEl.textContent = `${matched.length} suite${matched.length !== 1 ? "s" : ""} match your needs`;
     listEl.innerHTML = matched.map((s) => {
       const b = buildingMap[s.building_id];
-      return `<div class="search-suite-card">
-        <div>
-          <div class="search-suite-building"><a href="building.html?id=${b.building_id}">${escapeHtml(b.building_name)}</a></div>
-          <div class="search-suite-name">${escapeHtml(s.suite_number)}</div>
-          <div class="search-suite-meta">
-            ${s.square_feet ? `<span>${Number(s.square_feet).toLocaleString()} SF</span>` : ""}
-            ${s.lease_rate ? `<span>$${escapeHtml(s.lease_rate)}${escapeHtml(s.rate_unit || "")}</span>` : ""}
-            ${s.lease_type ? `<span>${escapeHtml(s.lease_type)}</span>` : ""}
-          </div>
+      return `<div class="find-space-card">
+        <div class="find-space-card-building"><a href="building.html?id=${b.building_id}">${escapeHtml(b.building_name)}</a></div>
+        <div class="find-space-card-suite">${escapeHtml(s.suite_number)}</div>
+        <div class="find-space-card-meta">
+          ${s.square_feet ? `<span>${Number(s.square_feet).toLocaleString()} SF</span>` : ""}
+          ${s.lease_rate ? `<span>$${escapeHtml(s.lease_rate)}${escapeHtml(s.rate_unit || "")}</span>` : ""}
+          ${s.lease_type ? `<span>${escapeHtml(s.lease_type)}</span>` : ""}
+          ${s.floor ? `<span>Floor ${escapeHtml(s.floor)}</span>` : ""}
         </div>
-        <div class="search-suite-actions">
-          <span class="suite-badge badge-available">${escapeHtml(s.status)}</span>
+        <div class="find-space-card-actions">
+          <a class="view-btn" href="building.html?id=${b.building_id}">View Building</a>
           <label class="compare-label-btn"><input type="checkbox" class="compare-cb" data-suite="${s.suite_id}"> Compare</label>
         </div>
       </div>`;
@@ -1081,6 +1073,12 @@ function initFindSpace(buildings, suites) {
 /* ── Page init ── */
 document.addEventListener("DOMContentLoaded", async () => {
   setupMobileMenu();
+
+  const page = document.body.dataset.page;
+  document.querySelectorAll(".header-nav a, .sidebar-quick-links a").forEach((a) => {
+    if (page === "find-space" && a.href.includes("find-space")) a.classList.add("nav-active");
+    else if (page === "home" && a.href.includes("#suite-search")) a.classList.add("nav-active");
+  });
 
   try {
     const { buildings, suites, contacts } = await loadAllData();
@@ -1098,10 +1096,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (page === "home") {
       initMap(buildings, suites);
       renderFavorites();
-      initFindSpace(buildings, suites);
       initSuiteSearch(buildings, suites);
       initCompare(buildingMap, suites);
       renderContacts(contacts, "contacts-grid");
+    } else if (page === "find-space") {
+      initFindSpace(buildings, suites);
+      initCompare(buildingMap, suites);
     } else if (page === "building") {
       const building = buildings.find((b) => b.building_id === buildingId);
       if (!building) {
