@@ -138,7 +138,7 @@ function setupMobileMenu() {
 }
 
 /* ── Map (home page) ── */
-function initMap(buildings) {
+function initMap(buildings, suites) {
   const mapEl = document.getElementById("map");
   if (!mapEl || typeof L === "undefined") return;
 
@@ -194,9 +194,10 @@ function initMap(buildings) {
     const lx = off.tx;
     const ly = off.ty;
 
+    const animDelay = idx * 0.12;
     const tagIcon = L.divIcon({
       className: "map-tag-icon",
-      html: `<svg class="map-tag-svg" width="${s}" height="${s}" viewBox="${-s/2} ${-s/2} ${s} ${s}" style="overflow:visible">
+      html: `<svg class="map-tag-svg" width="${s}" height="${s}" viewBox="${-s/2} ${-s/2} ${s} ${s}" style="overflow:visible;animation-delay:${animDelay}s">
         <line x1="${cx}" y1="${cy}" x2="${lx}" y2="${ly + 13}" stroke="#131210" stroke-width="1.5"/>
         <circle cx="${cx}" cy="${cy}" r="3.5" fill="#CF152D"/>
         <rect x="${lx - 13}" y="${ly}" width="26" height="26" rx="4" fill="#131210"/>
@@ -234,15 +235,29 @@ function initMap(buildings) {
   const legendEl = document.getElementById("map-legend-grid");
   if (legendEl) {
     let num = 0;
+    const allSuites = suites || [];
+
+    function legendCard(b, num, showNum) {
+      const bSuites = allSuites.filter((s) => s.building_id === b.building_id);
+      const availCount = bSuites.filter((s) => s.status === "Available").length;
+      const availText = availCount > 0
+        ? `${availCount} suite${availCount !== 1 ? "s" : ""} available`
+        : bSuites.length > 0 ? "No suites available" : "";
+      const thumb = b.photo_filename
+        ? `<img class="map-legend-thumb" src="${imgSrc(b.photo_filename)}" alt="" onerror="this.outerHTML='<div class=\\'map-legend-thumb-placeholder\\'>&#128247;</div>'">`
+        : `<div class="map-legend-thumb-placeholder">&#128247;</div>`;
+      return `<a class="map-legend-item" href="building.html?id=${b.building_id}"><span class="map-legend-num" ${showNum ? "" : 'style="visibility:hidden"'}>${num}</span>${thumb}<div class="map-legend-text"><span class="map-legend-name">${escapeHtml(b.building_name)}</span><span class="map-legend-address">${escapeHtml(b.address)}, ${escapeHtml(b.city)}</span>${availText ? `<span class="map-legend-avail">${availText}</span>` : ""}</div></a>`;
+    }
+
     Object.values(groups).forEach((buildings) => {
       const first = buildings[0];
       if (isNaN(parseFloat(first.latitude))) return;
       num++;
       if (buildings.length === 1) {
-        legendEl.innerHTML += `<a class="map-legend-item" href="building.html?id=${first.building_id}"><span class="map-legend-num">${num}</span><div class="map-legend-text"><span class="map-legend-name">${escapeHtml(first.building_name)}</span><span class="map-legend-address">${escapeHtml(first.address)}, ${escapeHtml(first.city)}</span></div></a>`;
+        legendEl.innerHTML += legendCard(first, num, true);
       } else {
         buildings.forEach((b, j) => {
-          legendEl.innerHTML += `<a class="map-legend-item" href="building.html?id=${b.building_id}"><span class="map-legend-num" ${j > 0 ? 'style="visibility:hidden"' : ''}>${num}</span><div class="map-legend-text"><span class="map-legend-name">${escapeHtml(b.building_name)}</span><span class="map-legend-address">${escapeHtml(b.address)}, ${escapeHtml(b.city)}</span></div></a>`;
+          legendEl.innerHTML += legendCard(b, num, j === 0);
         });
       }
     });
@@ -493,7 +508,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     buildSidebar(buildings, buildingId);
 
     if (page === "home") {
-      initMap(buildings);
+      initMap(buildings, suites);
       renderContacts(contacts, "contacts-grid");
     } else if (page === "building") {
       const building = buildings.find((b) => b.building_id === buildingId);
