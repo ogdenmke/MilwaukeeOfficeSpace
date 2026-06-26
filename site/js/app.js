@@ -625,6 +625,7 @@ function initSuiteSearch(buildings, suites) {
             ${s.lease_rate ? `<span>$${escapeHtml(s.lease_rate)}${escapeHtml(s.rate_unit || "")}</span>` : ""}
             ${s.lease_type ? `<span>${escapeHtml(s.lease_type)}</span>` : ""}
           </div>
+          ${s.notes ? `<div class="search-suite-notes">${escapeHtml(s.notes)}</div>` : ""}
         </div>
         <div class="search-suite-actions">
           <span class="suite-badge ${badgeClass}">${escapeHtml(s.status)}</span>
