@@ -214,6 +214,9 @@ img {
   background: rgba(207, 21, 45, 0.1);
   font-weight: 600;
 }
+.sidebar-nav a.for-sale {
+  font-weight: 700;
+}
 
 .sidebar-overlay {
   display: none;

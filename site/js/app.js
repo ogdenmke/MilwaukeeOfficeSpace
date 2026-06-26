@@ -121,6 +121,8 @@ function buildSidebar(buildings, activeBuildingId) {
   buildings.forEach((b) => {
     const a = document.createElement("a");
     a.href = `building.html?id=${b.building_id}`;
+    const isSale = (b.listing_type && b.listing_type.toLowerCase() === "sale") || b.asking_price || (b.building_name && b.building_name.toLowerCase().includes("for sale"));
+    if (isSale) a.classList.add("for-sale");
     a.textContent = b.building_name;
     if (b.building_id === activeBuildingId) a.classList.add("active");
     nav.appendChild(a);
