@@ -1,0 +1,78 @@
+name: Weekly Data Backup
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Every Monday at 6 AM UTC
+  workflow_dispatch:       # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch Google Sheets data and save as JSON
+        run: |
+          SHEET_ID="1pnKTusIbZuhHyzjUn5lHtUoLHR6kNnybQPc-RrqPqBU"
+          BASE_URL="https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet="
+
+          python3 - <<'PYEOF'
+          import csv
+          import json
+          import urllib.request
+          import io
+          import sys
+
+          SHEET_ID = "1pnKTusIbZuhHyzjUn5lHtUoLHR6kNnybQPc-RrqPqBU"
+          BASE_URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet="
+
+          tabs = {
+              "Buildings": "site/data/buildings.json",
+              "Suites": "site/data/suites.json",
+              "Contacts": "site/data/contacts.json",
+          }
+
+          for tab, outpath in tabs.items():
+              url = BASE_URL + tab
+              print(f"Fetching {tab}...")
+              try:
+                  req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                  with urllib.request.urlopen(req, timeout=30) as resp:
+                      raw = resp.read().decode("utf-8-sig")
+              except Exception as e:
+                  print(f"  ERROR fetching {tab}: {e}")
+                  sys.exit(1)
+
+              reader = csv.DictReader(io.StringIO(raw))
+              rows = []
+              for row in reader:
+                  clean = {}
+                  for k, v in row.items():
+                      key = k.strip().lower().replace(" ", "_")
+                      val = v.strip() if v else ""
+                      if val:
+                          clean[key] = val
+                  if clean:
+                      rows.append(clean)
+
+              with open(outpath, "w") as f:
+                  json.dump(rows, f, indent=2)
+              print(f"  Saved {len(rows)} rows to {outpath}")
+
+          print("Done.")
+          PYEOF
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add site/data/*.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: weekly data backup from Google Sheets"
+            git push
+          fi
