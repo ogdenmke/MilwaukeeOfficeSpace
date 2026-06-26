@@ -254,17 +254,22 @@ function initMap(buildings, suites) {
     map.fitBounds(group.getBounds().pad(0.15));
   }
 
-  const legendEl = document.getElementById("map-legend-grid");
-  if (legendEl) {
+  const leaseEl = document.getElementById("map-legend-lease");
+  const saleEl = document.getElementById("map-legend-sale");
+  if (leaseEl && saleEl) {
     let num = 0;
     const allSuites = suites || [];
 
+    function isBuildingSale(b) {
+      return (b.listing_type && b.listing_type.toLowerCase() === "sale") || b.asking_price || (b.building_name && b.building_name.toLowerCase().includes("for sale"));
+    }
+
     function legendCard(b, num, showNum) {
-      const isSale = (b.listing_type && b.listing_type.toLowerCase() === "sale") || b.asking_price || (b.building_name && b.building_name.toLowerCase().includes("for sale"));
+      const isSale = isBuildingSale(b);
       const bSuites = allSuites.filter((s) => s.building_id === b.building_id);
       const availCount = bSuites.filter((s) => s.status === "Available").length;
       const availText = isSale
-        ? "For Sale"
+        ? (b.asking_price ? `Asking: $${Number(b.asking_price).toLocaleString()}` : "For Sale")
         : availCount > 0
           ? `${availCount} suite${availCount !== 1 ? "s" : ""} available`
           : bSuites.length > 0 ? "No suites available" : "";
@@ -279,10 +284,12 @@ function initMap(buildings, suites) {
       if (isNaN(parseFloat(first.latitude))) return;
       num++;
       if (buildings.length === 1) {
-        legendEl.innerHTML += legendCard(first, num, true);
+        const target = isBuildingSale(first) ? saleEl : leaseEl;
+        target.innerHTML += legendCard(first, num, true);
       } else {
         buildings.forEach((b, j) => {
-          legendEl.innerHTML += legendCard(b, num, j === 0);
+          const target = isBuildingSale(b) ? saleEl : leaseEl;
+          target.innerHTML += legendCard(b, num, j === 0);
         });
       }
     });
@@ -1085,14 +1092,19 @@ function initFindSpace(buildings, suites) {
 /* ── Loading helpers ── */
 function showSkeletons(page) {
   if (page === "home") {
-    const legend = document.getElementById("map-legend-grid");
-    if (legend) {
-      legend.innerHTML = `
-        <div class="skeleton-card skeleton-pulse"></div>
+    const legendLease = document.getElementById("map-legend-lease");
+    const legendSale = document.getElementById("map-legend-sale");
+    if (legendLease) {
+      legendLease.innerHTML = `
         <div class="skeleton-card skeleton-pulse"></div>
         <div class="skeleton-card skeleton-pulse"></div>
         <div class="skeleton-card skeleton-pulse"></div>`;
-      legend.dataset.skeleton = "1";
+      legendLease.dataset.skeleton = "1";
+    }
+    if (legendSale) {
+      legendSale.innerHTML = `
+        <div class="skeleton-card skeleton-pulse"></div>`;
+      legendSale.dataset.skeleton = "1";
     }
     const suites = document.getElementById("suite-search-results");
     if (suites) {

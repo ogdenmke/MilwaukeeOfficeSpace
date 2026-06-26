@@ -893,11 +893,29 @@ img {
   max-width: 1100px;
 }
 
+.map-legend-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.map-legend-col-title {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--near-black);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid var(--red);
+  display: inline-block;
+}
+
 .map-legend-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0;
-  max-width: 600px;
 }
 
 .map-legend-item {
@@ -2408,6 +2426,11 @@ img {
 
   .map-legend-section {
     padding: 0 1rem 1.25rem;
+  }
+
+  .map-legend-columns {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   .map-legend-item {
