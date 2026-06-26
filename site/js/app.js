@@ -238,15 +238,18 @@ function initMap(buildings, suites) {
     const allSuites = suites || [];
 
     function legendCard(b, num, showNum) {
+      const isSale = b.listing_type && b.listing_type.toLowerCase() === "sale";
       const bSuites = allSuites.filter((s) => s.building_id === b.building_id);
       const availCount = bSuites.filter((s) => s.status === "Available").length;
-      const availText = availCount > 0
-        ? `${availCount} suite${availCount !== 1 ? "s" : ""} available`
-        : bSuites.length > 0 ? "No suites available" : "";
+      const availText = isSale
+        ? "For Sale"
+        : availCount > 0
+          ? `${availCount} suite${availCount !== 1 ? "s" : ""} available`
+          : bSuites.length > 0 ? "No suites available" : "";
       const thumb = b.photo_filename
         ? `<img class="map-legend-thumb" src="${imgSrc(b.photo_filename)}" alt="" onerror="this.outerHTML='<div class=\\'map-legend-thumb-placeholder\\'>&#128247;</div>'">`
         : `<div class="map-legend-thumb-placeholder">&#128247;</div>`;
-      return `<a class="map-legend-item" href="building.html?id=${b.building_id}"><span class="map-legend-num" ${showNum ? "" : 'style="visibility:hidden"'}>${num}</span>${thumb}<div class="map-legend-text"><span class="map-legend-name">${escapeHtml(b.building_name)}</span><span class="map-legend-address">${escapeHtml(b.address)}, ${escapeHtml(b.city)}</span>${availText ? `<span class="map-legend-avail">${availText}</span>` : ""}</div></a>`;
+      return `<a class="map-legend-item" href="building.html?id=${b.building_id}"><span class="map-legend-num" ${showNum ? "" : 'style="visibility:hidden"'}>${num}</span>${thumb}<div class="map-legend-text"><span class="map-legend-name">${escapeHtml(b.building_name)}</span><span class="map-legend-address">${escapeHtml(b.address)}, ${escapeHtml(b.city)}</span>${availText ? `<span class="map-legend-avail${isSale ? " for-sale" : ""}">${availText}</span>` : ""}</div></a>`;
     }
 
     Object.values(groups).forEach((buildings) => {
