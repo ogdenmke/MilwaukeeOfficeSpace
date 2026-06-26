@@ -220,11 +220,11 @@ function initMap(buildings, suites) {
     if (pin.pinType === "mixed") {
       dotSvg = `<clipPath id="dot-left-${idx}"><rect x="${cx-4}" y="${cy-4}" width="4" height="8"/></clipPath>
         <clipPath id="dot-right-${idx}"><rect x="${cx}" y="${cy-4}" width="4" height="8"/></clipPath>
-        <circle cx="${cx}" cy="${cy}" r="3.5" fill="${leaseColor}" clip-path="url(#dot-left-${idx})"/>
+        <circle cx="${cx}" cy="${cy}" r="3.5" fill="#131210" clip-path="url(#dot-left-${idx})"/>
         <circle cx="${cx}" cy="${cy}" r="3.5" fill="${saleColor}" clip-path="url(#dot-right-${idx})"/>`;
       tagBg = `<clipPath id="tag-left-${idx}"><rect x="${lx-13}" y="${ly}" width="13" height="26"/></clipPath>
         <clipPath id="tag-right-${idx}"><rect x="${lx}" y="${ly}" width="13" height="26"/></clipPath>
-        <rect x="${lx-13}" y="${ly}" width="26" height="26" rx="4" fill="${leaseColor}" clip-path="url(#tag-left-${idx})"/>
+        <rect x="${lx-13}" y="${ly}" width="26" height="26" rx="4" fill="#131210" clip-path="url(#tag-left-${idx})"/>
         <rect x="${lx-13}" y="${ly}" width="26" height="26" rx="4" fill="${saleColor}" clip-path="url(#tag-right-${idx})"/>`;
     } else {
       const color = pin.pinType === "sale" ? saleColor : leaseColor;
