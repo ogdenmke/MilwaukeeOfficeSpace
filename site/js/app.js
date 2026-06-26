@@ -361,7 +361,23 @@ function renderBuildingCTA(contacts, containerId) {
 
 /* ── Building page ── */
 function renderBuildingPage(building, suites, contacts) {
-  document.title = `${building.building_name} — Ogden Office Space`;
+  const isSale = (building.listing_type && building.listing_type.toLowerCase() === "sale") || building.asking_price || (building.building_name && building.building_name.toLowerCase().includes("for sale"));
+  const buildingSuites = suites.filter((s) => s.building_id === building.building_id);
+  const availCount = buildingSuites.filter((s) => s.status === "Available").length;
+
+  document.title = `${building.building_name} — ${isSale ? "For Sale" : "Office Space for Lease"} | Ogden & Company`;
+
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) {
+    let desc = `${building.address}, ${building.city}. `;
+    if (isSale && building.asking_price) {
+      desc += `For sale — asking $${building.asking_price}. `;
+    } else if (availCount > 0) {
+      desc += `${availCount} suite${availCount !== 1 ? "s" : ""} available. `;
+    }
+    if (building.description) desc += building.description;
+    metaDesc.setAttribute("content", desc.substring(0, 160));
+  }
 
   const header = document.getElementById("building-header");
   if (header) {
@@ -389,13 +405,10 @@ function renderBuildingPage(building, suites, contacts) {
   const suitesEl = document.getElementById("suites-list");
   if (!suitesEl) return;
 
-  const isSale = building.listing_type && building.listing_type.toLowerCase() === "sale";
   const suitesHeading = document.getElementById("suites-heading");
   if (suitesHeading) {
     suitesHeading.textContent = isSale ? "Building Details" : "Available Suites";
   }
-
-  const buildingSuites = suites.filter((s) => s.building_id === building.building_id);
 
   let filtered = buildingSuites;
   if (!CONFIG.SHOW_LEASED) {
