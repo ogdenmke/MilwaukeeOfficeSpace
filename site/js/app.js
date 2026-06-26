@@ -622,7 +622,7 @@ function initSuiteSearch(buildings, suites) {
     cb.type = "checkbox";
     cb.value = b.building_id;
     cb.checked = false;
-    cb.addEventListener("change", () => { updateBtnLabel(); render(); });
+    cb.addEventListener("change", () => { updateBtnLabel(); currentPage = 1; render(); });
     label.appendChild(cb);
     label.appendChild(document.createTextNode(" " + b.building_name));
     dropdown.appendChild(label);
@@ -654,6 +654,9 @@ function initSuiteSearch(buildings, suites) {
     return new Set(Array.from(checked).map((cb) => cb.value));
   }
 
+  const PAGE_SIZE = 10;
+  let currentPage = 1;
+
   function render() {
     const selectedBuildings = getSelectedBuildings();
     const status = statusSelect.value;
@@ -673,12 +676,25 @@ function initSuiteSearch(buildings, suites) {
       return true;
     });
 
+    filtered.sort((a, b) => {
+      const ba = buildingMap[a.building_id];
+      const bb = buildingMap[b.building_id];
+      const sa = parseInt(ba.sort_order) || 999;
+      const sb = parseInt(bb.sort_order) || 999;
+      return sa - sb;
+    });
+
     if (filtered.length === 0) {
       resultsEl.innerHTML = '<div class="suite-search-empty">No suites match your filters.</div>';
       return;
     }
 
-    resultsEl.innerHTML = filtered.map((s) => {
+    const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+    if (currentPage > totalPages) currentPage = totalPages;
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const pageItems = filtered.slice(start, start + PAGE_SIZE);
+
+    const cards = pageItems.map((s) => {
       const b = buildingMap[s.building_id];
       const statusClass = (s.status || "Available").toLowerCase();
       const badgeClass = statusClass === "available" ? "badge-available" : statusClass === "leased" ? "badge-leased" : "badge-pending";
@@ -699,12 +715,33 @@ function initSuiteSearch(buildings, suites) {
         </div>
       </div>`;
     }).join("");
+
+    let pagination = "";
+    if (totalPages > 1) {
+      pagination = `<div class="suite-pagination">
+        <button class="suite-page-btn" data-page="prev" ${currentPage === 1 ? "disabled" : ""} aria-label="Previous page">&laquo; Prev</button>
+        <span class="suite-page-info">Page ${currentPage} of ${totalPages} <span class="suite-page-count">(${filtered.length} suites)</span></span>
+        <button class="suite-page-btn" data-page="next" ${currentPage === totalPages ? "disabled" : ""} aria-label="Next page">Next &raquo;</button>
+      </div>`;
+    }
+
+    resultsEl.innerHTML = cards + pagination;
     syncCompareCheckboxes();
+
+    resultsEl.querySelectorAll(".suite-page-btn").forEach((b) => {
+      b.addEventListener("click", () => {
+        if (b.dataset.page === "prev" && currentPage > 1) currentPage--;
+        else if (b.dataset.page === "next" && currentPage < totalPages) currentPage++;
+        render();
+        resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
   }
 
-  statusSelect.addEventListener("change", render);
-  sizeMin.addEventListener("input", render);
-  sizeMax.addEventListener("input", render);
+  function resetPage() { currentPage = 1; render(); }
+  statusSelect.addEventListener("change", resetPage);
+  sizeMin.addEventListener("input", resetPage);
+  sizeMax.addEventListener("input", resetPage);
   render();
 }
 
