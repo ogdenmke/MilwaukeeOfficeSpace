@@ -1,0 +1,16 @@
+[
+  {
+    "suite_id": "SAMPLE-1-100",
+    "building_id": "SAMPLE-1",
+    "suite_number": "Suite 100",
+    "floor": "1",
+    "square_feet": "2000",
+    "lease_rate": "15.00",
+    "rate_unit": "/SF/yr",
+    "status": "Available",
+    "available_date": null,
+    "floor_plan_filename": null,
+    "brochure_filename": null,
+    "notes": "Sample suite — replace with your data or connect a Google Sheet."
+  }
+]

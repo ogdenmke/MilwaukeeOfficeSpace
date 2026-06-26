@@ -180,9 +180,12 @@ def main():
     print(f"     - {out_dir}/images/logos/favicon.svg")
     print(f"     - {out_dir}/images/logos/favicon.png")
     print(f"  2. Place your OG image at {out_dir}/images/og-image.jpg")
-    print(f"  3. Update the hero text in {out_dir}/index.html if needed")
-    print(f"  4. Add building photos to {out_dir}/images/")
-    print(f"  5. Deploy the {out_dir}/ folder\n")
+    print(f"  3. Create a Google Sheet with three tabs: Buildings, Suites, Contacts")
+    print(f"     Sample CSVs with the correct headers are in {out_dir}/data/sample-*.csv")
+    print(f"     See {out_dir}/README.md for column descriptions")
+    print(f"  4. Update the hero text in {out_dir}/index.html if needed")
+    print(f"  5. Add building photos to {out_dir}/images/")
+    print(f"  6. Deploy the {out_dir}/ folder\n")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,2 @@
+suite_id,building_id,suite_number,floor,square_feet,lease_rate,rate_unit,status,available_date,floor_plan_filename,brochure_filename,notes
+SAMPLE-1-100,SAMPLE-1,Suite 100,1,2000,15.00,/SF/yr,Available,,,,Replace with your suite data.

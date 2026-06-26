@@ -1,0 +1,18 @@
+[
+  {
+    "building_id": "SAMPLE-1",
+    "building_name": "Sample Office Building",
+    "address": "123 Main St",
+    "city": "Milwaukee",
+    "state": "WI",
+    "zip": "53202",
+    "latitude": "43.0389",
+    "longitude": "-87.9065",
+    "description": "Sample building — replace with your data or connect a Google Sheet.",
+    "photo_filename": "",
+    "listing_type": "lease",
+    "asking_price": null,
+    "map_group": null,
+    "broker": null
+  }
+]
