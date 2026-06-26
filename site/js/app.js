@@ -1067,6 +1067,7 @@ function initFindSpace(buildings, suites) {
           ${s.lease_type ? `<span>${escapeHtml(s.lease_type)}</span>` : ""}
           ${s.floor ? `<span>Floor ${escapeHtml(s.floor)}</span>` : ""}
         </div>
+        ${s.notes ? `<div class="find-space-card-notes">${escapeHtml(s.notes)}</div>` : ""}
         <div class="find-space-card-actions">
           <a class="view-btn" href="building.html?id=${b.building_id}">View Building</a>
           <label class="compare-label-btn"><input type="checkbox" class="compare-cb" data-suite="${s.suite_id}"> Compare</label>

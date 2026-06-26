@@ -1979,6 +1979,14 @@ img {
   color: var(--gray-600);
 }
 
+.find-space-card-notes {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  line-height: 1.5;
+  font-style: italic;
+}
+
 .find-space-card-actions {
   display: flex;
   align-items: center;
