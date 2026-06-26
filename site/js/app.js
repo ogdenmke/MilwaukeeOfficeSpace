@@ -269,7 +269,7 @@ function initMap(buildings, suites) {
       const bSuites = allSuites.filter((s) => s.building_id === b.building_id);
       const availCount = bSuites.filter((s) => s.status === "Available").length;
       const availText = isSale
-        ? (b.asking_price ? `Asking: $${Number(b.asking_price).toLocaleString()}` : "For Sale")
+        ? (b.asking_price ? `Asking: $${Number(String(b.asking_price).replace(/[^0-9.]/g, "")).toLocaleString()}` : "For Sale")
         : availCount > 0
           ? `${availCount} suite${availCount !== 1 ? "s" : ""} available`
           : bSuites.length > 0 ? "No suites available" : "";
@@ -390,7 +390,7 @@ function renderBuildingPage(building, suites, contacts) {
   if (metaDesc) {
     let desc = `${building.address}, ${building.city}. `;
     if (isSale && building.asking_price) {
-      desc += `For sale — asking $${building.asking_price}. `;
+      desc += `For sale — asking $${Number(String(building.asking_price).replace(/[^0-9.]/g, "")).toLocaleString()}. `;
     } else if (availCount > 0) {
       desc += `${availCount} suite${availCount !== 1 ? "s" : ""} available. `;
     }
@@ -414,7 +414,7 @@ function renderBuildingPage(building, suites, contacts) {
           <h1>${escapeHtml(building.building_name)}</h1>
           ${building.listing_type && building.listing_type.toLowerCase() === "sale" ? '<span class="suite-badge badge-sale">For Sale</span>' : ""}
           <div class="building-address">${escapeHtml(building.address)}, ${escapeHtml(building.city)}, ${escapeHtml(building.state)} ${escapeHtml(building.zip)}</div>
-          ${building.asking_price ? `<div class="building-price">Asking Price: $${escapeHtml(building.asking_price)}</div>` : ""}
+          ${building.asking_price ? `<div class="building-price">Asking Price: $${Number(String(building.asking_price).replace(/[^0-9.]/g, "")).toLocaleString()}</div>` : ""}
           <p class="building-description">${escapeHtml(building.description || "")}</p>
         </div>
       </div>
