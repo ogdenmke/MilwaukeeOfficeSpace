@@ -475,33 +475,78 @@ function getQueryParam(key) {
 /* ── Suite search/filter (home page) ── */
 function initSuiteSearch(buildings, suites) {
   const resultsEl = document.getElementById("suite-search-results");
-  const searchInput = document.getElementById("filter-search");
+  const buildingSelect = document.getElementById("filter-building");
   const statusSelect = document.getElementById("filter-status");
-  const sizeSelect = document.getElementById("filter-size");
-  if (!resultsEl || !searchInput) return;
+  const sizeMin = document.getElementById("filter-size-min");
+  const sizeMax = document.getElementById("filter-size-max");
+  if (!resultsEl || !buildingSelect) return;
 
   const buildingMap = {};
   buildings.forEach((b) => { buildingMap[b.building_id] = b; });
 
+  // Populate building dropdown with checkboxes
+  const wrapper = document.createElement("div");
+  wrapper.className = "multi-select-wrapper";
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "multi-select-btn filter-select";
+  btn.textContent = "All Buildings";
+  const dropdown = document.createElement("div");
+  dropdown.className = "multi-select-dropdown";
+  buildings.forEach((b) => {
+    const label = document.createElement("label");
+    label.className = "multi-select-option";
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.value = b.building_id;
+    cb.checked = true;
+    cb.addEventListener("change", () => { updateBtnLabel(); render(); });
+    label.appendChild(cb);
+    label.appendChild(document.createTextNode(" " + b.building_name));
+    dropdown.appendChild(label);
+  });
+  function updateBtnLabel() {
+    const checked = dropdown.querySelectorAll("input:checked");
+    const total = dropdown.querySelectorAll("input");
+    if (checked.length === 0 || checked.length === total.length) {
+      btn.textContent = "All Buildings";
+    } else if (checked.length === 1) {
+      btn.textContent = buildingMap[checked[0].value].building_name;
+    } else {
+      btn.textContent = checked.length + " Buildings";
+    }
+  }
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    wrapper.classList.toggle("open");
+  });
+  document.addEventListener("click", () => wrapper.classList.remove("open"));
+  dropdown.addEventListener("click", (e) => e.stopPropagation());
+  wrapper.appendChild(btn);
+  wrapper.appendChild(dropdown);
+  buildingSelect.replaceWith(wrapper);
+
+  function getSelectedBuildings() {
+    const checked = dropdown.querySelectorAll("input:checked");
+    if (checked.length === 0) return null;
+    return new Set(Array.from(checked).map((cb) => cb.value));
+  }
+
   function render() {
-    const query = searchInput.value.toLowerCase();
+    const selectedBuildings = getSelectedBuildings();
     const status = statusSelect.value;
-    const sizeRange = sizeSelect.value;
+    const minSF = parseInt(sizeMin.value) || 0;
+    const maxSF = parseInt(sizeMax.value) || 0;
 
     let filtered = suites.filter((s) => {
       const b = buildingMap[s.building_id];
       if (!b) return false;
+      if (selectedBuildings && !selectedBuildings.has(s.building_id)) return false;
       if (status && s.status !== status) return false;
-      if (query) {
-        const hay = `${b.building_name} ${s.suite_number} ${b.address}`.toLowerCase();
-        if (!hay.includes(query)) return false;
-      }
-      if (sizeRange) {
+      if (minSF || maxSF) {
         const sf = parseInt(s.square_feet) || 0;
-        if (sizeRange === "0-1000" && sf >= 1000) return false;
-        if (sizeRange === "1000-3000" && (sf < 1000 || sf >= 3000)) return false;
-        if (sizeRange === "3000-5000" && (sf < 3000 || sf >= 5000)) return false;
-        if (sizeRange === "5000+" && sf < 5000) return false;
+        if (minSF && sf < minSF) return false;
+        if (maxSF && sf > maxSF) return false;
       }
       return true;
     });
@@ -530,9 +575,9 @@ function initSuiteSearch(buildings, suites) {
     }).join("");
   }
 
-  searchInput.addEventListener("input", render);
   statusSelect.addEventListener("change", render);
-  sizeSelect.addEventListener("change", render);
+  sizeMin.addEventListener("input", render);
+  sizeMax.addEventListener("input", render);
   render();
 }
 

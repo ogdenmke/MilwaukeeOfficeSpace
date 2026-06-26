@@ -52,20 +52,21 @@
     <section class="suite-search-section" id="suite-search-section">
       <h2>Browse All Suites</h2>
       <div class="suite-search-filters" id="suite-search-filters">
-        <input type="text" class="filter-input" id="filter-search" placeholder="Search by building or suite...">
+        <select class="filter-select" id="filter-building">
+          <option value="">All Buildings</option>
+          <!-- Populated by JS -->
+        </select>
         <select class="filter-select" id="filter-status">
           <option value="">All Statuses</option>
           <option value="Available" selected>Available</option>
           <option value="Pending">Pending</option>
           <option value="Leased">Leased</option>
         </select>
-        <select class="filter-select" id="filter-size">
-          <option value="">Any Size</option>
-          <option value="0-1000">Under 1,000 SF</option>
-          <option value="1000-3000">1,000 – 3,000 SF</option>
-          <option value="3000-5000">3,000 – 5,000 SF</option>
-          <option value="5000+">5,000+ SF</option>
-        </select>
+        <div class="size-range-wrapper">
+          <input type="number" class="filter-input size-input" id="filter-size-min" placeholder="Min SF" min="0">
+          <span class="size-range-sep">&ndash;</span>
+          <input type="number" class="filter-input size-input" id="filter-size-max" placeholder="Max SF" min="0">
+        </div>
       </div>
       <div class="suite-search-results" id="suite-search-results">
         <!-- Populated by JS -->
