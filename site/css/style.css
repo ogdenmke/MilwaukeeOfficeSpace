@@ -1290,6 +1290,15 @@ img {
   color: var(--gray-500);
 }
 
+.search-suite-notes {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  line-height: 1.5;
+  font-style: italic;
+  margin-top: 0.25rem;
+}
+
 .search-suite-actions {
   display: flex;
   flex-direction: column;
