@@ -305,6 +305,33 @@ function renderContacts(contacts, containerId) {
     .join("");
 }
 
+function renderFooterContacts(contacts) {
+  const footer = document.querySelector(".site-footer");
+  if (!footer || !contacts.length) return;
+
+  const html = `
+    <div class="footer-brokers">
+      ${contacts.map((c) => `
+        <div class="footer-broker">
+          ${c.photo_filename
+            ? `<img class="footer-broker-photo" src="${imgSrc(c.photo_filename)}" alt="${escapeHtml(c.name)}" onerror="this.outerHTML='<span class=\\'footer-broker-initial\\'>${escapeHtml(c.name[0])}</span>'">`
+            : `<span class="footer-broker-initial">${escapeHtml(c.name[0])}</span>`
+          }
+          <div class="footer-broker-info">
+            <strong>${escapeHtml(c.name)}</strong>
+            <span>${escapeHtml(c.title)}</span>
+            <div class="footer-broker-links">
+              <a href="tel:${c.phone.replace(/[^+\d]/g, "")}">${escapeHtml(c.phone)}</a>
+              <a href="mailto:${escapeHtml(c.email)}">${escapeHtml(c.email)}</a>
+            </div>
+          </div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+  footer.insertAdjacentHTML("afterbegin", html);
+}
+
 function renderBuildingCTA(contacts, containerId) {
   const el = document.getElementById(containerId);
   if (!el) return;
@@ -574,9 +601,13 @@ function initSuiteSearch(buildings, suites) {
             ${s.lease_type ? `<span>${escapeHtml(s.lease_type)}</span>` : ""}
           </div>
         </div>
-        <span class="suite-badge ${badgeClass}">${escapeHtml(s.status)}</span>
+        <div class="search-suite-actions">
+          <span class="suite-badge ${badgeClass}">${escapeHtml(s.status)}</span>
+          <label class="compare-label-btn"><input type="checkbox" class="compare-cb" data-suite="${s.suite_id}"> Compare</label>
+        </div>
       </div>`;
     }).join("");
+    syncCompareCheckboxes();
   }
 
   statusSelect.addEventListener("change", render);
@@ -754,25 +785,44 @@ function trackSuiteClick(suiteId, buildingName) {
 /* ── Compare suites ── */
 let compareList = [];
 
-function initCompare(building, suites) {
-  const buildingSuites = suites.filter((s) => s.building_id === building.building_id);
+function loadCompareList() {
+  try { compareList = JSON.parse(sessionStorage.getItem("ogden_compare") || "[]"); }
+  catch { compareList = []; }
+}
 
+function saveCompareList() {
+  sessionStorage.setItem("ogden_compare", JSON.stringify(compareList));
+}
+
+function syncCompareCheckboxes() {
   document.querySelectorAll(".compare-cb").forEach((cb) => {
-    cb.addEventListener("change", () => {
-      const sid = cb.dataset.suite;
-      const s = buildingSuites.find((x) => x.suite_id === sid);
-      if (!s) return;
-      if (cb.checked) {
-        if (compareList.length >= 3) {
-          cb.checked = false;
-          return;
-        }
-        compareList.push({ ...s, building_name: building.building_name });
-      } else {
-        compareList = compareList.filter((c) => c.suite_id !== sid);
+    cb.checked = compareList.some((c) => c.suite_id === cb.dataset.suite);
+  });
+}
+
+function initCompare(buildingMap, allSuites) {
+  loadCompareList();
+  syncCompareCheckboxes();
+  if (compareList.length > 0) updateCompareBar();
+
+  document.addEventListener("change", (e) => {
+    if (!e.target.classList.contains("compare-cb")) return;
+    const cb = e.target;
+    const sid = cb.dataset.suite;
+    const s = allSuites.find((x) => x.suite_id === sid);
+    if (!s) return;
+    const b = buildingMap[s.building_id];
+    if (cb.checked) {
+      if (compareList.length >= 3) {
+        cb.checked = false;
+        return;
       }
-      updateCompareBar();
-    });
+      compareList.push({ ...s, building_name: b ? b.building_name : "" });
+    } else {
+      compareList = compareList.filter((c) => c.suite_id !== sid);
+    }
+    saveCompareList();
+    updateCompareBar();
   });
 }
 
@@ -796,7 +846,7 @@ function updateCompareBar() {
       <div class="compare-bar-items">
         ${compareList.map((s) => `
           <span class="compare-bar-chip">
-            ${escapeHtml(s.suite_number)}
+            ${escapeHtml(s.suite_number)}${s.building_name ? ` <span class="compare-chip-bldg">— ${escapeHtml(s.building_name)}</span>` : ""}
             <button onclick="removeCompare('${s.suite_id}')" class="compare-chip-x">&times;</button>
           </span>
         `).join("")}
@@ -809,6 +859,7 @@ function updateCompareBar() {
 
 function removeCompare(suiteId) {
   compareList = compareList.filter((c) => c.suite_id !== suiteId);
+  saveCompareList();
   const cb = document.querySelector(`.compare-cb[data-suite="${suiteId}"]`);
   if (cb) cb.checked = false;
   updateCompareBar();
@@ -818,6 +869,7 @@ function showCompareModal() {
   if (compareList.length < 2) return;
 
   const fields = [
+    { label: "Building", key: "building_name", format: (v) => v || "—" },
     { label: "Status", key: "status", format: (v) => v || "—" },
     { label: "Floor", key: "floor", format: (v) => v ? `Floor ${v}` : "—" },
     { label: "Size", key: "square_feet", format: (v) => v ? `${Number(v).toLocaleString()} SF` : "—" },
@@ -935,11 +987,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     buildSidebar(buildings, buildingId);
 
     initBackToTop();
+    renderFooterContacts(contacts);
+
+    const buildingMap = {};
+    buildings.forEach((b) => { buildingMap[b.building_id] = b; });
 
     if (page === "home") {
       initMap(buildings, suites);
       renderFavorites();
       initSuiteSearch(buildings, suites);
+      initCompare(buildingMap, suites);
       renderContacts(contacts, "contacts-grid");
     } else if (page === "building") {
       const building = buildings.find((b) => b.building_id === buildingId);
@@ -953,7 +1010,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       addShareButton();
       initInquiryForm(building.building_name);
 
-      initCompare(building, suites);
+      initCompare(buildingMap, suites);
 
       const buildingSuites = suites.filter((s) => s.building_id === building.building_id);
       document.querySelectorAll(".fav-btn").forEach((btn) => {

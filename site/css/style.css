@@ -762,6 +762,74 @@ img {
   margin-top: auto;
 }
 
+.footer-brokers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-broker {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.footer-broker-photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.footer-broker-initial {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.footer-broker-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.footer-broker-info strong {
+  color: var(--white);
+  font-size: 0.82rem;
+}
+
+.footer-broker-info span {
+  color: var(--gray-400);
+  font-size: 0.72rem;
+}
+
+.footer-broker-links {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+}
+
+.footer-broker-links a {
+  color: var(--gray-400);
+  text-decoration: none;
+}
+
+.footer-broker-links a:hover {
+  color: var(--white);
+}
+
 /* ── Map legend ── */
 .map-legend-section {
   padding: 0 2.5rem 1.5rem;
@@ -1165,6 +1233,13 @@ img {
   color: var(--gray-500);
 }
 
+.search-suite-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
 .suite-search-empty {
   padding: 2rem;
   text-align: center;
@@ -1562,6 +1637,11 @@ img {
   font-weight: 500;
 }
 
+.compare-chip-bldg {
+  color: var(--gray-400);
+  font-size: 0.72rem;
+}
+
 .compare-chip-x {
   background: none;
   border: none;
@@ -1767,6 +1847,12 @@ img {
     padding: 1.25rem 1rem;
     font-size: 0.75rem;
     text-align: center;
+  }
+
+  .footer-brokers {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: left;
   }
 
   .building-hero {
