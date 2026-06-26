@@ -187,13 +187,18 @@ function initMap(buildings, suites) {
     groups[key].push(b);
   });
 
+  function isBuildingSaleCheck(b) {
+    return (b.listing_type && b.listing_type.toLowerCase() === "sale") || b.asking_price || (b.building_name && b.building_name.toLowerCase().includes("for sale"));
+  }
+
   const pinData = [];
   Object.values(groups).forEach((buildings) => {
     const first = buildings[0];
     const lat = parseFloat(first.latitude);
     const lng = parseFloat(first.longitude);
     if (isNaN(lat) || isNaN(lng)) return;
-    pinData.push({ lat, lng, buildings });
+    const isSale = buildings.some(isBuildingSaleCheck);
+    pinData.push({ lat, lng, buildings, isSale });
   });
 
   const markers = [];
@@ -207,12 +212,14 @@ function initMap(buildings, suites) {
     const ly = off.ty;
 
     const animDelay = idx * 0.12;
+    const pinColor = pin.isSale ? "#1e40af" : "#CF152D";
+    const tagColor = pin.isSale ? "#1e40af" : "#131210";
     const tagIcon = L.divIcon({
       className: "map-tag-icon",
       html: `<svg class="map-tag-svg" width="${s}" height="${s}" viewBox="${-s/2} ${-s/2} ${s} ${s}" style="overflow:visible;animation-delay:${animDelay}s">
-        <line x1="${cx}" y1="${cy}" x2="${lx}" y2="${ly + 13}" stroke="#131210" stroke-width="1.5"/>
-        <circle cx="${cx}" cy="${cy}" r="3.5" fill="#CF152D"/>
-        <rect x="${lx - 13}" y="${ly}" width="26" height="26" rx="4" fill="#131210"/>
+        <line x1="${cx}" y1="${cy}" x2="${lx}" y2="${ly + 13}" stroke="${tagColor}" stroke-width="1.5"/>
+        <circle cx="${cx}" cy="${cy}" r="3.5" fill="${pinColor}"/>
+        <rect x="${lx - 13}" y="${ly}" width="26" height="26" rx="4" fill="${tagColor}"/>
         <text x="${lx}" y="${ly + 18}" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,sans-serif">${pinNumber}</text>
       </svg>`,
       iconSize: [s, s],
@@ -289,7 +296,7 @@ function initMap(buildings, suites) {
       } else {
         buildings.forEach((b, j) => {
           const target = isBuildingSale(b) ? saleEl : leaseEl;
-          target.innerHTML += legendCard(b, num, j === 0);
+          target.innerHTML += legendCard(b, num, true);
         });
       }
     });
