@@ -446,15 +446,31 @@ function renderBuildingPage(building, suites, contacts) {
   document.title = `${building.building_name} — ${isSale ? "For Sale" : "Office Space for Lease"} | Ogden & Company`;
 
   const metaDesc = document.querySelector('meta[name="description"]');
-  if (metaDesc) {
-    let desc = `${building.address}, ${building.city}. `;
-    if (isSale && building.asking_price) {
-      desc += `For sale — asking $${Number(String(building.asking_price).replace(/[^0-9.]/g, "")).toLocaleString()}. `;
-    } else if (availCount > 0) {
-      desc += `${availCount} suite${availCount !== 1 ? "s" : ""} available. `;
-    }
-    if (building.description) desc += building.description;
-    metaDesc.setAttribute("content", desc.substring(0, 160));
+  let desc = `${building.address}, ${building.city}. `;
+  if (isSale && building.asking_price) {
+    desc += `For sale — asking $${Number(String(building.asking_price).replace(/[^0-9.]/g, "")).toLocaleString()}. `;
+  } else if (availCount > 0) {
+    desc += `${availCount} suite${availCount !== 1 ? "s" : ""} available. `;
+  }
+  if (building.description) desc += building.description;
+  const descText = desc.substring(0, 160);
+  if (metaDesc) metaDesc.setAttribute("content", descText);
+
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  const ogDesc = document.querySelector('meta[property="og:description"]');
+  const twTitle = document.querySelector('meta[name="twitter:title"]');
+  const twDesc = document.querySelector('meta[name="twitter:description"]');
+  const pageTitle = document.title;
+  if (ogTitle) ogTitle.setAttribute("content", pageTitle);
+  if (ogDesc) ogDesc.setAttribute("content", descText);
+  if (twTitle) twTitle.setAttribute("content", pageTitle);
+  if (twDesc) twDesc.setAttribute("content", descText);
+  if (building.photo_filename) {
+    const photoUrl = imgSrc(building.photo_filename);
+    const ogImg = document.querySelector('meta[property="og:image"]');
+    const twImg = document.querySelector('meta[name="twitter:image"]');
+    if (ogImg) ogImg.setAttribute("content", photoUrl);
+    if (twImg) twImg.setAttribute("content", photoUrl);
   }
 
   const header = document.getElementById("building-header");
@@ -685,7 +701,13 @@ function initSuiteSearch(buildings, suites) {
     });
 
     if (filtered.length === 0) {
-      resultsEl.innerHTML = '<div class="suite-search-empty">No suites match your filters.</div>';
+      resultsEl.innerHTML = `<div class="suite-search-empty">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:0.75rem;opacity:0.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <p>No suites match your current filters.</p>
+        <button class="clear-filters-btn" onclick="document.querySelectorAll('.multi-select-dropdown input').forEach(c=>c.checked=false);document.getElementById('filter-status').value='Available';document.getElementById('filter-size-min').value='';document.getElementById('filter-size-max').value='';this.closest('.suite-search-results').dispatchEvent(new Event('reset-filters'))">Clear Filters</button>
+        <a class="empty-broker-link" href="#contacts-section">Or talk to a broker</a>
+      </div>`;
+      resultsEl.addEventListener("reset-filters", () => { currentPage = 1; updateBtnLabel(); render(); }, { once: true });
       return;
     }
 
@@ -743,6 +765,14 @@ function initSuiteSearch(buildings, suites) {
   sizeMin.addEventListener("input", resetPage);
   sizeMax.addEventListener("input", resetPage);
   render();
+
+  const filtersEl = document.getElementById("suite-search-filters");
+  if (filtersEl) {
+    const stickyObserver = new IntersectionObserver(([e]) => {
+      filtersEl.classList.toggle("stuck", e.intersectionRatio < 1);
+    }, { threshold: [1], rootMargin: `-${parseInt(getComputedStyle(document.documentElement).getPropertyValue("--header-height")) + 1}px 0px 0px 0px` });
+    stickyObserver.observe(filtersEl);
+  }
 }
 
 /* ── Share button ── */
@@ -1343,6 +1373,26 @@ function initPrefetch() {
   });
 }
 
+/* ── Page transition progress bar ── */
+function initPageTransitions() {
+  const bar = document.createElement("div");
+  bar.className = "page-progress-bar";
+  document.body.appendChild(bar);
+
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a[href]");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") || link.target === "_blank") return;
+    if (href.startsWith("http") && !href.includes(window.location.host)) return;
+    bar.classList.add("active");
+  });
+
+  window.addEventListener("pageshow", () => {
+    bar.classList.remove("active");
+  });
+}
+
 /* ── Dark mode ── */
 function initDarkMode() {
   const saved = localStorage.getItem("darkMode");
@@ -1361,6 +1411,7 @@ function initDarkMode() {
 document.addEventListener("DOMContentLoaded", async () => {
   setupMobileMenu();
   initDarkMode();
+  initPageTransitions();
 
   const page = document.body.dataset.page;
   document.querySelectorAll(".header-nav a, .sidebar-quick-links a").forEach((a) => {
