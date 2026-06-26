@@ -1270,7 +1270,7 @@ function saveRecentView(building) {
     photo_filename: building.photo_filename || "",
     timestamp: Date.now(),
   });
-  if (recent.length > 6) recent = recent.slice(0, 6);
+  if (recent.length > 4) recent = recent.slice(0, 4);
   localStorage.setItem("ogden_recent", JSON.stringify(recent));
 }
 
