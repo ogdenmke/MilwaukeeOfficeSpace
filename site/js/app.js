@@ -1123,6 +1123,7 @@ function showSkeletons(page) {
 
 function hideSkeletons() {
   document.querySelectorAll("[data-skeleton]").forEach((el) => {
+    el.innerHTML = "";
     el.removeAttribute("data-skeleton");
   });
 }
