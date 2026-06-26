@@ -444,7 +444,16 @@ function getQueryParam(key) {
 }
 
 /* ── Document modal ── */
+function isMobile() {
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+}
+
 function openDocModal(src) {
+  if (isMobile() && src.includes("drive.google.com")) {
+    const viewUrl = src.replace("/preview", "/view");
+    window.open(viewUrl, "_blank");
+    return;
+  }
   const overlay = document.getElementById("doc-modal-overlay");
   const iframe = document.getElementById("doc-modal-iframe");
   if (!overlay || !iframe) return;
