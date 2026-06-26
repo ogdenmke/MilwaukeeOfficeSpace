@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found — Ogden &amp; Company</title>
+  <link rel="icon" href="images/logos/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .error-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      text-align: center;
+      padding: 2rem;
+    }
+    .error-page h1 {
+      font-size: 4rem;
+      color: #b91c1c;
+      margin: 0 0 0.5rem;
+    }
+    .error-page p {
+      font-size: 1.125rem;
+      color: #555;
+      margin: 0.5rem 0;
+      max-width: 420px;
+    }
+    .error-page a {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.75rem 2rem;
+      background: #b91c1c;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .error-page a:hover { background: #991b1b; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="header-logo" href="index.html">
+      <img src="images/logos/ogden-logo-white.svg" alt="Ogden &amp; Company">
+    </a>
+  </header>
+
+  <div class="error-page">
+    <h1>404</h1>
+    <p>The page you're looking for doesn't exist or may have moved.</p>
+    <p>If you scanned a QR code, try scanning it again — this sometimes happens briefly after a site update.</p>
+    <a href="index.html">Back to Available Listings</a>
+  </div>
+</body>
+</html>

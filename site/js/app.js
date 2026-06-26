@@ -951,20 +951,16 @@ function initBackToTop() {
 
 /* ── Document modal ── */
 function openDocModal(src) {
+  if (src.includes("drive.google.com")) {
+    window.open(src.replace("/preview", "/view"), "_blank");
+    return;
+  }
   const overlay = document.getElementById("doc-modal-overlay");
   const iframe = document.getElementById("doc-modal-iframe");
   const fallback = document.getElementById("doc-modal-fallback");
   if (!overlay || !iframe) return;
   iframe.src = src;
-  if (fallback) {
-    if (src.includes("drive.google.com")) {
-      const viewUrl = src.replace("/preview", "/view");
-      fallback.href = viewUrl;
-      fallback.style.display = "inline-flex";
-    } else {
-      fallback.style.display = "none";
-    }
-  }
+  if (fallback) fallback.style.display = "none";
   overlay.classList.add("open");
 }
 
