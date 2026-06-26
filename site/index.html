@@ -19,6 +19,11 @@
     <a class="header-logo" href="index.html">
       <img src="images/logos/ogden-logo-white.svg" alt="Ogden &amp; Company">
     </a>
+    <nav class="header-nav" id="header-nav">
+      <a href="#find-space-section">Find Your Space</a>
+      <a href="#suite-search-section">Browse All Suites</a>
+      <a href="#contacts-section">Contact</a>
+    </nav>
   </header>
 
   <!-- Sidebar overlay (mobile) -->
@@ -49,10 +54,44 @@
       </div>
     </section>
 
-    <section class="contacts-section">
+    <section class="contacts-section" id="contacts-section">
       <h2>Contact Our Brokers</h2>
       <div class="contacts-grid" id="contacts-grid">
         <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <section class="find-space-section" id="find-space-section">
+      <h2>Find Your Space</h2>
+      <p class="find-space-subtitle">Not sure what you need? Tell us a little about your business and we'll show you spaces that fit.</p>
+      <form class="find-space-form" id="find-space-form">
+        <div class="find-space-field">
+          <label for="fs-people">How many people?</label>
+          <input type="number" id="fs-people" placeholder="e.g. 10" min="1">
+        </div>
+        <div class="find-space-field">
+          <label for="fs-sqft">Desired square footage</label>
+          <input type="number" id="fs-sqft" placeholder="Leave blank to estimate from people" min="0">
+        </div>
+        <div class="find-space-field">
+          <label for="fs-budget">Max budget ($/SF)</label>
+          <input type="number" id="fs-budget" placeholder="e.g. 15" min="0" step="0.01">
+        </div>
+        <div class="find-space-field">
+          <label for="fs-timeline">When do you need it?</label>
+          <select id="fs-timeline">
+            <option value="">No preference</option>
+            <option value="now">Immediately</option>
+            <option value="1-3">1–3 months</option>
+            <option value="3-6">3–6 months</option>
+            <option value="6+">6+ months</option>
+          </select>
+        </div>
+        <button type="submit" class="find-space-submit">Find Spaces</button>
+      </form>
+      <div class="find-space-results" id="find-space-results" style="display:none">
+        <h3 id="find-space-results-heading"></h3>
+        <div id="find-space-results-list"></div>
       </div>
     </section>
 
