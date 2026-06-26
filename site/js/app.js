@@ -430,6 +430,7 @@ function renderBuildingPage(building, suites, contacts) {
             ${s.brochure_filename ? `<a href="#" data-doc-src="${fileSrc(s.brochure_filename)}" onclick="openDocModal(this.dataset.docSrc);return false;">View Brochure</a>` : ""}
             ${s.photos ? `<a href="#" data-doc-src="${fileSrc(s.photos)}" onclick="openDocModal(this.dataset.docSrc);return false;">View Photos</a>` : ""}
             <a href="#" class="suite-share-link" onclick="shareSuite('${escapeHtml(building.building_name)}','${escapeHtml(s.suite_number)}',this);return false;">Share</a>
+            <label class="compare-label-btn"><input type="checkbox" class="compare-cb" data-suite="${s.suite_id}"> Compare</label>
           </div>
         </div>
         <span class="suite-badge ${badgeClass}">${escapeHtml(s.status)}</span>
@@ -750,6 +751,127 @@ function trackSuiteClick(suiteId, buildingName) {
   if (typeof gtag === "function") gtag("event", "view_suite", { suite_id: suiteId, building: buildingName });
 }
 
+/* ── Compare suites ── */
+let compareList = [];
+
+function initCompare(building, suites) {
+  const buildingSuites = suites.filter((s) => s.building_id === building.building_id);
+
+  document.querySelectorAll(".compare-cb").forEach((cb) => {
+    cb.addEventListener("change", () => {
+      const sid = cb.dataset.suite;
+      const s = buildingSuites.find((x) => x.suite_id === sid);
+      if (!s) return;
+      if (cb.checked) {
+        if (compareList.length >= 3) {
+          cb.checked = false;
+          return;
+        }
+        compareList.push({ ...s, building_name: building.building_name });
+      } else {
+        compareList = compareList.filter((c) => c.suite_id !== sid);
+      }
+      updateCompareBar();
+    });
+  });
+}
+
+function updateCompareBar() {
+  let bar = document.getElementById("compare-bar");
+  if (!bar) {
+    bar = document.createElement("div");
+    bar.id = "compare-bar";
+    bar.className = "compare-bar";
+    document.body.appendChild(bar);
+  }
+
+  if (compareList.length === 0) {
+    bar.classList.remove("visible");
+    return;
+  }
+
+  bar.classList.add("visible");
+  bar.innerHTML = `
+    <div class="compare-bar-inner">
+      <div class="compare-bar-items">
+        ${compareList.map((s) => `
+          <span class="compare-bar-chip">
+            ${escapeHtml(s.suite_number)}
+            <button onclick="removeCompare('${s.suite_id}')" class="compare-chip-x">&times;</button>
+          </span>
+        `).join("")}
+        ${compareList.length < 3 ? `<span class="compare-bar-hint">${3 - compareList.length} more</span>` : ""}
+      </div>
+      <button class="compare-bar-btn" onclick="showCompareModal()" ${compareList.length < 2 ? "disabled" : ""}>Compare ${compareList.length} Suite${compareList.length !== 1 ? "s" : ""}</button>
+    </div>
+  `;
+}
+
+function removeCompare(suiteId) {
+  compareList = compareList.filter((c) => c.suite_id !== suiteId);
+  const cb = document.querySelector(`.compare-cb[data-suite="${suiteId}"]`);
+  if (cb) cb.checked = false;
+  updateCompareBar();
+}
+
+function showCompareModal() {
+  if (compareList.length < 2) return;
+
+  const fields = [
+    { label: "Status", key: "status", format: (v) => v || "—" },
+    { label: "Floor", key: "floor", format: (v) => v ? `Floor ${v}` : "—" },
+    { label: "Size", key: "square_feet", format: (v) => v ? `${Number(v).toLocaleString()} SF` : "—" },
+    { label: "Rate", key: "lease_rate", format: (v, s) => v ? `$${v}${s.rate_unit || ""}` : "—" },
+    { label: "Lease Type", key: "lease_type", format: (v) => v || "—" },
+    { label: "Available", key: "available_date", format: (v) => v || "—" },
+    { label: "Notes", key: "notes", format: (v) => v || "—" },
+  ];
+
+  let overlay = document.getElementById("compare-modal-overlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.id = "compare-modal-overlay";
+    overlay.className = "compare-modal-overlay";
+    document.body.appendChild(overlay);
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) closeCompareModal();
+    });
+  }
+
+  overlay.innerHTML = `
+    <div class="compare-modal">
+      <button class="doc-modal-close" onclick="closeCompareModal()">&times;</button>
+      <h3 class="compare-modal-title">Suite Comparison</h3>
+      <div class="compare-table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th></th>
+              ${compareList.map((s) => `<th>${escapeHtml(s.suite_number)}</th>`).join("")}
+            </tr>
+          </thead>
+          <tbody>
+            ${fields.map((f) => `
+              <tr>
+                <td class="compare-label">${f.label}</td>
+                ${compareList.map((s) => `<td>${escapeHtml(f.format(s[f.key], s))}</td>`).join("")}
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+  overlay.classList.add("open");
+
+  if (typeof gtag === "function") gtag("event", "compare_suites", { count: compareList.length });
+}
+
+function closeCompareModal() {
+  const overlay = document.getElementById("compare-modal-overlay");
+  if (overlay) overlay.classList.remove("open");
+}
+
 /* ── Back to top ── */
 function initBackToTop() {
   const btn = document.getElementById("back-to-top");
@@ -797,7 +919,7 @@ function closeDocModal() {
     if (e.target === overlay) closeDocModal();
   });
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") closeDocModal();
+    if (e.key === "Escape") { closeDocModal(); closeCompareModal(); }
   });
 })();
 
@@ -830,6 +952,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       trackBuildingView(building.building_name);
       addShareButton();
       initInquiryForm(building.building_name);
+
+      initCompare(building, suites);
 
       const buildingSuites = suites.filter((s) => s.building_id === building.building_id);
       document.querySelectorAll(".fav-btn").forEach((btn) => {
