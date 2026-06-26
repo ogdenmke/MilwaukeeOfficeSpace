@@ -52,10 +52,37 @@ a:hover {
   text-decoration: underline;
 }
 
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
 img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+/* ── Skip link ── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--red);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 6px 6px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 10000;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+  color: var(--white);
+  text-decoration: none;
 }
 
 /* ── Header ── */
@@ -216,6 +243,50 @@ img {
 }
 .sidebar-nav a.for-sale {
   font-weight: 700;
+}
+
+.sidebar-search {
+  padding: 0.5rem 1rem 0.75rem;
+}
+
+.sidebar-search-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.82rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.sidebar-search-input::placeholder {
+  color: var(--gray-400);
+}
+
+.sidebar-search-input:focus {
+  border-color: var(--red);
+}
+
+.sidebar-badge {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+  background: rgba(207, 21, 45, 0.2);
+  color: var(--red);
+  margin-left: 0.4rem;
+  vertical-align: middle;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.sidebar-badge.sale {
+  background: rgba(30, 64, 175, 0.25);
+  color: #60a5fa;
 }
 
 .sidebar-overlay {
@@ -1379,6 +1450,41 @@ img {
 }
 
 /* ── Back to top ── */
+/* ── Dark mode toggle ── */
+.dark-mode-toggle {
+  position: fixed;
+  bottom: 80px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  background: var(--near-black);
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: background 0.2s;
+}
+
+.dark-mode-toggle:hover {
+  background: var(--red);
+}
+
+.dark-mode-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.dm-icon-moon { display: none; }
+.dm-icon-sun { display: block; }
+
+html.dark .dm-icon-moon { display: block; }
+html.dark .dm-icon-sun { display: none; }
+
 .back-to-top {
   position: fixed;
   bottom: 24px;
@@ -2181,6 +2287,175 @@ img {
   justify-content: space-between;
   padding: 0 1.25rem;
   gap: 0.75rem;
+}
+
+/* ── Dark mode ── */
+html.dark {
+  --black: #e5e7eb;
+  --near-black: #131210;
+  --charcoal: #1a1a1a;
+  --white: #1b1b1b;
+  --off-white: #232323;
+  --gray-50: #262626;
+  --gray-100: #2d2d2d;
+  --gray-200: #3a3a3a;
+  --gray-300: #4a4a4a;
+  --gray-400: #888;
+  --gray-500: #aaa;
+  --gray-600: #ccc;
+  --gray-700: #e0e0e0;
+  color-scheme: dark;
+}
+
+html.dark body {
+  background: #1b1b1b;
+  color: #e5e7eb;
+}
+
+html.dark a {
+  color: #e85a6e;
+}
+
+html.dark a:hover {
+  color: #f08090;
+}
+
+html.dark .site-header {
+  background: #0d0d0c;
+}
+
+html.dark .hero,
+html.dark .find-space-hero {
+  background: #232323;
+}
+
+html.dark .hero p,
+html.dark .find-space-hero p {
+  color: #bbb;
+}
+
+html.dark .map-container {
+  border-color: #3a3a3a;
+}
+
+html.dark .map-legend-item {
+  background: #232323;
+  border-color: #3a3a3a;
+}
+
+html.dark .map-legend-item:hover {
+  background: #2a2a2a;
+  border-color: #4a4a4a;
+}
+
+html.dark .map-legend-col-title {
+  color: #e5e7eb;
+}
+
+html.dark .suite-card {
+  background: #232323;
+  border-color: #3a3a3a;
+}
+
+html.dark .suite-card:hover {
+  border-color: #4a4a4a;
+}
+
+html.dark .contact-card {
+  background: #232323;
+  border-color: #3a3a3a;
+}
+
+html.dark .filter-select,
+html.dark .filter-input,
+html.dark .multi-select-wrapper {
+  background: #232323;
+  border-color: #3a3a3a;
+  color: #e5e7eb;
+}
+
+html.dark .cta-box {
+  background: #232323;
+  border-color: #3a3a3a;
+}
+
+html.dark .search-suite-card {
+  background: #232323;
+  border-color: #3a3a3a;
+}
+
+html.dark .search-suite-card:hover {
+  border-color: #4a4a4a;
+}
+
+html.dark .fav-card {
+  background: #232323;
+  border-color: #3a3a3a;
+}
+
+html.dark .find-space-card {
+  background: #232323;
+  border-color: #3a3a3a;
+}
+
+html.dark .find-space-form input,
+html.dark .find-space-form select {
+  background: #232323;
+  border-color: #3a3a3a;
+  color: #e5e7eb;
+}
+
+html.dark .compare-modal {
+  background: #1b1b1b;
+  border-color: #3a3a3a;
+}
+
+html.dark .compare-table th {
+  background: #232323;
+}
+
+html.dark .compare-table td {
+  border-color: #3a3a3a;
+}
+
+html.dark .doc-modal {
+  background: #1b1b1b;
+}
+
+html.dark .site-footer {
+  background: #0d0d0c;
+  color: #888;
+}
+
+html.dark .dark-mode-toggle {
+  background: #2d2d2d;
+  border-color: #4a4a4a;
+}
+
+html.dark .back-to-top {
+  background: #2d2d2d;
+}
+
+html.dark .inquiry-form input,
+html.dark .inquiry-form textarea,
+html.dark .inquiry-form select {
+  background: #232323;
+  border-color: #3a3a3a;
+  color: #e5e7eb;
+}
+
+html.dark .multi-select-dropdown {
+  background: #232323;
+  border-color: #3a3a3a;
+}
+
+html.dark .multi-select-dropdown label:hover {
+  background: #2d2d2d;
+}
+
+html.dark .skeleton-pulse {
+  background: linear-gradient(90deg, #2d2d2d 25%, #3a3a3a 50%, #2d2d2d 75%);
+  background-size: 200% 100%;
 }
 
 /* ── Print styles ── */

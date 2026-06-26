@@ -102,7 +102,7 @@ async function loadAllData() {
 }
 
 /* ── Sidebar ── */
-function buildSidebar(buildings, activeBuildingId) {
+function buildSidebar(buildings, activeBuildingId, suites) {
   const nav = document.getElementById("sidebar-nav");
   if (!nav) return;
   nav.innerHTML = "";
@@ -118,14 +118,37 @@ function buildSidebar(buildings, activeBuildingId) {
   `;
   nav.appendChild(quickLinks);
 
+  const searchWrap = document.createElement("div");
+  searchWrap.className = "sidebar-search";
+  searchWrap.innerHTML = '<input type="text" class="sidebar-search-input" placeholder="Search buildings…" aria-label="Search buildings">';
+  nav.appendChild(searchWrap);
+
+  const allSuites = suites || [];
+  const buildingLinks = [];
+
   buildings.forEach((b) => {
     const a = document.createElement("a");
     a.href = `building.html?id=${b.building_id}`;
     const isSale = (b.listing_type && b.listing_type.toLowerCase() === "sale") || b.asking_price || (b.building_name && b.building_name.toLowerCase().includes("for sale"));
-    if (isSale) a.classList.add("for-sale");
-    a.textContent = b.building_name;
+    if (isSale) {
+      a.classList.add("for-sale");
+      a.innerHTML = `${escapeHtml(b.building_name)} <span class="sidebar-badge sale">For Sale</span>`;
+    } else {
+      const availCount = allSuites.filter((s) => s.building_id === b.building_id && s.status === "Available").length;
+      const badge = availCount > 0 ? `<span class="sidebar-badge">${availCount} available</span>` : "";
+      a.innerHTML = `${escapeHtml(b.building_name)} ${badge}`;
+    }
     if (b.building_id === activeBuildingId) a.classList.add("active");
     nav.appendChild(a);
+    buildingLinks.push({ el: a, name: b.building_name.toLowerCase() });
+  });
+
+  const searchInput = searchWrap.querySelector("input");
+  searchInput.addEventListener("input", () => {
+    const q = searchInput.value.toLowerCase().trim();
+    buildingLinks.forEach(({ el, name }) => {
+      el.style.display = name.includes(q) ? "" : "none";
+    });
   });
 }
 
@@ -135,16 +158,23 @@ function setupMobileMenu() {
   const overlay = document.getElementById("sidebar-overlay");
   if (!hamburger) return;
 
+  hamburger.setAttribute("aria-expanded", "false");
+  hamburger.setAttribute("aria-controls", "sidebar");
+  sidebar.setAttribute("role", "navigation");
+  sidebar.setAttribute("aria-label", "Building navigation");
+
   function toggle() {
     hamburger.classList.toggle("active");
     sidebar.classList.toggle("open");
     overlay.classList.toggle("open");
+    hamburger.setAttribute("aria-expanded", sidebar.classList.contains("open"));
   }
 
   function close() {
     hamburger.classList.remove("active");
     sidebar.classList.remove("open");
     overlay.classList.remove("open");
+    hamburger.setAttribute("aria-expanded", "false");
   }
 
   hamburger.addEventListener("click", toggle);
@@ -248,7 +278,8 @@ function initMap(buildings, suites) {
       popupAnchor: [off.tx, off.ty - 5],
     });
 
-    const marker = L.marker([pin.lat, pin.lng], { icon: tagIcon, zIndexOffset: (pinData.length - idx) * 1000 }).addTo(map);
+    const pinLabel = pin.buildings.map((b) => b.building_name).join(", ");
+    const marker = L.marker([pin.lat, pin.lng], { icon: tagIcon, zIndexOffset: (pinData.length - idx) * 1000, alt: pinLabel, title: pinLabel }).addTo(map);
     const buildings = pin.buildings;
     const first = buildings[0];
     if (buildings.length === 1) {
@@ -945,6 +976,9 @@ function showCompareModal() {
     overlay = document.createElement("div");
     overlay.id = "compare-modal-overlay";
     overlay.className = "compare-modal-overlay";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", "Suite comparison");
     document.body.appendChild(overlay);
     overlay.addEventListener("click", (e) => {
       if (e.target === overlay) closeCompareModal();
@@ -953,7 +987,7 @@ function showCompareModal() {
 
   overlay.innerHTML = `
     <div class="compare-modal">
-      <button class="doc-modal-close" onclick="closeCompareModal()">&times;</button>
+      <button class="doc-modal-close" onclick="closeCompareModal()" aria-label="Close comparison">&times;</button>
       <h3 class="compare-modal-title">Suite Comparison</h3>
       <div class="compare-modal-header">
         <button class="compare-print-btn" onclick="printComparison()">
@@ -1174,9 +1208,24 @@ function hideSplash() {
   if (splash) splash.classList.add("hidden");
 }
 
+/* ── Dark mode ── */
+function initDarkMode() {
+  const saved = localStorage.getItem("darkMode");
+  if (saved === "true" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    document.documentElement.classList.add("dark");
+  }
+  const btn = document.getElementById("dark-mode-toggle");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    document.documentElement.classList.toggle("dark");
+    localStorage.setItem("darkMode", document.documentElement.classList.contains("dark"));
+  });
+}
+
 /* ── Page init ── */
 document.addEventListener("DOMContentLoaded", async () => {
   setupMobileMenu();
+  initDarkMode();
 
   const page = document.body.dataset.page;
   document.querySelectorAll(".header-nav a, .sidebar-quick-links a").forEach((a) => {
@@ -1193,7 +1242,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const page = document.body.dataset.page;
     const buildingId = getQueryParam("id");
 
-    buildSidebar(buildings, buildingId);
+    buildSidebar(buildings, buildingId, suites);
 
     initBackToTop();
     renderFooterContacts(contacts);
