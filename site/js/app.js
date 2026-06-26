@@ -197,8 +197,10 @@ function initMap(buildings, suites) {
     const lat = parseFloat(first.latitude);
     const lng = parseFloat(first.longitude);
     if (isNaN(lat) || isNaN(lng)) return;
-    const isSale = buildings.some(isBuildingSaleCheck);
-    pinData.push({ lat, lng, buildings, isSale });
+    const hasSale = buildings.some(isBuildingSaleCheck);
+    const hasLease = buildings.some((b) => !isBuildingSaleCheck(b));
+    const pinType = hasSale && hasLease ? "mixed" : hasSale ? "sale" : "lease";
+    pinData.push({ lat, lng, buildings, pinType });
   });
 
   const markers = [];
@@ -212,14 +214,31 @@ function initMap(buildings, suites) {
     const ly = off.ty;
 
     const animDelay = idx * 0.12;
-    const pinColor = pin.isSale ? "#1e40af" : "#CF152D";
-    const tagColor = pin.isSale ? "#1e40af" : "#131210";
+    const leaseColor = "#CF152D";
+    const saleColor = "#1e40af";
+    let dotSvg, tagBg;
+    if (pin.pinType === "mixed") {
+      dotSvg = `<clipPath id="dot-left-${idx}"><rect x="${cx-4}" y="${cy-4}" width="4" height="8"/></clipPath>
+        <clipPath id="dot-right-${idx}"><rect x="${cx}" y="${cy-4}" width="4" height="8"/></clipPath>
+        <circle cx="${cx}" cy="${cy}" r="3.5" fill="${leaseColor}" clip-path="url(#dot-left-${idx})"/>
+        <circle cx="${cx}" cy="${cy}" r="3.5" fill="${saleColor}" clip-path="url(#dot-right-${idx})"/>`;
+      tagBg = `<clipPath id="tag-left-${idx}"><rect x="${lx-13}" y="${ly}" width="13" height="26"/></clipPath>
+        <clipPath id="tag-right-${idx}"><rect x="${lx}" y="${ly}" width="13" height="26"/></clipPath>
+        <rect x="${lx-13}" y="${ly}" width="26" height="26" rx="4" fill="${leaseColor}" clip-path="url(#tag-left-${idx})"/>
+        <rect x="${lx-13}" y="${ly}" width="26" height="26" rx="4" fill="${saleColor}" clip-path="url(#tag-right-${idx})"/>`;
+    } else {
+      const color = pin.pinType === "sale" ? saleColor : leaseColor;
+      const bgColor = pin.pinType === "sale" ? saleColor : "#131210";
+      dotSvg = `<circle cx="${cx}" cy="${cy}" r="3.5" fill="${color}"/>`;
+      tagBg = `<rect x="${lx-13}" y="${ly}" width="26" height="26" rx="4" fill="${bgColor}"/>`;
+    }
     const tagIcon = L.divIcon({
       className: "map-tag-icon",
       html: `<svg class="map-tag-svg" width="${s}" height="${s}" viewBox="${-s/2} ${-s/2} ${s} ${s}" style="overflow:visible;animation-delay:${animDelay}s">
-        <line x1="${cx}" y1="${cy}" x2="${lx}" y2="${ly + 13}" stroke="${tagColor}" stroke-width="1.5"/>
-        <circle cx="${cx}" cy="${cy}" r="3.5" fill="${pinColor}"/>
-        <rect x="${lx - 13}" y="${ly}" width="26" height="26" rx="4" fill="${tagColor}"/>
+        <defs></defs>
+        <line x1="${cx}" y1="${cy}" x2="${lx}" y2="${ly + 13}" stroke="#131210" stroke-width="1.5"/>
+        ${dotSvg}
+        ${tagBg}
         <text x="${lx}" y="${ly + 18}" text-anchor="middle" fill="white" font-size="12" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,sans-serif">${pinNumber}</text>
       </svg>`,
       iconSize: [s, s],
