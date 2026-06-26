@@ -57,6 +57,15 @@ a:hover {
   outline-offset: 2px;
 }
 
+.img-fade {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.img-fade.loaded {
+  opacity: 1;
+}
+
 img {
   max-width: 100%;
   height: auto;
@@ -564,11 +573,13 @@ img {
   border-radius: 4px;
   background: var(--gray-100);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   color: var(--gray-400);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
 }
 
 .building-details h1 {
@@ -1379,6 +1390,8 @@ img {
 
 .search-suite-card:hover {
   background: var(--gray-50);
+  border-left: 3px solid var(--red);
+  padding-left: calc(1.25rem - 3px);
 }
 
 .search-suite-building {

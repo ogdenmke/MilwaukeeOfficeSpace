@@ -333,8 +333,8 @@ function initMap(buildings, suites) {
           ? `${availCount} suite${availCount !== 1 ? "s" : ""} available`
           : bSuites.length > 0 ? "No suites available" : "";
       const thumb = b.photo_filename
-        ? `<img class="map-legend-thumb" src="${imgSrc(b.photo_filename)}" alt="" onerror="this.outerHTML='<div class=\\'map-legend-thumb-placeholder\\'>&#128247;</div>'">`
-        : `<div class="map-legend-thumb-placeholder">&#128247;</div>`;
+        ? `<img class="map-legend-thumb img-fade" src="${imgSrc(b.photo_filename)}" alt="" onload="this.classList.add('loaded')" onerror="this.outerHTML='<div class=\\'map-legend-thumb-placeholder\\'><svg width=\\'16\\' height=\\'16\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><path d=\\'M21 15l-5-5L5 21\\'/></svg></div>'">`
+        : `<div class="map-legend-thumb-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`;
       return `<a class="map-legend-item" id="legend-${b.building_id}" href="building.html?id=${b.building_id}"><span class="map-legend-num${isSale ? " sale" : ""}" ${showNum ? "" : 'style="visibility:hidden"'}>${num}</span>${thumb}<div class="map-legend-text"><span class="map-legend-name">${escapeHtml(b.building_name)}</span><span class="map-legend-address">${escapeHtml(b.address)}, ${escapeHtml(b.city)}</span>${availText ? `<span class="map-legend-avail${isSale ? " for-sale" : ""}">${availText}</span>` : ""}</div></a>`;
     }
 
@@ -366,7 +366,7 @@ function renderContacts(contacts, containerId) {
     <div class="contact-card">
       ${
         c.photo_filename
-          ? `<img class="contact-photo" src="${imgSrc(c.photo_filename)}" alt="${escapeHtml(c.name)}" onerror="this.outerHTML='<div class=\\'contact-photo-placeholder\\'>${escapeHtml(c.name[0])}</div>'">`
+          ? `<img class="contact-photo img-fade" src="${imgSrc(c.photo_filename)}" alt="${escapeHtml(c.name)}" onload="this.classList.add('loaded')" onerror="this.outerHTML='<div class=\\'contact-photo-placeholder\\'>${escapeHtml(c.name[0])}</div>'">`
           : `<div class="contact-photo-placeholder">${escapeHtml(c.name[0])}</div>`
       }
       <div class="contact-info">
@@ -392,7 +392,7 @@ function renderFooterContacts(contacts) {
       ${contacts.map((c) => `
         <div class="footer-broker">
           ${c.photo_filename
-            ? `<img class="footer-broker-photo" src="${imgSrc(c.photo_filename)}" alt="${escapeHtml(c.name)}" onerror="this.outerHTML='<span class=\\'footer-broker-initial\\'>${escapeHtml(c.name[0])}</span>'">`
+            ? `<img class="footer-broker-photo img-fade" src="${imgSrc(c.photo_filename)}" alt="${escapeHtml(c.name)}" onload="this.classList.add('loaded')" onerror="this.outerHTML='<span class=\\'footer-broker-initial\\'>${escapeHtml(c.name[0])}</span>'">`
             : `<span class="footer-broker-initial">${escapeHtml(c.name[0])}</span>`
           }
           <div class="footer-broker-info">
@@ -481,8 +481,8 @@ function renderBuildingPage(building, suites, contacts) {
         <div>
           ${
             building.photo_filename
-              ? `<img class="building-photo" src="${imgSrc(building.photo_filename)}" alt="${escapeHtml(building.building_name)}" onerror="this.outerHTML='<div class=\\'building-photo-placeholder\\'>Photo coming soon</div>'">`
-              : `<div class="building-photo-placeholder">Photo coming soon</div>`
+              ? `<img class="building-photo img-fade" src="${imgSrc(building.photo_filename)}" alt="${escapeHtml(building.building_name)}" onload="this.classList.add('loaded')" onerror="this.outerHTML='<div class=\\'building-photo-placeholder\\'><svg width=\\'32\\' height=\\'32\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><path d=\\'M21 15l-5-5L5 21\\'/></svg><span>Photo coming soon</span></div>'">`
+              : `<div class="building-photo-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Photo coming soon</span></div>`
           }
         </div>
         <div class="building-details">
@@ -1351,8 +1351,8 @@ function renderRecentlyViewed() {
   if (!grid) return;
   grid.innerHTML = recent.map((b) => {
     const thumb = b.photo_filename
-      ? `<img class="recent-thumb" src="${imgSrc(b.photo_filename)}" alt="" onerror="this.outerHTML='<div class=\\'recent-thumb-placeholder\\'>&#128247;</div>'">`
-      : `<div class="recent-thumb-placeholder">&#128247;</div>`;
+      ? `<img class="recent-thumb img-fade" src="${imgSrc(b.photo_filename)}" alt="" onload="this.classList.add('loaded')" onerror="this.outerHTML='<div class=\\'recent-thumb-placeholder\\'><svg width=\\'14\\' height=\\'14\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><path d=\\'M21 15l-5-5L5 21\\'/></svg></div>'">`
+      : `<div class="recent-thumb-placeholder"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`;
     return `<a class="recent-card" href="building.html?id=${b.building_id}">${thumb}<div class="recent-info"><span class="recent-name">${escapeHtml(b.building_name)}</span><span class="recent-address">${escapeHtml(b.address)}, ${escapeHtml(b.city)}</span></div></a>`;
   }).join("");
 }
@@ -1370,6 +1370,25 @@ function initPrefetch() {
     prefetchLink.rel = "prefetch";
     prefetchLink.href = href;
     document.head.appendChild(prefetchLink);
+  });
+}
+
+/* ── Scroll position memory ── */
+function initScrollMemory() {
+  const page = document.body.dataset.page;
+  const key = "ogden_scroll_" + page;
+  const saved = sessionStorage.getItem(key);
+  if (saved) {
+    requestAnimationFrame(() => window.scrollTo(0, parseInt(saved)));
+    sessionStorage.removeItem(key);
+  }
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a[href]");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (href && !href.startsWith("#") && !href.startsWith("mailto:") && !href.startsWith("tel:")) {
+      sessionStorage.setItem(key, window.scrollY);
+    }
   });
 }
 
@@ -1412,11 +1431,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupMobileMenu();
   initDarkMode();
   initPageTransitions();
+  initScrollMemory();
 
   const page = document.body.dataset.page;
   document.querySelectorAll(".header-nav a, .sidebar-quick-links a").forEach((a) => {
     if (page === "find-space" && a.href.includes("find-space")) a.classList.add("nav-active");
     else if (page === "home" && a.href.includes("#suite-search")) a.classList.add("nav-active");
+    else if (page === "building" && a.href.includes("#suite-search")) a.classList.add("nav-active");
   });
 
   showSkeletons(page);
