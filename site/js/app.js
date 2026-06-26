@@ -1083,49 +1083,48 @@ function initFindSpace(buildings, suites) {
 
 /* ── Loading helpers ── */
 function showSkeletons(page) {
-  const main = document.querySelector(".main-content");
-  if (!main) return;
-  const container = document.createElement("div");
-  container.id = "loading-skeletons";
-
   if (page === "home") {
-    container.innerHTML = `
-      <div class="skeleton-map skeleton-pulse"></div>
-      <div class="skeleton-grid">
+    const legend = document.getElementById("map-legend-grid");
+    if (legend) {
+      legend.innerHTML = `
         <div class="skeleton-card skeleton-pulse"></div>
         <div class="skeleton-card skeleton-pulse"></div>
         <div class="skeleton-card skeleton-pulse"></div>
+        <div class="skeleton-card skeleton-pulse"></div>`;
+      legend.dataset.skeleton = "1";
+    }
+    const suites = document.getElementById("suite-search-results");
+    if (suites) {
+      suites.innerHTML = `
         <div class="skeleton-card skeleton-pulse"></div>
-      </div>`;
+        <div class="skeleton-card skeleton-pulse"></div>`;
+      suites.dataset.skeleton = "1";
+    }
   } else if (page === "building") {
-    container.innerHTML = `
-      <div style="padding:0 2.5rem">
-        <div class="skeleton-hero skeleton-pulse" style="margin-bottom:1.5rem"></div>
+    const header = document.getElementById("building-header");
+    if (header) {
+      header.innerHTML = `
+        <div class="skeleton-hero skeleton-pulse" style="margin-bottom:1rem"></div>
         <div class="skeleton-line wide skeleton-pulse"></div>
         <div class="skeleton-line skeleton-pulse"></div>
-        <div class="skeleton-line short skeleton-pulse"></div>
-        <div style="margin-top:1.5rem">
-          <div class="skeleton-card skeleton-pulse"></div>
-          <div class="skeleton-card skeleton-pulse"></div>
-          <div class="skeleton-card skeleton-pulse"></div>
-        </div>
-      </div>`;
-  } else if (page === "find-space") {
-    container.innerHTML = `
-      <div style="padding:0 2.5rem;margin-top:1rem">
-        <div class="skeleton-line wide skeleton-pulse"></div>
-        <div class="skeleton-line skeleton-pulse"></div>
-      </div>`;
+        <div class="skeleton-line short skeleton-pulse"></div>`;
+      header.dataset.skeleton = "1";
+    }
+    const suitesList = document.getElementById("suites-list");
+    if (suitesList) {
+      suitesList.innerHTML = `
+        <div class="skeleton-card skeleton-pulse"></div>
+        <div class="skeleton-card skeleton-pulse"></div>
+        <div class="skeleton-card skeleton-pulse"></div>`;
+      suitesList.dataset.skeleton = "1";
+    }
   }
-
-  const hero = main.querySelector(".hero, .building-header, .find-space-section");
-  if (hero) hero.before(container);
-  else main.prepend(container);
 }
 
 function hideSkeletons() {
-  const el = document.getElementById("loading-skeletons");
-  if (el) el.remove();
+  document.querySelectorAll("[data-skeleton]").forEach((el) => {
+    el.removeAttribute("data-skeleton");
+  });
 }
 
 function hideSplash() {
