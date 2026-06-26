@@ -994,6 +994,10 @@ function showCompareModal() {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
           Print / Save
         </button>
+        <button class="compare-share-btn" onclick="shareComparison()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Share
+        </button>
       </div>
       <div class="compare-table-wrap">
         <table class="compare-table">
@@ -1022,6 +1026,30 @@ function showCompareModal() {
 
 function printComparison() {
   window.print();
+}
+
+function shareComparison() {
+  const rows = [];
+  const table = document.querySelector(".compare-table");
+  if (!table) return;
+  table.querySelectorAll("tr").forEach((tr) => {
+    const cells = Array.from(tr.querySelectorAll("th, td")).map((c) => c.textContent.trim());
+    rows.push(cells.join(" | "));
+  });
+  const text = "Suite Comparison — Ogden & Company\n\n" + rows.join("\n") + "\n\nView properties: " + window.location.origin + window.location.pathname;
+  const btn = document.querySelector(".compare-share-btn");
+  if (navigator.share) {
+    navigator.share({ title: "Suite Comparison — Ogden & Company", text }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(text).then(() => {
+      if (btn) {
+        btn.innerHTML = "Copied!";
+        setTimeout(() => {
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> Share';
+        }, 2000);
+      }
+    });
+  }
 }
 
 function closeCompareModal() {
@@ -1208,6 +1236,76 @@ function hideSplash() {
   if (splash) splash.classList.add("hidden");
 }
 
+/* ── Scroll animations ── */
+function initScrollAnimations() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll(".map-legend-item, .contact-card, .suite-card, .search-suite-card, .find-space-card, .fav-card, .cta-box, .map-legend-section, .contacts-section, .suite-search-section, .favorites-section, .building-hero, .find-space-section").forEach((el) => {
+    el.classList.add("fade-in");
+    observer.observe(el);
+  });
+}
+
+/* ── Recently viewed ── */
+function getRecentlyViewed() {
+  try { return JSON.parse(localStorage.getItem("ogden_recent") || "[]"); }
+  catch { return []; }
+}
+
+function saveRecentView(building) {
+  let recent = getRecentlyViewed();
+  recent = recent.filter((r) => r.building_id !== building.building_id);
+  recent.unshift({
+    building_id: building.building_id,
+    building_name: building.building_name,
+    address: building.address,
+    city: building.city,
+    photo_filename: building.photo_filename || "",
+    timestamp: Date.now(),
+  });
+  if (recent.length > 4) recent = recent.slice(0, 4);
+  localStorage.setItem("ogden_recent", JSON.stringify(recent));
+}
+
+function renderRecentlyViewed() {
+  const section = document.getElementById("recently-viewed-section");
+  if (!section) return;
+  const recent = getRecentlyViewed();
+  if (recent.length === 0) { section.style.display = "none"; return; }
+  section.style.display = "";
+  const grid = document.getElementById("recently-viewed-grid");
+  if (!grid) return;
+  grid.innerHTML = recent.map((b) => {
+    const thumb = b.photo_filename
+      ? `<img class="recent-thumb" src="${imgSrc(b.photo_filename)}" alt="" onerror="this.outerHTML='<div class=\\'recent-thumb-placeholder\\'>&#128247;</div>'">`
+      : `<div class="recent-thumb-placeholder">&#128247;</div>`;
+    return `<a class="recent-card" href="building.html?id=${b.building_id}">${thumb}<div class="recent-info"><span class="recent-name">${escapeHtml(b.building_name)}</span><span class="recent-address">${escapeHtml(b.address)}, ${escapeHtml(b.city)}</span></div></a>`;
+  }).join("");
+}
+
+/* ── Prefetch on hover ── */
+function initPrefetch() {
+  let prefetched = new Set();
+  document.addEventListener("mouseover", (e) => {
+    const link = e.target.closest('a[href*="building.html?id="]');
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (prefetched.has(href)) return;
+    prefetched.add(href);
+    const prefetchLink = document.createElement("link");
+    prefetchLink.rel = "prefetch";
+    prefetchLink.href = href;
+    document.head.appendChild(prefetchLink);
+  });
+}
+
 /* ── Dark mode ── */
 function initDarkMode() {
   const saved = localStorage.getItem("darkMode");
@@ -1245,6 +1343,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     buildSidebar(buildings, buildingId, suites);
 
     initBackToTop();
+    initPrefetch();
     renderFooterContacts(contacts);
 
     const buildingMap = {};
@@ -1252,13 +1351,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (page === "home") {
       initMap(buildings, suites);
+      renderRecentlyViewed();
       renderFavorites();
       initSuiteSearch(buildings, suites);
       initCompare(buildingMap, suites);
       renderContacts(contacts, "contacts-grid");
+      initScrollAnimations();
     } else if (page === "find-space") {
       initFindSpace(buildings, suites);
       initCompare(buildingMap, suites);
+      initScrollAnimations();
     } else if (page === "building") {
       const building = buildings.find((b) => b.building_id === buildingId);
       if (!building) {
@@ -1268,6 +1370,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
       renderBuildingPage(building, suites, contacts);
       trackBuildingView(building.building_name);
+      saveRecentView(building);
       addShareButton();
       initInquiryForm(building.building_name);
 
@@ -1289,6 +1392,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (matched.length > 0) buildingContacts = matched;
       }
       renderBuildingCTA(buildingContacts, "building-cta");
+      initScrollAnimations();
     }
   } catch (err) {
     console.error("Failed to load site data:", err);
