@@ -80,25 +80,37 @@ img {
 
 .header-nav {
   display: flex;
-  gap: 0.25rem;
+  align-items: center;
+  gap: 0;
   margin-left: auto;
+  height: 100%;
 }
 
 .header-nav a {
   color: var(--gray-300);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  transition: color 0.15s, background 0.15s;
+  letter-spacing: 0.03em;
+  padding: 0 1.75rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -3px;
+  transition: color 0.2s, border-color 0.2s;
   white-space: nowrap;
 }
 
 .header-nav a:hover {
   color: var(--white);
-  background: rgba(255, 255, 255, 0.1);
+  border-bottom-color: var(--red);
   text-decoration: none;
+}
+
+.header-nav a.nav-active {
+  color: var(--white);
+  border-bottom-color: var(--red);
 }
 
 .hamburger {
@@ -1815,15 +1827,42 @@ img {
 }
 
 /* ── Find Your Space ── */
+.find-space-hero {
+  padding: 3rem 2.5rem 2rem;
+  background: linear-gradient(135deg, var(--near-black) 0%, #1a2332 40%, #243447 70%, #1a2332 100%);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.find-space-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(207, 21, 45, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.find-space-hero h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+.find-space-hero p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 600px;
+  line-height: 1.6;
+  position: relative;
+}
+
 .find-space-section {
   padding: 2.5rem 2.5rem 2rem;
   max-width: 900px;
-}
-
-.find-space-subtitle {
-  font-size: 1rem;
-  color: var(--gray-500);
-  margin-bottom: 1.5rem;
 }
 
 .find-space-form {
@@ -1889,13 +1928,89 @@ img {
   margin-bottom: 1rem;
 }
 
+.find-space-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.find-space-card {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  padding: 1.25rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.find-space-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.find-space-card-building {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gray-500);
+}
+
+.find-space-card-building a {
+  color: var(--red);
+}
+
+.find-space-card-suite {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--near-black);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.find-space-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.85rem;
+  color: var(--gray-600);
+}
+
+.find-space-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.find-space-card-actions .view-btn {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  background: var(--red);
+  color: var(--white);
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.find-space-card-actions .view-btn:hover {
+  background: var(--red-dark);
+  text-decoration: none;
+}
+
 .find-space-no-match {
-  padding: 1.5rem;
+  padding: 2rem;
   background: var(--gray-50);
-  border-radius: 8px;
+  border-radius: 10px;
   text-align: center;
   color: var(--gray-500);
-  font-size: 0.95rem;
+  font-size: 1rem;
+  grid-column: 1 / -1;
 }
 
 .find-space-no-match a {
@@ -2151,11 +2266,27 @@ img {
     grid-template-columns: 1fr;
   }
 
+  .find-space-hero {
+    padding: 1.5rem 1rem 1.25rem;
+  }
+
+  .find-space-hero h1 {
+    font-size: 1.1rem;
+  }
+
+  .find-space-hero p {
+    font-size: 0.85rem;
+  }
+
   .find-space-section {
     padding: 1.5rem 1rem;
   }
 
   .find-space-form {
+    grid-template-columns: 1fr;
+  }
+
+  .find-space-results-grid {
     grid-template-columns: 1fr;
   }
 
