@@ -106,6 +106,25 @@ function buildSidebar(buildings, activeBuildingId) {
   const nav = document.getElementById("sidebar-nav");
   if (!nav) return;
   nav.innerHTML = "";
+
+  const page = document.body.dataset.page;
+  const quickLinks = document.createElement("div");
+  quickLinks.className = "sidebar-quick-links";
+  if (page === "home") {
+    quickLinks.innerHTML = `
+      <a href="#find-space-section">Find Your Space</a>
+      <a href="#suite-search-section">Browse All Suites</a>
+      <a href="#contacts-section">Contact</a>
+    `;
+  } else {
+    quickLinks.innerHTML = `
+      <a href="index.html#find-space-section">Find Your Space</a>
+      <a href="index.html#suite-search-section">Browse All Suites</a>
+      <a href="#inquiry-section">Contact</a>
+    `;
+  }
+  nav.appendChild(quickLinks);
+
   buildings.forEach((b) => {
     const a = document.createElement("a");
     a.href = `building.html?id=${b.building_id}`;
@@ -988,6 +1007,77 @@ function closeDocModal() {
   });
 })();
 
+/* ── Find Your Space ── */
+function initFindSpace(buildings, suites) {
+  const form = document.getElementById("find-space-form");
+  if (!form) return;
+
+  const buildingMap = {};
+  buildings.forEach((b) => { buildingMap[b.building_id] = b; });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const people = parseInt(document.getElementById("fs-people").value) || 0;
+    const sqft = parseInt(document.getElementById("fs-sqft").value) || 0;
+    const budget = parseFloat(document.getElementById("fs-budget").value) || 0;
+
+    const minSF = sqft || (people ? people * 150 : 0);
+    const maxSF = sqft || (people ? people * 250 : 0);
+
+    let matched = suites.filter((s) => {
+      if (s.status !== "Available") return false;
+      const sf = parseInt(s.square_feet) || 0;
+      if (minSF && sf < minSF) return false;
+      if (maxSF && sf > maxSF) return false;
+      if (budget) {
+        const rate = parseFloat(s.lease_rate) || 0;
+        if (rate > 0 && rate > budget) return false;
+      }
+      return true;
+    });
+
+    const resultsEl = document.getElementById("find-space-results");
+    const headingEl = document.getElementById("find-space-results-heading");
+    const listEl = document.getElementById("find-space-results-list");
+    resultsEl.style.display = "";
+
+    if (matched.length === 0) {
+      headingEl.textContent = "";
+      listEl.innerHTML = `
+        <div class="find-space-no-match">
+          <p>No suites match your criteria right now, but our brokers can help you find the right space.</p>
+          <a href="#contacts-section">Talk to a Broker</a>
+        </div>`;
+      resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
+    headingEl.textContent = `${matched.length} suite${matched.length !== 1 ? "s" : ""} match your needs`;
+    listEl.innerHTML = matched.map((s) => {
+      const b = buildingMap[s.building_id];
+      return `<div class="search-suite-card">
+        <div>
+          <div class="search-suite-building"><a href="building.html?id=${b.building_id}">${escapeHtml(b.building_name)}</a></div>
+          <div class="search-suite-name">${escapeHtml(s.suite_number)}</div>
+          <div class="search-suite-meta">
+            ${s.square_feet ? `<span>${Number(s.square_feet).toLocaleString()} SF</span>` : ""}
+            ${s.lease_rate ? `<span>$${escapeHtml(s.lease_rate)}${escapeHtml(s.rate_unit || "")}</span>` : ""}
+            ${s.lease_type ? `<span>${escapeHtml(s.lease_type)}</span>` : ""}
+          </div>
+        </div>
+        <div class="search-suite-actions">
+          <span class="suite-badge badge-available">${escapeHtml(s.status)}</span>
+          <label class="compare-label-btn"><input type="checkbox" class="compare-cb" data-suite="${s.suite_id}"> Compare</label>
+        </div>
+      </div>`;
+    }).join("");
+    syncCompareCheckboxes();
+    resultsEl.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    if (typeof gtag === "function") gtag("event", "find_space", { people, sqft: minSF, budget, results: matched.length });
+  });
+}
+
 /* ── Page init ── */
 document.addEventListener("DOMContentLoaded", async () => {
   setupMobileMenu();
@@ -1008,6 +1098,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (page === "home") {
       initMap(buildings, suites);
       renderFavorites();
+      initFindSpace(buildings, suites);
       initSuiteSearch(buildings, suites);
       initCompare(buildingMap, suites);
       renderContacts(contacts, "contacts-grid");

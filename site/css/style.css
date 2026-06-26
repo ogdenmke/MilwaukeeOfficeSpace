@@ -78,6 +78,29 @@ img {
   width: auto;
 }
 
+.header-nav {
+  display: flex;
+  gap: 0.25rem;
+  margin-left: auto;
+}
+
+.header-nav a {
+  color: var(--gray-300);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.header-nav a:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+}
+
 .hamburger {
   display: none;
   background: none;
@@ -133,6 +156,28 @@ img {
   color: var(--gray-400);
   padding: 0 1.25rem;
   margin-bottom: 0.5rem;
+}
+
+.sidebar-quick-links {
+  display: none;
+  padding: 0.5rem 1.25rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-quick-links a {
+  display: block;
+  padding: 0.6rem 0;
+  color: var(--white);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+
+.sidebar-quick-links a:hover {
+  color: var(--red);
+  text-decoration: none;
 }
 
 .sidebar-nav a {
@@ -1769,6 +1814,96 @@ img {
   border-bottom: none;
 }
 
+/* ── Find Your Space ── */
+.find-space-section {
+  padding: 2.5rem 2.5rem 2rem;
+  max-width: 900px;
+}
+
+.find-space-subtitle {
+  font-size: 1rem;
+  color: var(--gray-500);
+  margin-bottom: 1.5rem;
+}
+
+.find-space-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.find-space-field label {
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  margin-bottom: 0.4rem;
+}
+
+.find-space-field input,
+.find-space-field select {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--black);
+  transition: border-color 0.15s;
+}
+
+.find-space-field input:focus,
+.find-space-field select:focus {
+  outline: none;
+  border-color: var(--red);
+}
+
+.find-space-submit {
+  grid-column: 1 / -1;
+  padding: 0.75rem 2rem;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  cursor: pointer;
+  transition: background 0.2s;
+  justify-self: start;
+}
+
+.find-space-submit:hover {
+  background: var(--red-dark);
+}
+
+.find-space-results {
+  margin-top: 2rem;
+}
+
+.find-space-results h3 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.05rem;
+  color: var(--near-black);
+  margin-bottom: 1rem;
+}
+
+.find-space-no-match {
+  padding: 1.5rem;
+  background: var(--gray-50);
+  border-radius: 8px;
+  text-align: center;
+  color: var(--gray-500);
+  font-size: 0.95rem;
+}
+
+.find-space-no-match a {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-weight: 600;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   :root {
@@ -1776,6 +1911,14 @@ img {
   }
 
   .hamburger {
+    display: block;
+  }
+
+  .header-nav {
+    display: none;
+  }
+
+  .sidebar-quick-links {
     display: block;
   }
 
@@ -2005,6 +2148,14 @@ img {
   }
 
   .inquiry-form {
+    grid-template-columns: 1fr;
+  }
+
+  .find-space-section {
+    padding: 1.5rem 1rem;
+  }
+
+  .find-space-form {
     grid-template-columns: 1fr;
   }
 
