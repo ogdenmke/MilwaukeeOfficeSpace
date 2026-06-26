@@ -462,20 +462,21 @@ function getQueryParam(key) {
 }
 
 /* ── Document modal ── */
-function isMobile() {
-  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (window.innerWidth <= 768);
-}
-
 function openDocModal(src) {
-  if (isMobile() && src.includes("drive.google.com")) {
-    const viewUrl = src.replace("/preview", "/view");
-    window.open(viewUrl, "_blank");
-    return;
-  }
   const overlay = document.getElementById("doc-modal-overlay");
   const iframe = document.getElementById("doc-modal-iframe");
+  const fallback = document.getElementById("doc-modal-fallback");
   if (!overlay || !iframe) return;
   iframe.src = src;
+  if (fallback) {
+    if (src.includes("drive.google.com")) {
+      const viewUrl = src.replace("/preview", "/view");
+      fallback.href = viewUrl;
+      fallback.style.display = "inline-flex";
+    } else {
+      fallback.style.display = "none";
+    }
+  }
   overlay.classList.add("open");
 }
 

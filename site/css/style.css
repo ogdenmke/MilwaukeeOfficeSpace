@@ -701,6 +701,32 @@ img {
   background: var(--red);
 }
 
+.doc-modal-fallback {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  background: var(--near-black);
+  color: var(--white) !important;
+  border-radius: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-decoration: none !important;
+  white-space: nowrap;
+  opacity: 0.85;
+  transition: opacity 0.15s;
+  z-index: 2001;
+}
+
+.doc-modal-fallback:hover {
+  opacity: 1;
+}
+
 /* ── Footer ── */
 .site-footer {
   padding: 1.5rem 2.5rem;
