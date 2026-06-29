@@ -1041,7 +1041,7 @@ function initCompare(buildingMap, allSuites) {
     if (!s) return;
     const b = buildingMap[s.building_id];
     if (cb.checked) {
-      if (compareList.length >= 3) {
+      if (compareList.length >= 4) {
         cb.checked = false;
         return;
       }
@@ -1078,7 +1078,7 @@ function updateCompareBar() {
             <button onclick="removeCompare('${s.suite_id}')" class="compare-chip-x">&times;</button>
           </span>
         `).join("")}
-        ${compareList.length < 3 ? `<span class="compare-bar-hint">${3 - compareList.length} more</span>` : ""}
+        ${compareList.length < 4 ? `<span class="compare-bar-hint">${4 - compareList.length} more</span>` : ""}
       </div>
       <button class="compare-bar-btn" onclick="showCompareModal()" ${compareList.length < 2 ? "disabled" : ""}>Compare ${compareList.length} Suite${compareList.length !== 1 ? "s" : ""}</button>
     </div>
