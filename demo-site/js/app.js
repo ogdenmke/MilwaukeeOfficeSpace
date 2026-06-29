@@ -74,9 +74,85 @@ function extractSheetId(input) {
   return "";
 }
 
+async function loadConfigFromSheet(sheetId) {
+  try {
+    const rows = await loadSheetCSV(sheetId, "Config");
+    const config = {};
+    rows.forEach(row => {
+      if (row.key && row.value) config[row.key.trim()] = row.value.trim();
+    });
+    return config;
+  } catch {
+    return null;
+  }
+}
+
+function applySheetConfig(sheetConfig) {
+  if (!sheetConfig) return;
+  ["COMPANY_NAME", "COMPANY_NAME_FULL", "COMPANY_TAGLINE", "BRAND_COLOR", "BRAND_COLOR_DARK"].forEach(k => {
+    if (sheetConfig[k]) SITE_CONFIG[k] = sheetConfig[k];
+  });
+  if (sheetConfig.INQUIRY_EMAILS) {
+    SITE_CONFIG.INQUIRY_EMAILS = sheetConfig.INQUIRY_EMAILS.split(",").map(e => e.trim());
+  }
+}
+
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function replaceTextInDOM(oldText, newText) {
+  if (!oldText || !newText || oldText === newText) return;
+  const re = new RegExp(escapeRegex(oldText), "g");
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(node => {
+    if (node.nodeValue.includes(oldText)) node.nodeValue = node.nodeValue.replace(re, newText);
+  });
+  document.querySelectorAll("img[alt]").forEach(img => {
+    if (img.alt.includes(oldText)) img.alt = img.alt.replace(re, newText);
+  });
+}
+
+function applyBranding(oldName, oldNameFull, oldTagline) {
+  document.documentElement.style.setProperty("--red", SITE_CONFIG.BRAND_COLOR);
+  document.documentElement.style.setProperty("--red-dark", SITE_CONFIG.BRAND_COLOR_DARK);
+  replaceTextInDOM(oldNameFull, SITE_CONFIG.COMPANY_NAME_FULL);
+  replaceTextInDOM(oldName, SITE_CONFIG.COMPANY_NAME);
+  replaceTextInDOM(oldTagline, SITE_CONFIG.COMPANY_TAGLINE);
+  document.title = document.title
+    .replace(new RegExp(escapeRegex(oldName), "g"), SITE_CONFIG.COMPANY_NAME);
+  document.querySelectorAll("meta[content]").forEach(m => {
+    m.content = m.content
+      .replace(new RegExp(escapeRegex(oldNameFull), "g"), SITE_CONFIG.COMPANY_NAME_FULL)
+      .replace(new RegExp(escapeRegex(oldName), "g"), SITE_CONFIG.COMPANY_NAME)
+      .replace(new RegExp(escapeRegex(oldTagline), "g"), SITE_CONFIG.COMPANY_TAGLINE);
+  });
+  document.querySelectorAll(".header-logo img, .loading-splash img").forEach(img => {
+    const span = document.createElement("span");
+    span.textContent = SITE_CONFIG.COMPANY_NAME;
+    span.style.cssText = "font-weight:700;font-size:2.4rem;color:#fff;white-space:nowrap;letter-spacing:.05em;text-transform:uppercase;";
+    img.replaceWith(span);
+  });
+  const initial = SITE_CONFIG.COMPANY_NAME.charAt(0).toUpperCase();
+  const color = SITE_CONFIG.BRAND_COLOR;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="${color}"/><text x="32" y="44" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="38" fill="#fff">${initial}</text></svg>`;
+  const blob = new Blob([svg], { type: "image/svg+xml" });
+  const url = URL.createObjectURL(blob);
+  document.querySelectorAll('link[rel="icon"]').forEach(el => el.remove());
+  const link = document.createElement("link");
+  link.rel = "icon";
+  link.type = "image/svg+xml";
+  link.href = url;
+  document.head.appendChild(link);
+}
+
 async function loadAllData() {
   const id = extractSheetId(CONFIG.GOOGLE_SHEET_ID);
   if (id) {
+    const sheetConfig = await loadConfigFromSheet(id);
+    applySheetConfig(sheetConfig);
     const [buildings, suites, contacts] = await Promise.all([
       loadSheetCSV(id, "Buildings"),
       loadSheetCSV(id, "Suites"),
@@ -1421,6 +1497,10 @@ function initDarkMode() {
 
 /* ── Page init ── */
 document.addEventListener("DOMContentLoaded", async () => {
+  const oldName = SITE_CONFIG.COMPANY_NAME;
+  const oldNameFull = SITE_CONFIG.COMPANY_NAME_FULL;
+  const oldTagline = SITE_CONFIG.COMPANY_TAGLINE;
+
   setupMobileMenu();
   initDarkMode();
   initPageTransitions();
@@ -1437,6 +1517,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const { buildings, suites, contacts } = await loadAllData();
+    applyBranding(oldName, oldNameFull, oldTagline);
     hideSkeletons();
     hideSplash();
     const page = document.body.dataset.page;
