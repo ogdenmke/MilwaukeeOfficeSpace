@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Office Space Map — __COMPANY_NAME__</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #fff; }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 30px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .header img {
+      height: 50px;
+      margin-bottom: 8px;
+    }
+
+    .header h1 {
+      font-size: 1.4rem;
+      color: #131210;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .header p {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    #map {
+      width: 100%;
+      height: 500px;
+      border: 2px solid #e5e7eb;
+      border-radius: 6px;
+    }
+
+    .legend {
+      margin-top: 20px;
+    }
+
+    .legend h2 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #131210;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 3px solid var(--brand-color, #CF152D);
+      display: inline-block;
+    }
+
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 4px 24px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: baseline;
+      padding: 5px 0;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .legend-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+      height: 24px;
+      background: var(--brand-color, #CF152D);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .legend-name {
+      font-weight: 600;
+      color: #131210;
+      font-size: 0.85rem;
+    }
+
+    .legend-address {
+      color: #6b7280;
+      font-size: 0.8rem;
+      margin-left: 6px;
+    }
+
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .numbered-pin {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: var(--brand-color, #CF152D);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    }
+
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .page { padding: 10px 20px; }
+      #map { height: 450px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <img src="images/logos/logo-dark.svg" alt="__COMPANY_NAME__">
+      <h1>Available Office Space</h1>
+      <p>Properties Managed by __COMPANY_NAME__</p>
+    </div>
+
+    <div id="map"></div>
+
+    <div class="legend">
+      <h2>Property Directory</h2>
+      <div class="legend-grid" id="legend-grid"></div>
+    </div>
+
+    <div class="footer">
+      &copy; __COMPANY_NAME_FULL__ &middot; __COMPANY_TAGLINE__
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script>
+    const SHEET_ID = SITE_CONFIG.GOOGLE_SHEET_ID;
+    document.documentElement.style.setProperty("--brand-color", SITE_CONFIG.BRAND_COLOR);
+
+    function parseCSV(text) {
+      const rows = [];
+      let current = "";
+      let inQuotes = false;
+      const lines = [];
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        if (ch === '"') {
+          if (inQuotes && text[i + 1] === '"') { current += '"'; i++; }
+          else inQuotes = !inQuotes;
+        } else if (ch === "," && !inQuotes) {
+          rows.push(current); current = "";
+        } else if ((ch === "\n" || ch === "\r") && !inQuotes) {
+          if (ch === "\r" && text[i + 1] === "\n") i++;
+          rows.push(current); current = "";
+          lines.push(rows.splice(0));
+        } else current += ch;
+      }
+      if (current || rows.length) { rows.push(current); lines.push(rows.splice(0)); }
+      if (lines.length < 2) return [];
+      const headers = lines[0];
+      return lines.slice(1).filter(r => r.some(c => c.trim())).map(r => {
+        const obj = {};
+        headers.forEach((h, i) => { const v = (r[i] || "").trim(); obj[h.trim()] = v === "" ? null : v; });
+        return obj;
+      });
+    }
+
+    async function loadBuildings() {
+      const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Buildings`;
+      const resp = await fetch(url);
+      return parseCSV(await resp.text());
+    }
+
+    async function init() {
+      const buildings = await loadBuildings();
+      const valid = buildings.filter(b => b.latitude && b.longitude);
+
+      const groups = {};
+      valid.forEach(b => {
+        const key = b.map_group || b.building_id;
+        if (!groups[key]) groups[key] = { label: b.map_group || b.building_name, buildings: [] };
+        groups[key].buildings.push(b);
+      });
+
+      const entries = Object.values(groups);
+      const map = L.map("map", { scrollWheelZoom: false, attributionControl: false });
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        maxZoom: 19, subdomains: "abcd"
+      }).addTo(map);
+
+      const markers = [];
+      const legendEl = document.getElementById("legend-grid");
+
+      entries.forEach((group, i) => {
+        const num = i + 1;
+        const first = group.buildings[0];
+        const lat = parseFloat(first.latitude);
+        const lng = parseFloat(first.longitude);
+        if (isNaN(lat) || isNaN(lng)) return;
+
+        const icon = L.divIcon({
+          className: "",
+          html: `<div class="numbered-pin">${num}</div>`,
+          iconSize: [28, 28],
+          iconAnchor: [14, 14],
+        });
+
+        const marker = L.marker([lat, lng], { icon }).addTo(map);
+        markers.push(marker);
+
+        if (group.buildings.length === 1) {
+          const b = first;
+          legendEl.innerHTML += `
+            <div class="legend-item">
+              <span class="legend-num">${num}</span>
+              <span class="legend-name">${b.building_name}</span>
+              <span class="legend-address">${b.address}, ${b.city}</span>
+            </div>`;
+        } else {
+          group.buildings.forEach((b, j) => {
+            legendEl.innerHTML += `
+              <div class="legend-item">
+                ${j === 0 ? `<span class="legend-num">${num}</span>` : `<span class="legend-num" style="background:transparent;color:transparent;">${num}</span>`}
+                <span class="legend-name">${b.building_name}</span>
+                <span class="legend-address">${b.address}, ${b.city}</span>
+              </div>`;
+          });
+        }
+      });
+
+      if (markers.length > 0) {
+        map.fitBounds(L.featureGroup(markers).getBounds().pad(0.15));
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>

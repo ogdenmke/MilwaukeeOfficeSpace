@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Available Office Space — __COMPANY_NAME__</title>
+  <meta name="description" content="Commercial office space available for lease. Managed by __COMPANY_NAME__ — __COMPANY_TAGLINE__.">
+  <meta property="og:title" content="Available Office Space — __COMPANY_NAME__">
+  <meta property="og:description" content="Commercial office space available for lease. Explore properties, view floor plans, and schedule a tour.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="__SITE_URL__">
+  <meta property="og:image" content="__SITE_URL__images/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Available Office Space — __COMPANY_NAME__">
+  <meta name="twitter:description" content="Commercial office space available for lease. Explore properties, view floor plans, and schedule a tour.">
+  <meta name="twitter:image" content="__SITE_URL__images/og-image.jpg">
+  <link rel="icon" href="images/logos/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="images/logos/favicon.png" type="image/png">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="home">
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <!-- Loading splash -->
+  <div class="loading-splash" id="loading-splash">
+    <img src="images/logos/logo-white.svg" alt="__COMPANY_NAME__">
+    <div class="loading-splash-spinner"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="header-logo" href="index.html">
+      <img src="images/logos/logo-white.svg" alt="__COMPANY_NAME__">
+    </a>
+    <nav class="header-nav" id="header-nav">
+      <a href="find-space.html">Find Your Space</a>
+      <a href="#suite-search-section">Browse All Suites</a>
+      <a href="#contacts-section">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Sidebar overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-title">Buildings</div>
+    <nav class="sidebar-nav" id="sidebar-nav">
+      <!-- Populated by JS -->
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main-content" id="main-content">
+    <div class="hero">
+      <h1>Available Office Space</h1>
+      <p>__COMPANY_NAME__ has multiple office properties currently available. Explore our interactive map to see where each property is located, click on any building to view photos, floor plans, and current availability, or reach out directly to schedule a tour.</p>
+    </div>
+
+    <div class="map-container">
+      <div id="map"></div>
+    </div>
+
+    <section class="map-legend-section" id="map-legend-section">
+      <div class="map-legend-columns">
+        <div class="map-legend-col">
+          <h3 class="map-legend-col-title">For Lease</h3>
+          <div class="map-legend-grid" id="map-legend-lease">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+        <div class="map-legend-col">
+          <h3 class="map-legend-col-title">For Sale</h3>
+          <div class="map-legend-grid" id="map-legend-sale">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contacts-section" id="contacts-section">
+      <h2>Contact Our Brokers</h2>
+      <div class="contacts-grid" id="contacts-grid">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <section class="recently-viewed-section" id="recently-viewed-section" style="display:none">
+      <h2>Recently Viewed</h2>
+      <div class="recently-viewed-grid" id="recently-viewed-grid">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <section class="favorites-section" id="favorites-section" style="display:none">
+      <h2>Your Saved Suites</h2>
+      <div class="favorites-grid" id="favorites-grid">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <section class="suite-search-section" id="suite-search-section">
+      <h2>Browse All Suites</h2>
+      <div class="suite-search-filters" id="suite-search-filters">
+        <select class="filter-select" id="filter-building" aria-label="Filter by building">
+          <option value="">All Buildings</option>
+          <!-- Populated by JS -->
+        </select>
+        <select class="filter-select" id="filter-status" aria-label="Filter by status">
+          <option value="">All Statuses</option>
+          <option value="Available" selected>Available</option>
+          <option value="Pending">Pending</option>
+          <option value="Leased">Leased</option>
+        </select>
+        <div class="size-range-wrapper">
+          <input type="number" class="filter-input size-input" id="filter-size-min" placeholder="Min SF" min="0" aria-label="Minimum square footage">
+          <span class="size-range-sep">&ndash;</span>
+          <input type="number" class="filter-input size-input" id="filter-size-max" placeholder="Max SF" min="0" aria-label="Maximum square footage">
+        </div>
+      </div>
+      <div class="suite-search-results" id="suite-search-results">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      &copy; __COMPANY_NAME_FULL__ &middot; __COMPANY_TAGLINE__
+    </footer>
+  </main>
+
+  <!-- Dark mode toggle -->
+  <button class="dark-mode-toggle" id="dark-mode-toggle" aria-label="Toggle dark mode">
+    <svg class="dm-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    <svg class="dm-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">&uarr;</button>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=__GA_ID__"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '__GA_ID__');
+  </script>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+building_id,building_name,address,city,state,zip,latitude,longitude,description,photo_filename,listing_type,asking_price,map_group,broker
+SAMPLE-1,Sample Office Building,123 Main St,Milwaukee,WI,53202,43.0389,-87.9065,Replace with your building data.,,lease,,,

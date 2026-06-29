@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building Details — __COMPANY_NAME__</title>
+  <meta name="description" content="Commercial office space available for lease. Managed by __COMPANY_NAME__ — __COMPANY_TAGLINE__.">
+  <meta property="og:title" content="Building Details — __COMPANY_NAME__">
+  <meta property="og:description" content="View available suites, floor plans, and schedule a tour. Managed by __COMPANY_NAME__.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="__SITE_URL__images/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Building Details — __COMPANY_NAME__">
+  <meta name="twitter:description" content="View available suites, floor plans, and schedule a tour. Managed by __COMPANY_NAME__.">
+  <meta name="twitter:image" content="__SITE_URL__images/og-image.jpg">
+  <link rel="icon" href="images/logos/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="images/logos/favicon.png" type="image/png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="building">
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <!-- Loading splash -->
+  <div class="loading-splash" id="loading-splash">
+    <img src="images/logos/logo-white.svg" alt="__COMPANY_NAME__">
+    <div class="loading-splash-spinner"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="header-logo" href="index.html">
+      <img src="images/logos/logo-white.svg" alt="__COMPANY_NAME__">
+    </a>
+    <nav class="header-nav" id="header-nav">
+      <a href="find-space.html">Find Your Space</a>
+      <a href="index.html#suite-search-section">Browse All Suites</a>
+      <a href="#inquiry-section">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Sidebar overlay (mobile) -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-title">Buildings</div>
+    <nav class="sidebar-nav" id="sidebar-nav">
+      <!-- Populated by JS -->
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main-content" id="main-content">
+    <div class="building-header" id="building-header">
+      <!-- Populated by JS -->
+    </div>
+
+    <section class="suites-section">
+      <h2 id="suites-heading">Available Suites</h2>
+      <div class="suites-grid" id="suites-list">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <div class="building-cta" id="building-cta">
+      <!-- Populated by JS -->
+    </div>
+
+    <section class="inquiry-section" id="inquiry-section">
+      <h2>Interested in This Space?</h2>
+      <p class="inquiry-subtitle">Fill out the form below and a broker will be in touch.</p>
+      <form class="inquiry-form" id="inquiry-form">
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="text" name="company" placeholder="Company Name" required>
+        <input type="email" name="email" placeholder="Email Address" required>
+        <input type="tel" name="phone" placeholder="Phone Number">
+        <textarea name="message" rows="3" placeholder="Tell us about your space needs (size, timeline, etc.)"></textarea>
+        <input type="hidden" name="building" id="inquiry-building" value="">
+        <button type="submit" class="inquiry-submit">Submit Inquiry</button>
+      </form>
+      <div class="inquiry-success" id="inquiry-success" style="display:none">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <p>Thank you! A broker will contact you shortly.</p>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      &copy; __COMPANY_NAME_FULL__ &middot; __COMPANY_TAGLINE__
+    </footer>
+  </main>
+
+  <!-- Dark mode toggle -->
+  <button class="dark-mode-toggle" id="dark-mode-toggle" aria-label="Toggle dark mode">
+    <svg class="dm-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    <svg class="dm-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">&uarr;</button>
+
+  <!-- Document viewer modal -->
+  <div class="doc-modal-overlay" id="doc-modal-overlay" role="dialog" aria-modal="true" aria-label="Document viewer">
+    <div class="doc-modal">
+      <button class="doc-modal-close" id="doc-modal-close" aria-label="Close document viewer">&times;</button>
+      <iframe id="doc-modal-iframe" src="about:blank"></iframe>
+      <a class="doc-modal-fallback" id="doc-modal-fallback" href="#" target="_blank" style="display:none">Having trouble? Open in new tab &rarr;</a>
+    </div>
+  </div>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=__GA_ID__"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '__GA_ID__');
+  </script>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
