@@ -341,6 +341,7 @@ img {
 /* ── Home page ── */
 .hero {
   padding: 3rem 2.5rem 2rem;
+  margin-bottom: 1.5rem;
   max-width: none;
   background: linear-gradient(135deg, var(--near-black) 0%, #1a2332 40%, #243447 70%, #1a2332 100%);
   color: var(--white);
