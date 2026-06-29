@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "prompt=$(cat | jq -r '.prompt // \"\"'); echo \"$prompt\" | grep -qi '\\bpushed\\b' && echo '{\"hookSpecificOutput\": {\"hookEventName\": \"UserPromptSubmit\", \"additionalContext\": \"SYSTEM NOTE: The user has merged a PR and the site is deploying. Use GitHub MCP tools to check GitHub Actions status for caseyski/mke-office-space. Poll until the Pages deployment succeeds, then notify the user that https://caseyski.github.io/MKE-Office-Space/ is live. Use ScheduleWakeup to check every 60 seconds if needed.\"}}' || true"
+          }
+        ]
+      }
+    ]
+  }
+}
