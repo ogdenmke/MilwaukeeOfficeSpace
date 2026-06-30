@@ -45,7 +45,9 @@
     "latitude": "43.0443",
     "longitude": "-87.9147",
     "description": "Landmark building in Milwaukee's Old World Third Street district.",
-    "photo_filename": "steinmeyer.jpg"
+    "photo_filename": "steinmeyer.jpg",
+    "floor_count": "6",
+    "lobby_floors": "1,2"
   },
   {
     "building_id": "VVC",

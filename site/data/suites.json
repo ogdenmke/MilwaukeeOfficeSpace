@@ -37,5 +37,150 @@
     "available_date": "Now",
     "floor_plan_filename": "bwy-101.svg",
     "notes": "Ground floor, street access"
+  },
+  {
+    "suite_id": "STN-301",
+    "building_id": "STN",
+    "suite_number": "Suite 301",
+    "floor": "3",
+    "status": "Available"
+  },
+  {
+    "suite_id": "STN-303",
+    "building_id": "STN",
+    "suite_number": "Suite 303",
+    "floor": "3",
+    "status": "Available"
+  },
+  {
+    "suite_id": "STN-306",
+    "building_id": "STN",
+    "suite_number": "Suite 306",
+    "floor": "3",
+    "square_feet": "3289",
+    "status": "Available"
+  },
+  {
+    "suite_id": "STN-308",
+    "building_id": "STN",
+    "suite_number": "Suite 308",
+    "floor": "3",
+    "status": "Available"
+  },
+  {
+    "suite_id": "STN-310",
+    "building_id": "STN",
+    "suite_number": "Suite 310",
+    "floor": "3",
+    "status": "Available"
+  },
+  {
+    "suite_id": "STN-314",
+    "building_id": "STN",
+    "suite_number": "Suite 314",
+    "floor": "3",
+    "status": "Available"
+  },
+  {
+    "suite_id": "STN-400",
+    "building_id": "STN",
+    "suite_number": "Suite 400",
+    "floor": "4",
+    "square_feet": "4446",
+    "lease_type": "Turn-Key",
+    "status": "Available",
+    "available_date": "04/01/2026",
+    "fp_x": "5",
+    "fp_y": "5",
+    "fp_w": "42",
+    "fp_h": "44"
+  },
+  {
+    "suite_id": "STN-401",
+    "building_id": "STN",
+    "suite_number": "Suite 401",
+    "floor": "4",
+    "square_feet": "2768",
+    "status": "Available",
+    "fp_x": "53",
+    "fp_y": "5",
+    "fp_w": "42",
+    "fp_h": "44"
+  },
+  {
+    "suite_id": "STN-402",
+    "building_id": "STN",
+    "suite_number": "Suite 402",
+    "floor": "4",
+    "square_feet": "4530",
+    "lease_type": "Turn-Key",
+    "status": "Available",
+    "fp_x": "5",
+    "fp_y": "55",
+    "fp_w": "42",
+    "fp_h": "40"
+  },
+  {
+    "suite_id": "STN-403",
+    "building_id": "STN",
+    "suite_number": "Suite 403",
+    "floor": "4",
+    "square_feet": "1864",
+    "status": "Available",
+    "fp_x": "53",
+    "fp_y": "55",
+    "fp_w": "42",
+    "fp_h": "40"
+  },
+  {
+    "suite_id": "STN-500",
+    "building_id": "STN",
+    "suite_number": "Suite 500",
+    "floor": "5",
+    "square_feet": "6360",
+    "status": "Available",
+    "fp_x": "5",
+    "fp_y": "5",
+    "fp_w": "46",
+    "fp_h": "90"
+  },
+  {
+    "suite_id": "STN-502",
+    "building_id": "STN",
+    "suite_number": "Suite 502",
+    "floor": "5",
+    "square_feet": "1388",
+    "lease_type": "Turn-Key",
+    "status": "Available",
+    "fp_x": "56",
+    "fp_y": "5",
+    "fp_w": "39",
+    "fp_h": "28"
+  },
+  {
+    "suite_id": "STN-504",
+    "building_id": "STN",
+    "suite_number": "Suite 504",
+    "floor": "5",
+    "square_feet": "2358",
+    "status": "Available",
+    "fp_x": "56",
+    "fp_y": "36",
+    "fp_w": "39",
+    "fp_h": "28"
+  },
+  {
+    "suite_id": "STN-509",
+    "building_id": "STN",
+    "suite_number": "Suite 509",
+    "floor": "5",
+    "square_feet": "3392",
+    "lease_type": "Turn-Key",
+    "status": "Available",
+    "available_date": "04/01/2026",
+    "fp_x": "56",
+    "fp_y": "67",
+    "fp_w": "39",
+    "fp_h": "28"
   }
 ]

@@ -15,6 +15,7 @@
   <meta name="twitter:image" content="https://caseyski.github.io/MKE-Office-Space/images/og-image.jpg">
   <link rel="icon" href="images/logos/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="images/logos/favicon.png" type="image/png">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-page="building">
@@ -62,6 +63,22 @@
       <h2 id="suites-heading">Available Suites</h2>
       <div class="suites-grid" id="suites-list">
         <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <section class="floor-plan-section" id="floor-plan-section" style="display:none">
+      <div class="fp-toolbar">
+        <h2 class="fp-heading">Floor Plans</h2>
+        <div class="fp-view-toggle" role="group" aria-label="View mode">
+          <button class="fp-toggle-btn active" data-view="2d" aria-pressed="true">2D</button>
+          <button class="fp-toggle-btn" data-view="3d" aria-pressed="false">3D View</button>
+        </div>
+      </div>
+      <div class="fp-floor-tabs" id="fp-floor-tabs" role="tablist">
+        <!-- populated by JS -->
+      </div>
+      <div class="fp-viewer" id="fp-viewer">
+        <!-- populated by JS -->
       </div>
     </section>
 
@@ -119,6 +136,7 @@
     gtag('config', 'G-7SJYYVJB87');
   </script>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WPcU=" crossorigin=""></script>
   <script src="js/app.js"></script>
 </body>
 </html>
