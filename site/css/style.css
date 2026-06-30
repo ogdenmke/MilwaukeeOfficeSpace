@@ -3364,8 +3364,8 @@ html.dark .suite-page-btn:hover:not(:disabled) {
 }
 
 .fp-hotspot.leased {
-  fill: rgba(156, 163, 175, 0.15);
-  stroke: rgba(156, 163, 175, 0.5);
+  fill: rgba(207, 21, 45, 0.15);
+  stroke: rgba(207, 21, 45, 0.55);
   pointer-events: none;
 }
 
@@ -3410,7 +3410,7 @@ html.dark .suite-page-btn:hover:not(:disabled) {
 
 .fp-tt-status { font-size: 0.75rem; }
 .fp-tt-status.available { color: #16a34a; font-weight: 600; }
-.fp-tt-status.leased { color: var(--text-light); }
+.fp-tt-status.leased { color: #CF152D; font-weight: 600; }
 .fp-tt-status.pending { color: #ea580c; font-weight: 600; }
 
 /* Lobby / coming soon placeholders */
