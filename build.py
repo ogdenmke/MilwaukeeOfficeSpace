@@ -98,10 +98,11 @@ def main():
     # Floor plan viewer fields — add to STN if not already in the sheet
     for b in buildings:
         if b.get("building_id") == "STN":
-            b.setdefault("floor_count", "6")
+            b.setdefault("floor_count", "5")
             b.setdefault("lobby_floors", "1,2")
 
     STN_FP = {
+        "Suite 306": {"fp_x": "5",  "fp_y": "5",  "fp_w": "90", "fp_h": "90"},
         "Suite 400": {"fp_x": "5",  "fp_y": "5",  "fp_w": "42", "fp_h": "44"},
         "Suite 401": {"fp_x": "53", "fp_y": "5",  "fp_w": "42", "fp_h": "44"},
         "Suite 402": {"fp_x": "5",  "fp_y": "55", "fp_w": "42", "fp_h": "40"},

@@ -446,7 +446,11 @@
     "status": "Available",
     "available_date": "Now",
     "brochure_filename": "https://drive.google.com/file/d/1YPNAL6T8iZw6lw0VDRbdba0XnFWhCdXQ/view?usp=sharing",
-    "floor_plan_filename": "https://drive.google.com/file/d/1ZXePqVLa7lJR1ECgH9lrI4k6j71_G66E/view?usp=sharing"
+    "floor_plan_filename": "https://drive.google.com/file/d/1ZXePqVLa7lJR1ECgH9lrI4k6j71_G66E/view?usp=sharing",
+    "fp_x": "5",
+    "fp_y": "5",
+    "fp_w": "90",
+    "fp_h": "90"
   },
   {
     "suite_id": "STN-400",
