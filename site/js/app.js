@@ -1227,7 +1227,7 @@ function initFloorPlan(building, suites) {
       num,
       isLobby: lobbyFloors.has(num),
       imgPath: `images/floorplans/${buildingId}-floor-${i}.png`,
-      suites: buildingSuites.filter((s) => s.floor === num && s.fp_x),
+      suites: buildingSuites.filter((s) => s.floor === num && (s.fp_points || s.fp_x)),
     });
   }
 
@@ -1260,12 +1260,17 @@ function initFloorPlan(building, suites) {
 
     const hotspotSvg = floor.suites
       .map((s) => {
+        const statusCls = (s.status || "available").toLowerCase();
+        const attrs = `data-suite="${s.suite_id}" data-label="${escapeHtml(s.suite_number)}" data-sf="${s.square_feet || ""}" data-status="${s.status || ""}"`;
+        if (s.fp_points) {
+          const pts = s.fp_points.trim().replace(/:/g, ",");
+          return `<polygon class="fp-hotspot ${statusCls}" points="${pts}" ${attrs}/>`;
+        }
         const x = parseFloat(s.fp_x) || 0;
         const y = parseFloat(s.fp_y) || 0;
         const w = parseFloat(s.fp_w) || 10;
         const h = parseFloat(s.fp_h) || 10;
-        const statusCls = (s.status || "available").toLowerCase();
-        return `<rect class="fp-hotspot ${statusCls}" x="${x}" y="${y}" width="${w}" height="${h}" data-suite="${s.suite_id}" data-label="${escapeHtml(s.suite_number)}" data-sf="${s.square_feet || ""}" data-status="${s.status || ""}" rx="0.5"/>`;
+        return `<rect class="fp-hotspot ${statusCls}" x="${x}" y="${y}" width="${w}" height="${h}" ${attrs} rx="0.5"/>`;
       })
       .join("");
 
