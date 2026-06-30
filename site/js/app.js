@@ -1204,7 +1204,7 @@ function initFindSpace() {
 }
 
 /* ── Floor plan viewer ── */
-function initFloorPlan(building, suites) {
+async function initFloorPlan(building, suites) {
   const section = document.getElementById("floor-plan-section");
   if (!section) return;
 
@@ -1214,7 +1214,22 @@ function initFloorPlan(building, suites) {
   section.style.display = "";
 
   const buildingId = building.building_id;
-  const buildingSuites = suites.filter((s) => s.building_id === buildingId);
+  let buildingSuites = suites.filter((s) => s.building_id === buildingId);
+
+  try {
+    const overrides = await loadJSON("data/floorplan-points.json");
+    buildingSuites = buildingSuites.map((s) => {
+      const o = overrides[s.suite_id];
+      if (!o) return s;
+      return {
+        ...s,
+        fp_points: o.points || s.fp_points,
+        status: o.status || s.status,
+      };
+    });
+  } catch (e) {
+    // optional override file; ignore if missing or unreachable
+  }
 
   const lobbyFloors = new Set(
     (building.lobby_floors || "").split(",").map((f) => f.trim()).filter(Boolean)
