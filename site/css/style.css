@@ -3350,8 +3350,8 @@ html.dark .suite-page-btn:hover:not(:disabled) {
 
 /* Hotspot rects */
 .fp-hotspot {
-  fill: rgba(207, 21, 45, 0.1);
-  stroke: rgba(207, 21, 45, 0.55);
+  fill: transparent;
+  stroke: transparent;
   stroke-width: 0.5;
   pointer-events: all;
   cursor: pointer;
@@ -3364,8 +3364,8 @@ html.dark .suite-page-btn:hover:not(:disabled) {
 }
 
 .fp-hotspot.leased {
-  fill: rgba(156, 163, 175, 0.15);
-  stroke: rgba(156, 163, 175, 0.5);
+  fill: rgba(207, 21, 45, 0.15);
+  stroke: rgba(207, 21, 45, 0.55);
   pointer-events: none;
 }
 
@@ -3374,15 +3374,15 @@ html.dark .suite-page-btn:hover:not(:disabled) {
   stroke: rgba(251, 146, 60, 0.6);
 }
 
-.fp-hotspot:not(.leased):hover {
-  fill: rgba(207, 21, 45, 0.22);
-  stroke: rgba(207, 21, 45, 1);
-  stroke-width: 0.8;
-}
-
 .fp-hotspot.available:not(.leased):hover {
   fill: rgba(34, 197, 94, 0.26);
   stroke: rgba(34, 197, 94, 1);
+  stroke-width: 0.8;
+}
+
+.fp-hotspot.pending:hover {
+  fill: rgba(251, 146, 60, 0.28);
+  stroke: rgba(251, 146, 60, 1);
   stroke-width: 0.8;
 }
 
@@ -3410,7 +3410,7 @@ html.dark .suite-page-btn:hover:not(:disabled) {
 
 .fp-tt-status { font-size: 0.75rem; }
 .fp-tt-status.available { color: #16a34a; font-weight: 600; }
-.fp-tt-status.leased { color: var(--text-light); }
+.fp-tt-status.leased { color: #CF152D; font-weight: 600; }
 .fp-tt-status.pending { color: #ea580c; font-weight: 600; }
 
 /* Lobby / coming soon placeholders */
