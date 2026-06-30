@@ -1,16 +1,16 @@
 [
   {
-    "name": "Richard Reinders",
-    "title": "Commercial Broker Associate",
-    "phone": "(262) 000-0000",
-    "email": "rreinders@ogdenre.com",
-    "photo_filename": "richard.jpg"
-  },
-  {
     "name": "Luke Fehrenbach",
     "title": "Assistant VP / Commercial Broker Associate",
-    "phone": "(262) 000-0000",
-    "email": "lfehrenbach@ogdenre.com",
-    "photo_filename": "luke.jpg"
+    "phone": "(262) 312-4865",
+    "email": "lukef@ogdenre.com",
+    "photo_filename": "luke.jpeg"
+  },
+  {
+    "name": "Richard Reinders",
+    "title": "Commercial Broker Associate",
+    "phone": "(414) 270-1351",
+    "email": "richardr@ogdenre.com",
+    "photo_filename": "richard.jpeg"
   }
 ]

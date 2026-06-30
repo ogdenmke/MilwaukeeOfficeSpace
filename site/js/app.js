@@ -925,7 +925,7 @@ function initInquiryForm(buildingName) {
     const body = encodeURIComponent(
       `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nPhone: ${data.phone || "N/A"}\n\nBuilding: ${data.building || "N/A"}\n\nMessage:\n${data.message || "N/A"}`
     );
-    window.location.href = `mailto:rreinders@ogdenre.com,lfehrenbach@ogdenre.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:richardr@ogdenre.com,lukef@ogdenre.com?subject=${subject}&body=${body}`;
 
     form.style.display = "none";
     successEl.style.display = "flex";
@@ -1196,11 +1196,198 @@ function initFindSpace() {
     const body = encodeURIComponent(
       `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nPhone: ${data.phone || "N/A"}\n\nSpace Needs:\n${data.message || "N/A"}`
     );
-    window.location.href = `mailto:rreinders@ogdenre.com,lfehrenbach@ogdenre.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:richardr@ogdenre.com,lukef@ogdenre.com?subject=${subject}&body=${body}`;
 
     form.style.display = "none";
     successEl.style.display = "flex";
   });
+}
+
+/* ── Floor plan viewer ── */
+function initFloorPlan(building, suites) {
+  const section = document.getElementById("floor-plan-section");
+  if (!section) return;
+
+  const floorCount = parseInt(building.floor_count) || 0;
+  if (floorCount === 0) return;
+
+  section.style.display = "";
+
+  const buildingId = building.building_id;
+  const buildingSuites = suites.filter((s) => s.building_id === buildingId);
+
+  const lobbyFloors = new Set(
+    (building.lobby_floors || "").split(",").map((f) => f.trim()).filter(Boolean)
+  );
+
+  const floors = [];
+  for (let i = 1; i <= floorCount; i++) {
+    const num = String(i);
+    floors.push({
+      num,
+      isLobby: lobbyFloors.has(num),
+      imgPath: `images/floorplans/${buildingId}-floor-${i}.png`,
+      suites: buildingSuites.filter((s) => s.floor === num && s.fp_x),
+    });
+  }
+
+  let currentFloor =
+    floors.find((f) => !f.isLobby && f.suites.length > 0) ||
+    floors.find((f) => !f.isLobby) ||
+    floors[0];
+  let currentView = "2d";
+  let fpMap = null;
+
+  const tabsEl = section.querySelector(".fp-floor-tabs");
+  const viewer = section.querySelector(".fp-viewer");
+  const toggleBtns = section.querySelectorAll(".fp-toggle-btn");
+
+  function renderTabs() {
+    tabsEl.innerHTML = floors
+      .map((f) => {
+        const active = f.num === currentFloor.num;
+        return `<button class="fp-tab${active ? " active" : ""}" data-floor="${f.num}" role="tab" aria-selected="${active}">Floor ${f.num}${f.isLobby ? '<span class="fp-tab-sub">Lobby</span>' : ""}</button>`;
+      })
+      .join("");
+  }
+
+  function render2D(floor) {
+    cleanupMap();
+    if (floor.isLobby) {
+      viewer.innerHTML = `<div class="fp-lobby-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><p>Floor ${floor.num} — Lobby</p></div>`;
+      return;
+    }
+
+    const hotspotSvg = floor.suites
+      .map((s) => {
+        const x = parseFloat(s.fp_x) || 0;
+        const y = parseFloat(s.fp_y) || 0;
+        const w = parseFloat(s.fp_w) || 10;
+        const h = parseFloat(s.fp_h) || 10;
+        const statusCls = (s.status || "available").toLowerCase();
+        return `<rect class="fp-hotspot ${statusCls}" x="${x}" y="${y}" width="${w}" height="${h}" data-suite="${s.suite_id}" data-label="${escapeHtml(s.suite_number)}" data-sf="${s.square_feet || ""}" data-status="${s.status || ""}" rx="0.5"/>`;
+      })
+      .join("");
+
+    viewer.innerHTML = `<div class="fp-image-wrap" id="fp-image-wrap"><img class="fp-image" id="fp-img" src="${floor.imgPath}" alt="Floor ${floor.num} plan"><svg class="fp-overlay" id="fp-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">${hotspotSvg}</svg><div class="fp-tooltip" id="fp-tooltip"></div></div>`;
+
+    const imgEl = document.getElementById("fp-img");
+    if (imgEl) {
+      imgEl.addEventListener("error", () => {
+        const wrap = document.getElementById("fp-image-wrap");
+        if (wrap) wrap.innerHTML = `<div class="fp-coming-soon"><p>Floor ${floor.num} plan coming soon</p><p class="fp-coming-sub">Upload <code>${buildingId}-floor-${floor.num}.png</code> to <code>site/images/floorplans/</code></p></div>`;
+      });
+    }
+
+    setupHotspots();
+  }
+
+  function render3D() {
+    cleanupMap();
+    viewer.innerHTML = `<div class="fp-3d-scene"><div class="fp-3d-map" id="fp-mini-map"></div></div><p class="fp-3d-label">${escapeHtml(building.building_name)}</p>`;
+    requestAnimationFrame(() => initMiniMap());
+  }
+
+  function initMiniMap() {
+    if (typeof L === "undefined") return;
+    cleanupMap();
+    const lat = parseFloat(building.latitude);
+    const lng = parseFloat(building.longitude);
+    if (isNaN(lat) || isNaN(lng)) return;
+    fpMap = L.map("fp-mini-map", {
+      scrollWheelZoom: false,
+      attributionControl: false,
+      zoomControl: false,
+      dragging: false,
+      touchZoom: false,
+    }).setView([lat, lng], 17);
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", { maxZoom: 19, subdomains: "abcd" }).addTo(fpMap);
+    L.circleMarker([lat, lng], { radius: 9, fillColor: "#CF152D", fillOpacity: 1, color: "white", weight: 2 }).addTo(fpMap);
+  }
+
+  function cleanupMap() {
+    if (fpMap) { fpMap.remove(); fpMap = null; }
+  }
+
+  function setupHotspots() {
+    const overlay = document.getElementById("fp-overlay");
+    const tooltip = document.getElementById("fp-tooltip");
+    const wrap = document.getElementById("fp-image-wrap");
+    if (!overlay || !tooltip || !wrap) return;
+
+    overlay.querySelectorAll(".fp-hotspot").forEach((rect) => {
+      rect.addEventListener("mouseenter", () => {
+        const sf = rect.dataset.sf ? `${Number(rect.dataset.sf).toLocaleString()} SF` : "";
+        const status = rect.dataset.status;
+        tooltip.innerHTML = `<strong>${rect.dataset.label}</strong>${sf ? `<br><span>${sf}</span>` : ""}${status ? `<br><span class="fp-tt-status ${status.toLowerCase()}">${status}</span>` : ""}`;
+        tooltip.classList.add("visible");
+      });
+      rect.addEventListener("mousemove", (e) => {
+        const bounds = wrap.getBoundingClientRect();
+        let tx = e.clientX - bounds.left + 12;
+        let ty = e.clientY - bounds.top - 68;
+        if (tx + 170 > bounds.width) tx = e.clientX - bounds.left - 170;
+        if (ty < 4) ty = e.clientY - bounds.top + 14;
+        tooltip.style.left = tx + "px";
+        tooltip.style.top = ty + "px";
+      });
+      rect.addEventListener("mouseleave", () => tooltip.classList.remove("visible"));
+      rect.addEventListener("click", () => {
+        const sid = rect.dataset.suite;
+        let target = null;
+        document.querySelectorAll(".suite-card").forEach((card) => {
+          if (!target && card.querySelector(`.fav-btn[data-suite="${sid}"]`)) target = card;
+        });
+        if (!target) {
+          const label = rect.dataset.label;
+          document.querySelectorAll(".suite-card .suite-name").forEach((el) => {
+            if (!target && el.textContent.trim() === label) target = el.closest(".suite-card");
+          });
+        }
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+          target.classList.add("fp-highlight");
+          setTimeout(() => target.classList.remove("fp-highlight"), 1500);
+        }
+      });
+    });
+  }
+
+  function switchFloor(floor) {
+    currentFloor = floor;
+    tabsEl.querySelectorAll(".fp-tab").forEach((t) => {
+      const active = t.dataset.floor === floor.num;
+      t.classList.toggle("active", active);
+      t.setAttribute("aria-selected", String(active));
+    });
+    if (currentView === "2d") render2D(floor);
+  }
+
+  function switchView(view) {
+    currentView = view;
+    toggleBtns.forEach((btn) => {
+      const active = btn.dataset.view === view;
+      btn.classList.toggle("active", active);
+      btn.setAttribute("aria-pressed", String(active));
+    });
+    tabsEl.style.display = view === "2d" ? "" : "none";
+    if (view === "3d") render3D();
+    else render2D(currentFloor);
+  }
+
+  tabsEl.addEventListener("click", (e) => {
+    const btn = e.target.closest(".fp-tab");
+    if (!btn) return;
+    const floor = floors.find((f) => f.num === btn.dataset.floor);
+    if (floor) switchFloor(floor);
+  });
+
+  toggleBtns.forEach((btn) => {
+    btn.addEventListener("click", () => switchView(btn.dataset.view));
+  });
+
+  renderTabs();
+  render2D(currentFloor);
 }
 
 /* ── Loading helpers ── */
@@ -1439,6 +1626,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       saveRecentView(building);
       addShareButton();
       initInquiryForm(building.building_name);
+      initFloorPlan(building, suites);
 
       initCompare(buildingMap, suites);
 

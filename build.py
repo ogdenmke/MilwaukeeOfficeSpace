@@ -34,13 +34,32 @@ FALLBACK_COORDS = {
 }
 
 
+def clean_val(v):
+    if v is None:
+        return None
+    # Convert integer-like floats (e.g. floor=1.0 → "1", sf=1141.0 → "1141")
+    if isinstance(v, float) and v == int(v):
+        return str(int(v))
+    s = str(v).strip()
+    return s if s else None
+
+
 def read_sheet(wb, sheet_name):
     ws = wb[sheet_name]
-    headers = [cell.value for cell in ws[1]]
+    raw_headers = [cell.value for cell in ws[1]]
     rows = []
     for row in ws.iter_rows(min_row=2, values_only=True):
-        if any(v is not None for v in row):
-            rows.append(dict(zip(headers, [str(v) if v is not None else None for v in row])))
+        if not any(v is not None for v in row):
+            continue
+        d = {}
+        for h, v in zip(raw_headers, row):
+            if h is None:
+                continue
+            cv = clean_val(v)
+            if cv is not None:
+                d[h] = cv
+        if d:
+            rows.append(d)
     return rows
 
 
@@ -75,6 +94,30 @@ def main():
     buildings = read_sheet(wb, "Buildings")
     suites = read_sheet(wb, "Suites")
     contacts = read_sheet(wb, "Contacts")
+
+    # Floor plan viewer fields — add to STN if not already in the sheet
+    for b in buildings:
+        if b.get("building_id") == "STN":
+            b.setdefault("floor_count", "5")
+            b.setdefault("lobby_floors", "1,2")
+
+    STN_FP = {
+        "Suite 306": {"fp_x": "5",  "fp_y": "5",  "fp_w": "90", "fp_h": "90"},
+        "Suite 400": {"fp_x": "5",  "fp_y": "5",  "fp_w": "42", "fp_h": "44"},
+        "Suite 401": {"fp_x": "53", "fp_y": "5",  "fp_w": "42", "fp_h": "44"},
+        "Suite 402": {"fp_x": "5",  "fp_y": "55", "fp_w": "42", "fp_h": "40"},
+        "Suite 403": {"fp_x": "53", "fp_y": "55", "fp_w": "42", "fp_h": "40"},
+        "Suite 500": {"fp_x": "5",  "fp_y": "5",  "fp_w": "46", "fp_h": "90"},
+        "Suite 502": {"fp_x": "56", "fp_y": "5",  "fp_w": "39", "fp_h": "28"},
+        "Suite 504": {"fp_x": "56", "fp_y": "36", "fp_w": "39", "fp_h": "28"},
+        "Suite 509": {"fp_x": "56", "fp_y": "67", "fp_w": "39", "fp_h": "28"},
+    }
+    for s in suites:
+        if s.get("building_id") == "STN":
+            fp = STN_FP.get(s.get("suite_number", ""))
+            if fp:
+                for k, v in fp.items():
+                    s.setdefault(k, v)
 
     unresolved = []
     for b in buildings:
