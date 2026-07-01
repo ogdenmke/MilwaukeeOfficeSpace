@@ -1242,7 +1242,7 @@ async function initFloorPlan(building, suites) {
       num,
       isLobby: lobbyFloors.has(num),
       imgPath: `images/floorplans/${buildingId}-floor-${i}.png`,
-      suites: buildingSuites.filter((s) => s.floor === num && (s.fp_points || s.fp_x)),
+      suites: buildingSuites.filter((s) => String(parseInt(s.floor)) === num && (s.fp_points || s.fp_x)),
     });
   }
 
