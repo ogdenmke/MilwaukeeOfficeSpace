@@ -504,17 +504,13 @@ function renderBuildingPage(building, suites, contacts) {
     suitesHeading.textContent = isSale ? "Building Details" : "Available Suites";
   }
 
-  let filtered = buildingSuites;
-  if (!CONFIG.SHOW_LEASED) {
-    filtered = filtered.filter((s) => s.status !== "Leased");
-  }
+  const sortOrder = { Available: 0, Pending: 1, Leased: 2 };
+  buildingSuites.sort((a, b) => (sortOrder[a.status] ?? 1) - (sortOrder[b.status] ?? 1));
 
-  filtered.sort((a, b) => {
-    const order = { Available: 0, Pending: 1, Leased: 2 };
-    return (order[a.status] ?? 1) - (order[b.status] ?? 1);
-  });
+  const activeSuites = buildingSuites.filter((s) => s.status !== "Leased");
+  const leasedSuites = buildingSuites.filter((s) => s.status === "Leased");
 
-  if (filtered.length === 0 && buildingSuites.length === 0) {
+  if (buildingSuites.length === 0) {
     suitesEl.innerHTML = `
       <div class="no-suites">
         <p>Suite details coming soon.</p>
@@ -524,27 +520,15 @@ function renderBuildingPage(building, suites, contacts) {
     return;
   }
 
-  if (filtered.length === 0) {
-    suitesEl.innerHTML = `
-      <div class="no-suites">
-        <p>No available suites at this time.</p>
-        <p>Contact us for future availability.</p>
-      </div>
-    `;
-    return;
-  }
-
-  suitesEl.innerHTML = filtered
-    .map((s) => {
-      const statusClass = (s.status || "Available").toLowerCase();
-      const badgeClass =
-        statusClass === "available"
-          ? "badge-available"
-          : statusClass === "leased"
-            ? "badge-leased"
-            : "badge-pending";
-
-      return `
+  function suiteCard(s) {
+    const statusClass = (s.status || "Available").toLowerCase();
+    const badgeClass =
+      statusClass === "available"
+        ? "badge-available"
+        : statusClass === "leased"
+          ? "badge-leased"
+          : "badge-pending";
+    return `
       <div class="suite-card ${statusClass}">
         <div>
           <div class="suite-card-header">
@@ -570,8 +554,26 @@ function renderBuildingPage(building, suites, contacts) {
         <span class="suite-badge ${badgeClass}">${escapeHtml(s.status)}</span>
       </div>
     `;
-    })
-    .join("");
+  }
+
+  let html = activeSuites.length > 0
+    ? activeSuites.map(suiteCard).join("")
+    : `<div class="no-suites"><p>No available suites at this time.</p><p>Contact us for future availability.</p></div>`;
+
+  if (leasedSuites.length > 0) {
+    const label = `${leasedSuites.length} leased suite${leasedSuites.length !== 1 ? "s" : ""}`;
+    html += `
+      <details class="leased-toggle">
+        <summary>
+          <span>View ${label}</span>
+          <svg class="leased-toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="leased-suites-list">${leasedSuites.map(suiteCard).join("")}</div>
+      </details>
+    `;
+  }
+
+  suitesEl.innerHTML = html;
 }
 
 /* ── Utilities ── */
