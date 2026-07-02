@@ -927,7 +927,7 @@ function initInquiryForm(buildingName) {
     const body = encodeURIComponent(
       `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nPhone: ${data.phone || "N/A"}\n\nBuilding: ${data.building || "N/A"}\n\nMessage:\n${data.message || "N/A"}`
     );
-    window.location.href = `mailto:richardr@ogdenre.com,lukef@ogdenre.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:richardr@ogdenre.com;lukef@ogdenre.com?subject=${subject}&body=${body}`;
 
     form.style.display = "none";
     successEl.style.display = "flex";
@@ -1198,7 +1198,7 @@ function initFindSpace() {
     const body = encodeURIComponent(
       `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nPhone: ${data.phone || "N/A"}\n\nSpace Needs:\n${data.message || "N/A"}`
     );
-    window.location.href = `mailto:richardr@ogdenre.com,lukef@ogdenre.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:richardr@ogdenre.com;lukef@ogdenre.com?subject=${subject}&body=${body}`;
 
     form.style.display = "none";
     successEl.style.display = "flex";
