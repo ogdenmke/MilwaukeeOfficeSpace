@@ -1543,11 +1543,6 @@ function initPrefetch() {
 function initScrollMemory() {
   const page = document.body.dataset.page;
   const key = "ogden_scroll_" + page;
-  const saved = sessionStorage.getItem(key);
-  if (saved) {
-    requestAnimationFrame(() => window.scrollTo(0, parseInt(saved)));
-    sessionStorage.removeItem(key);
-  }
   document.addEventListener("click", (e) => {
     const link = e.target.closest("a[href]");
     if (!link) return;
