@@ -65,8 +65,8 @@
     "broker": "Richard",
     "description": "Step into history at The Historic Steinmeyer Building, a five-story treasure built in 1893 that exudes old-world charm in the heart of Milwaukee. This beautifully preserved property showcases the timeless character of its era, with suites featuring exposed cream city brick and striking exposed ceiling timbers that create warm, inviting workspaces. Recent upgrades to the common areas blend modern convenience with historic integrity, highlighted by original hardwood floors that honor the building's rich heritage. Situated within walking distance to the vibrant Deer District, as well as an array of shops, restaurants, banks, and urban amenities, the Steinmeyer Building offers tenants a unique opportunity to establish their business in a landmark setting that feels both prestigious and welcoming. Experience the perfect marriage of historic architecture and contemporary functionality in one of Milwaukee's most distinctive buildings.",
     "photo_filename": "Steinmeyer Building Pic.jpg",
-    "floor_count": "5",
-    "lobby_floors": "1,2"
+    "floor_count": "",
+    "lobby_floors": ""
   },
   {
     "building_id": "VVC",
