@@ -669,6 +669,44 @@ img {
   border-left-color: var(--red);
 }
 
+.leased-toggle {
+  margin-top: 1rem;
+}
+
+.leased-toggle summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  color: var(--gray-500);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  user-select: none;
+}
+
+.leased-toggle summary::-webkit-details-marker {
+  display: none;
+}
+
+.leased-toggle summary:hover {
+  color: var(--gray-700);
+}
+
+.leased-toggle-icon {
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.leased-toggle[open] .leased-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.leased-suites-list {
+  margin-top: 0.5rem;
+}
+
 .suite-card.pending {
   border-left-color: #f59e0b;
 }
