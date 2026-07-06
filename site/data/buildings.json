@@ -10,7 +10,7 @@
     "longitude": "-87.9057782",
     "broker": "Richard",
     "description": "Located in the vibrant East Town district, The Northern Lights Building offers premier Class office space along the scenic Milwaukee River. This distinctive property features creative loft suites with exposed brick and timber construction, soaring ceilings, and an abundance of natural light that creates an inspiring work environment. Enjoy direct access to the Riverwalk, with stunning river and city views just outside your windows. Tenants appreciate the convenience of on-site surface and off-street parking, elevator access, and a walkable neighborhood brimming with top-tier restaurants, shopping, and urban amenities. Ideal for businesses seeking a blend of historic character and modern functionality in one of Milwaukee's most desirable locations.",
-    "photo_filename": "Northern Lights Pic.jpg"
+    "photo_filename": "https://drive.google.com/file/d/1OPk3HhRkpnjdohto6n9hQBucff2kVjkC/view?usp=sharing"
   },
   {
     "building_id": "BWY",
@@ -22,8 +22,21 @@
     "latitude": "43.0399309",
     "longitude": "-87.9079445",
     "description": "Situated in the heart of Milwaukee's Central Business District, this versatile ground-floor retail and office space at 757 North Broadway offers exceptional visibility and accessibility. Built in 1910, the property features flexible configurations suitable for a wide range of users, with a mezzanine level available to expand your footprint (not included in base rent). Prominent building and window signage opportunities ensure your brand stands out in this high-traffic corridor, with 5,300 vehicles passing daily on Broadway. Tenants enjoy proximity to the Riverwalk and nearby parking, surrounded by a thriving mix of major financial, legal, hospitality, and service firms.",
-    "photo_filename": "BroadwayPic.jpg",
+    "photo_filename": "https://drive.google.com/file/d/1i3P9TZefAeVihLvmO94iXCDZ3N1Or98_/view",
     "map_group": "Broadway"
+  },
+  {
+    "building_id": "AH",
+    "building_name": "The Adler House",
+    "address": "1681 N Prospect Ave",
+    "city": "Milwaukee",
+    "state": "WI",
+    "zip": "53202",
+    "latitude": "43.05265908",
+    "longitude": "-87.89165161",
+    "broker": "Richard",
+    "description": "Anchoring the corner of Brady Street and Prospect Avenue since 1888, the historic Adler House is one of the most distinguished addresses on Milwaukee's vibrant East Side. Designed by architect Alfred C. Clas in a richly detailed Romanesque Revival\u2013Queen Anne style and listed on the State and National Registers of Historic Places, this landmark offers a quiet, professional office environment with rare character and craftsmanship. Its highly visible corner location places tenants steps from renowned restaurants and entertainment along Brady Street, with an easy walk to Lake Michigan and the Oak Leaf Trail. The Adler House is a singular home for businesses seeking visibility, distinction, and timeless character in Milwaukee's urban core.",
+    "photo_filename": "https://drive.google.com/file/d/1XhJ22U1RlEyCbYucU3oJeY-dY8i8cJKD/view"
   },
   {
     "building_id": "BWY-FS",
@@ -35,14 +48,14 @@
     "latitude": "43.0399309",
     "longitude": "-87.9079445",
     "description": "Situated in the heart of Milwaukee's Central Business District, this versatile ground-floor retail and office space at 757 North Broadway offers exceptional visibility and accessibility. Built in 1910, the property features flexible configurations suitable for a wide range of users, with a mezzanine level available to expand your footprint (not included in base rent). Prominent building and window signage opportunities ensure your brand stands out in this high-traffic corridor, with 5,300 vehicles passing daily on Broadway. Tenants enjoy proximity to the Riverwalk and nearby parking, surrounded by a thriving mix of major financial, legal, hospitality, and service firms.",
-    "photo_filename": "BroadwayPic.jpg",
+    "photo_filename": "https://drive.google.com/file/d/1i3P9TZefAeVihLvmO94iXCDZ3N1Or98_/view",
     "listing_type": "sale",
-    "asking_price": "3750000",
+    "asking_price": "3,750,000",
     "map_group": "Broadway"
   },
   {
     "building_id": "FIVE9",
-    "building_name": "Five Nine Building",
+    "building_name": "Bank Five Nine Building",
     "address": "5555 N Port Washington Rd",
     "city": "Glendale",
     "state": "WI",
@@ -51,7 +64,7 @@
     "longitude": "-87.9173235",
     "broker": "Richard",
     "description": "A trusted landmark along the Port Washington Road corridor, the Bank Five Nine Building offers professional office space in a well-established Masonry-constructed building in Glendale. Built in 1980, this commercial property benefits from exceptional visibility and accessibility, with over 31,000 vehicles passing daily at the busy intersection of W. Silver Spring Drive and N. Port Washington Road. Tenants enjoy the convenience of a Full Service Gross lease, generous on-site parking with 102 spaces available, and a premier location just moments from Bayshore Mall, I-43, and Silver Spring Drive.",
-    "photo_filename": "FiveNine.png"
+    "photo_filename": "https://drive.google.com/file/d/1-gR1EXZ_rKbdi5yhACKZrm9ptf6p0eY2/view"
   },
   {
     "building_id": "STN",
@@ -64,9 +77,7 @@
     "longitude": "-87.9138218",
     "broker": "Richard",
     "description": "Step into history at The Historic Steinmeyer Building, a five-story treasure built in 1893 that exudes old-world charm in the heart of Milwaukee. This beautifully preserved property showcases the timeless character of its era, with suites featuring exposed cream city brick and striking exposed ceiling timbers that create warm, inviting workspaces. Recent upgrades to the common areas blend modern convenience with historic integrity, highlighted by original hardwood floors that honor the building's rich heritage. Situated within walking distance to the vibrant Deer District, as well as an array of shops, restaurants, banks, and urban amenities, the Steinmeyer Building offers tenants a unique opportunity to establish their business in a landmark setting that feels both prestigious and welcoming. Experience the perfect marriage of historic architecture and contemporary functionality in one of Milwaukee's most distinctive buildings.",
-    "photo_filename": "Steinmeyer Building Pic.jpg",
-    "floor_count": "",
-    "lobby_floors": ""
+    "photo_filename": "https://drive.google.com/file/d/1Zs4ib6On8amNR7yVGZrWlIEjNADC74vz/view"
   },
   {
     "building_id": "VVC",
@@ -78,11 +89,11 @@
     "latitude": "43.0238738",
     "longitude": "-87.9590389",
     "description": "Located in the dynamic Menomonee Valley and Silver City neighborhoods, Valley View Commons offers exceptional office/flex space with distinct industrial character. This masonry-constructed building features first-floor commercial space highlighted by exposed cream city brick, open ductwork, and striking steel beams that celebrate the property's authentic urban heritage. With 10-foot clear ceilings and 3-phase power available, the space is well-suited for a variety of creative, professional, and light industrial uses. Tenants enjoy the convenience of forced air HVAC, separately metered electricity, and a Gross lease structure. The property's prime location provides quick access to the Hank Aaron Trail, American Family Field, and the Stadium Freeway interchange, making it an ideal home for businesses seeking both character and connectivity in Milwaukee's thriving western corridor.",
-    "photo_filename": "Valley View Commons Pic.jpg"
+    "photo_filename": "https://drive.google.com/file/d/15_y346VoGe1Dt826NmUrheENXCmJN2ig/view?usp=sharing"
   },
   {
     "building_id": "WSB",
-    "building_name": "Water Street Building",
+    "building_name": "757 N Water Street",
     "address": "753-757 N Water St",
     "city": "Milwaukee",
     "state": "WI",
@@ -90,7 +101,7 @@
     "latitude": "43.0400171",
     "longitude": "-87.9095643",
     "description": "Standing tall on Milwaukee's premier Water Street corridor since 1900, this historic commercial building anchors a prime block in the heart of the Central Business District. The property offers a quiet, professional office environment while placing tenants at the center of downtown's vibrant energy, with immediate access to the Milwaukee Riverwalk, renowned local restaurants, and diverse entertainment options. Surrounded by an impressive roster of industry leaders\u2014including BMO Harris Bank, Marcus Corporation, Heartland Advisors, CBRE, Kahler Slater, Gruber Law Offices, and Michael Best & Friedrich\u2014the building provides a prestigious address that signals stability and success. With negotiable signage opportunities and a timeless presence on one of the city's busiest thoroughfares, this property represents a distinguished home for businesses seeking visibility and prestige in Milwaukee's bustling urban core.",
-    "photo_filename": "N Water St.jpg"
+    "photo_filename": "https://drive.google.com/file/d/1TECobqEqkS-uBzzsFk9zWy4U0bs3P7jg/view?usp=sharing"
   },
   {
     "building_id": "IRON-5205",
@@ -103,7 +114,7 @@
     "longitude": "-87.918436",
     "broker": "Richard",
     "description": "Nestled in a serene park-like setting spanning 5.9 acres, The Ironwood Office Park comprises three distinguished office buildings surrounded by lush green space and ample off-street parking. Built in 1973, this Glendale property has been thoughtfully modernized with updated LED lighting and a state-of-the-art Building Automation System for optimal HVAC control and energy efficiency. The campus's convenient location adjacent to I-43 offers effortless access to the greater Milwaukee area. The Ironwood Office Park delivers a peaceful, professional environment with modern infrastructure in the heart of Glendale.",
-    "photo_filename": "IronwoodPic5205.jpg",
+    "photo_filename": "https://drive.google.com/file/d/1SHwbxcPg-D3bjHiloINXbE2IvUItxlmQ/view",
     "map_group": "Ironwood Office Park"
   },
   {
@@ -117,7 +128,7 @@
     "longitude": "-87.918436",
     "broker": "Richard",
     "description": "Nestled in a serene park-like setting spanning 5.9 acres, The Ironwood Office Park comprises three distinguished office buildings surrounded by lush green space and ample off-street parking. Built in 1973, this Glendale property has been thoughtfully modernized with updated LED lighting and a state-of-the-art Building Automation System for optimal HVAC control and energy efficiency. The campus's convenient location adjacent to I-43 offers effortless access to the greater Milwaukee area. The Ironwood Office Park delivers a peaceful, professional environment with modern infrastructure in the heart of Glendale.",
-    "photo_filename": "ironwood5215.jpg",
+    "photo_filename": "https://drive.google.com/file/d/1FgajrzutumM3npM3TPCRRUoV_dwpyIBR/view",
     "map_group": "Ironwood Office Park"
   },
   {
@@ -131,7 +142,7 @@
     "longitude": "-87.918452",
     "broker": "Richard",
     "description": "Nestled in a serene park-like setting spanning 5.9 acres, The Ironwood Office Park comprises three distinguished office buildings surrounded by lush green space and ample off-street parking. Built in 1973, this Glendale property has been thoughtfully modernized with updated LED lighting and a state-of-the-art Building Automation System for optimal HVAC control and energy efficiency. The campus's convenient location adjacent to I-43 offers effortless access to the greater Milwaukee area. The Ironwood Office Park delivers a peaceful, professional environment with modern infrastructure in the heart of Glendale.",
-    "photo_filename": "ironwood5225.jpg",
+    "photo_filename": "https://drive.google.com/file/d/1LL4crf7L42vogFDWeoS5Ep1JcRVoYkfi/view",
     "map_group": "Ironwood Office Park"
   },
   {
@@ -144,9 +155,9 @@
     "latitude": "43.14912",
     "longitude": "-88.0081596",
     "description": "Located along a high-traffic corridor with 23,300 vehicles passing daily, this 5,280 SF medical office building offers a prominent presence on West Good Hope Road in Milwaukee. Built in 1985, the property sits on a 1.4-acre site with ample on-site parking and monument signage available for strong visibility. The interior has been recently renovated with fresh paint and new flooring, while skylights flood the space with abundant natural light, complemented by track and chandelier lighting. The building features a functional racetrack-style layout with five individual offices, eight exam rooms, a lab room, break room, and storage room. With 3-phase, 400 Amp, 240 Volt power and CS Commercial Service District zoning, this property is well-equipped for medical, professional, or redevelopment use.",
-    "photo_filename": "W Good Hope.jpg",
+    "photo_filename": "https://drive.google.com/file/d/1I2XvT0eaFZQXex5YTdKbUuXIimyXIEw7/view",
     "listing_type": "sale",
-    "asking_price": "1499000"
+    "asking_price": "1,499,000"
   },
   {
     "building_id": "NAO",
@@ -158,21 +169,8 @@
     "latitude": "43.0607154",
     "longitude": "-87.9345071",
     "description": "Standing as a prominent headquarters-style campus in Milwaukee's Lindsay Heights neighborhood, this 32,400 square foot property offers an exceptional opportunity for businesses seeking substantial office or institutional space. Renovated in 2017, the concrete and block building features modern finishes throughout, including a roof-mounted solar field that underscores a commitment to sustainability. The flexible layout encompasses large open areas, private offices, and conference rooms designed to support collaborative work environments. Four washrooms and 80 off-street parking spaces across two fenced, paved, and lighted lots ensure convenience for employees and visitors alike. Located in the heart of the city with easy access to major highways and public transportation (MKE County Rt. 2), and close to numerous restaurants and the Northside YMCA, this property offers a versatile and well-positioned home for a company looking to establish or expand its presence in this improving Milwaukee neighborhood.",
-    "photo_filename": "North Ave.png",
+    "photo_filename": "https://drive.google.com/file/d/1CE4MBHAv8qlP1hyybolw9LI-Cdg-zRX8/view",
     "listing_type": "sale",
-    "asking_price": "2106000"
-  },
-  {
-    "building_id": "AH",
-    "building_name": "The Adler House",
-    "address": "1681 N Prospect Ave",
-    "city": "Milwaukee",
-    "state": "WI",
-    "zip": "53202",
-    "latitude": "43.0526591",
-    "longitude": "-87.8916516",
-    "broker": "Richard",
-    "description": "Anchoring the corner of Brady Street and Prospect Avenue since 1888, the historic Adler House is one of the most distinguished addresses on Milwaukee's vibrant East Side. Designed by architect Alfred C. Clas in a richly detailed Romanesque Revival\u2013Queen Anne style and listed on the State and National Registers of Historic Places, this landmark offers a quiet, professional office environment with rare character and craftsmanship. Its highly visible corner location places tenants steps from renowned restaurants and entertainment along Brady Street, with an easy walk to Lake Michigan and the Oak Leaf Trail. The Adler House is a singular home for businesses seeking visibility, distinction, and timeless character in Milwaukee's urban core.",
-    "photo_filename": "AdlerHouse.jpg"
+    "asking_price": "2,106,000"
   }
 ]

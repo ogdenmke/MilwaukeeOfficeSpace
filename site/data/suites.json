@@ -334,7 +334,7 @@
     "brochure_filename": "https://drive.google.com/file/d/13xjjLurVom1GHzJTO4DNAR5morlsmf6r/view",
     "floor_plan_filename": "https://drive.google.com/file/d/1RVWAy7MuzRHRgnkrPWGMQDdudHFgoL9w/view?usp=sharing",
     "photos": "https://drive.google.com/file/d/1AQK_EhK3IsEbgQjQvJtRy2a-zSHHLHE2/view?usp=sharing",
-    "notes": "abundant natural light\nsuites feature exposed brick & timber"
+    "notes": "abundant natural light\r\nsuites feature exposed brick & timber"
   },
   {
     "suite_id": "NLB-300",
@@ -409,6 +409,18 @@
     "brochure_filename": "https://drive.google.com/file/d/1UySPHUiPAdVIgXX72hEikk2iY_dJZHNZ/view"
   },
   {
+    "suite_id": "BWY",
+    "building_id": "BWY-FS",
+    "suite_number": "Building for Sale",
+    "floor": "7",
+    "square_feet": "67200",
+    "lease_rate": "55.8",
+    "rate_unit": "/SF/yr",
+    "status": "Available",
+    "available_date": "Now",
+    "brochure_filename": "https://drive.google.com/file/d/1UySPHUiPAdVIgXX72hEikk2iY_dJZHNZ/view"
+  },
+  {
     "suite_id": "FIVE9-304",
     "building_id": "FIVE9",
     "suite_number": "Suite 304",
@@ -428,7 +440,6 @@
     "suite_number": "Suite 305",
     "floor": "3",
     "square_feet": "1565",
-    "lease_rate": "Withheld",
     "status": "Available",
     "available_date": "Now",
     "brochure_filename": "https://drive.google.com/file/d/1GtIa8pKlmobrtvCHbwRPROZr_jFwSFOw/view?usp=sharing",
@@ -446,11 +457,62 @@
     "status": "Available",
     "available_date": "Now",
     "brochure_filename": "https://drive.google.com/file/d/1YPNAL6T8iZw6lw0VDRbdba0XnFWhCdXQ/view?usp=sharing",
-    "floor_plan_filename": "https://drive.google.com/file/d/1ZXePqVLa7lJR1ECgH9lrI4k6j71_G66E/view?usp=sharing",
-    "fp_x": "5",
-    "fp_y": "5",
-    "fp_w": "90",
-    "fp_h": "90"
+    "floor_plan_filename": "https://drive.google.com/file/d/1ZXePqVLa7lJR1ECgH9lrI4k6j71_G66E/view?usp=sharing"
+  },
+  {
+    "suite_id": "STN-308",
+    "building_id": "STN",
+    "suite_number": "Suite 308",
+    "floor": "3",
+    "square_feet": "1000",
+    "lease_rate": "16",
+    "lease_type": "MG",
+    "rate_unit": "/SF/yr",
+    "status": "Leased"
+  },
+  {
+    "suite_id": "STN-303",
+    "building_id": "STN",
+    "suite_number": "Suite 303",
+    "floor": "3",
+    "square_feet": "1500",
+    "lease_rate": "16",
+    "lease_type": "MG",
+    "rate_unit": "/SF/yr",
+    "status": "Leased"
+  },
+  {
+    "suite_id": "STN-301",
+    "building_id": "STN",
+    "suite_number": "Suite 301",
+    "floor": "3",
+    "square_feet": "800",
+    "lease_rate": "16",
+    "lease_type": "MG",
+    "rate_unit": "/SF/yr",
+    "status": "Leased"
+  },
+  {
+    "suite_id": "STN-310",
+    "building_id": "STN",
+    "suite_number": "Suite 310",
+    "floor": "3",
+    "square_feet": "500",
+    "lease_rate": "16",
+    "lease_type": "MG",
+    "rate_unit": "/SF/yr",
+    "status": "Leased"
+  },
+  {
+    "suite_id": "STN-314",
+    "building_id": "STN",
+    "suite_number": "Suite 314",
+    "floor": "3",
+    "square_feet": "1200",
+    "lease_rate": "16",
+    "lease_type": "MG",
+    "rate_unit": "/SF/yr",
+    "status": "Leased"
   },
   {
     "suite_id": "STN-400",
@@ -464,11 +526,7 @@
     "status": "Available",
     "available_date": "Now",
     "brochure_filename": "https://drive.google.com/file/d/1YPNAL6T8iZw6lw0VDRbdba0XnFWhCdXQ/view?usp=sharing",
-    "floor_plan_filename": "https://drive.google.com/file/d/1FeN-V3gQQwlaDPuhECqDWDIy8EMV4zHF/view?usp=sharing",
-    "fp_x": "5",
-    "fp_y": "5",
-    "fp_w": "42",
-    "fp_h": "44"
+    "floor_plan_filename": "https://drive.google.com/file/d/1FeN-V3gQQwlaDPuhECqDWDIy8EMV4zHF/view?usp=sharing"
   },
   {
     "suite_id": "STN-401",
@@ -482,11 +540,7 @@
     "status": "Available",
     "available_date": "Now",
     "brochure_filename": "https://drive.google.com/file/d/1YPNAL6T8iZw6lw0VDRbdba0XnFWhCdXQ/view?usp=sharing",
-    "floor_plan_filename": "https://drive.google.com/file/d/1FeN-V3gQQwlaDPuhECqDWDIy8EMV4zHF/viewhttps://drive.google.com/file/d/1FeN-V3gQQwlaDPuhECqDWDIy8EMV4zHF/view",
-    "fp_x": "53",
-    "fp_y": "5",
-    "fp_w": "42",
-    "fp_h": "44"
+    "floor_plan_filename": "https://drive.google.com/file/d/1FeN-V3gQQwlaDPuhECqDWDIy8EMV4zHF/viewhttps://drive.google.com/file/d/1FeN-V3gQQwlaDPuhECqDWDIy8EMV4zHF/view"
   },
   {
     "suite_id": "STN-402",
@@ -500,11 +554,7 @@
     "status": "Available",
     "available_date": "Now",
     "brochure_filename": "https://drive.google.com/file/d/1YPNAL6T8iZw6lw0VDRbdba0XnFWhCdXQ/view?usp=sharing",
-    "floor_plan_filename": "https://drive.google.com/file/d/1FeN-V3gQQwlaDPuhECqDWDIy8EMV4zHF/viewhttps://drive.google.com/file/d/1FeN-V3gQQwlaDPuhECqDWDIy8EMV4zHF/view",
-    "fp_x": "5",
-    "fp_y": "55",
-    "fp_w": "42",
-    "fp_h": "40"
+    "floor_plan_filename": "https://drive.google.com/file/d/1FeN-V3gQQwlaDPuhECqDWDIy8EMV4zHF/viewhttps://drive.google.com/file/d/1FeN-V3gQQwlaDPuhECqDWDIy8EMV4zHF/view"
   },
   {
     "suite_id": "STN-403",
@@ -518,11 +568,7 @@
     "status": "Available",
     "available_date": "Now",
     "brochure_filename": "https://drive.google.com/file/d/1YPNAL6T8iZw6lw0VDRbdba0XnFWhCdXQ/view?usp=sharing",
-    "floor_plan_filename": "https://drive.google.com/file/d/1FeN-V3gQQwlaDPuhECqDWDIy8EMV4zHF/view",
-    "fp_x": "53",
-    "fp_y": "55",
-    "fp_w": "42",
-    "fp_h": "40"
+    "floor_plan_filename": "https://drive.google.com/file/d/1FeN-V3gQQwlaDPuhECqDWDIy8EMV4zHF/view"
   },
   {
     "suite_id": "STN-500",
@@ -536,11 +582,7 @@
     "status": "Available",
     "available_date": "Now",
     "brochure_filename": "https://drive.google.com/file/d/1YPNAL6T8iZw6lw0VDRbdba0XnFWhCdXQ/view?usp=sharing",
-    "floor_plan_filename": "https://drive.google.com/file/d/18lOY3q4qn9AVEpi0WmXOAXJuWd3i159V/view?usp=sharing",
-    "fp_x": "5",
-    "fp_y": "5",
-    "fp_w": "46",
-    "fp_h": "90"
+    "floor_plan_filename": "https://drive.google.com/file/d/18lOY3q4qn9AVEpi0WmXOAXJuWd3i159V/view?usp=sharing"
   },
   {
     "suite_id": "STN-502",
@@ -554,11 +596,7 @@
     "status": "Available",
     "available_date": "Now",
     "brochure_filename": "https://drive.google.com/file/d/1YPNAL6T8iZw6lw0VDRbdba0XnFWhCdXQ/view?usp=sharing",
-    "floor_plan_filename": "https://drive.google.com/file/d/18lOY3q4qn9AVEpi0WmXOAXJuWd3i159V/view?usp=sharing",
-    "fp_x": "56",
-    "fp_y": "5",
-    "fp_w": "39",
-    "fp_h": "28"
+    "floor_plan_filename": "https://drive.google.com/file/d/18lOY3q4qn9AVEpi0WmXOAXJuWd3i159V/view?usp=sharing"
   },
   {
     "suite_id": "STN-504",
@@ -572,11 +610,7 @@
     "status": "Available",
     "available_date": "Now",
     "brochure_filename": "https://drive.google.com/file/d/1YPNAL6T8iZw6lw0VDRbdba0XnFWhCdXQ/view?usp=sharing",
-    "floor_plan_filename": "https://drive.google.com/file/d/18lOY3q4qn9AVEpi0WmXOAXJuWd3i159V/view?usp=sharing",
-    "fp_x": "56",
-    "fp_y": "36",
-    "fp_w": "39",
-    "fp_h": "28"
+    "floor_plan_filename": "https://drive.google.com/file/d/18lOY3q4qn9AVEpi0WmXOAXJuWd3i159V/view?usp=sharing"
   },
   {
     "suite_id": "STN-509",
@@ -590,11 +624,7 @@
     "status": "Available",
     "available_date": "Now",
     "brochure_filename": "https://drive.google.com/file/d/1YPNAL6T8iZw6lw0VDRbdba0XnFWhCdXQ/view?usp=sharing",
-    "floor_plan_filename": "https://drive.google.com/file/d/18lOY3q4qn9AVEpi0WmXOAXJuWd3i159V/view?usp=sharing",
-    "fp_x": "56",
-    "fp_y": "67",
-    "fp_w": "39",
-    "fp_h": "28"
+    "floor_plan_filename": "https://drive.google.com/file/d/18lOY3q4qn9AVEpi0WmXOAXJuWd3i159V/view?usp=sharing"
   },
   {
     "suite_id": "VVC-1",
@@ -605,7 +635,7 @@
     "lease_rate": "13.19",
     "lease_type": "MG",
     "rate_unit": "/SF/yr",
-    "status": "Available",
+    "status": "Leased",
     "available_date": "Now",
     "brochure_filename": "https://drive.google.com/file/d/1uEUrDaY76ym-StlVfX5kdcXPzNaignZN/view",
     "floor_plan_filename": "https://drive.google.com/file/d/1qZ9bwV2b8bjNg_JHouBTuiX17iDoRSgC/view?usp=sharing"
@@ -641,15 +671,14 @@
   {
     "suite_id": "NAO",
     "building_id": "NAO",
-    "suite_number": "Building For Sale",
+    "suite_number": "Building for Sale",
     "square_feet": "32400",
     "lease_rate": "65",
     "rate_unit": "/SF",
     "status": "Available",
     "available_date": "Now",
     "brochure_filename": "https://drive.google.com/file/d/1uYKMLZl-lZZm0_L4nmZF-RObSNN6e0Jb/view?usp=sharing",
-    "photos": "https://drive.google.com/file/d/1NCoqtsRYFwJmA7CsA4Btq3A4xpTzmB0C/view?usp=sharing",
-    "notes": "This 32,400 square foot headquarters-style offi ce building, situated in the heart of Milwaukee\u2019s Lindsay Heights neighborhood, presents a rare opportunity for businesses seeking expansive offi ce or institutional space. Renovated in 2017, the property features modern fi nishes, including a roof-mounted solar field, and a flexible layout with large open areas, private offi ces, and conference rooms\u2014ideal for collaborative work. Its central location within the city provides easy access to major highways and public transportation, making it convenient for employees, clients, and customers alike. Two fenced, paved and lighted dedicated parking lots with 80 spaces ensure hassle-free visits. This versatile property is perfect for a company looking to establish or expand its presence in the improving Lindsay Heights neighborhood. Close to numerous restaurants (McDonald\u2019s, Wendy\u2019s, Jake\u2019s Deli, Galst Foods and Northside YMCA)."
+    "photos": "https://drive.google.com/file/d/1NCoqtsRYFwJmA7CsA4Btq3A4xpTzmB0C/view?usp=sharing"
   },
   {
     "suite_id": "GH",
