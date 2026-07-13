@@ -1,5 +1,5 @@
 # Ogden Office Space — Leasing Website
-
+ 
 A static website showing commercial office space available for lease, managed by Ogden & Company.
 
 People will mostly reach it by scanning a QR code on their phone. It works great on mobile and desktop.
