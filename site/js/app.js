@@ -115,6 +115,7 @@ function buildSidebar(buildings, activeBuildingId, suites) {
     <a href="find-space.html">Find Your Space</a>
     <a href="index.html#suite-search-section">Browse All Suites</a>
     <a href="${contactLink}">Contact</a>
+    <a href="https://ogdenre.com/division/commercial-brokerage/#/search/map@43.02964269823966,-88.17116931080818,9/?bounds=43.6627991919114,-86.65368273854256,42.38988680251829,-89.6886558830738">Back to Ogdenre.com</a>
   `;
   nav.appendChild(quickLinks);
 
