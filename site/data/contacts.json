@@ -1,16 +1,23 @@
 [
   {
     "name": "Luke Fehrenbach",
-    "title": "Assistant VP / Commercial Broker Associate",
+    "title": "Assistant Vice President, Commercial Broker Associate",
     "phone": "(262) 312-4865",
     "email": "lukef@ogdenre.com",
-    "photo_filename": "luke.jpeg"
+    "photo_filename": "https://drive.google.com/file/d/1PkHBQ9LyVTJI2ybEvjDYzw9l01QlaL-s/view"
   },
   {
     "name": "Richard Reinders",
     "title": "Commercial Broker Associate",
     "phone": "(414) 270-1351",
     "email": "richardr@ogdenre.com",
-    "photo_filename": "richard.jpeg"
+    "photo_filename": "https://drive.google.com/file/d/1RuaHcJh2HjWCa_HkY16RsffKPfQK2ukQ/view"
+  },
+  {
+    "name": "Michael Seramur",
+    "title": "Senior Vice President, Brokerage",
+    "phone": "(414) 270-4159",
+    "email": "mikes@ogdenre.com",
+    "photo_filename": "https://drive.google.com/file/d/1Q8D9JrIsbY1PnhfQV-TfFCKw_Ks7SpRF/view"
   }
 ]

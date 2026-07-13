@@ -169,6 +169,105 @@
     "floor_plan_filename": "https://drive.google.com/file/d/1R9FXM86zmtevGqa9bTAVBml13aE4Rwff/view?usp=sharing"
   },
   {
+    "suite_id": "IRON-5205-102",
+    "building_id": "IRON-5205",
+    "suite_number": "Suite 102",
+    "floor": "1",
+    "square_feet": "420",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/18PoOC2VHLzgFvSbf6cuwj_7gvk4Swyz_/view",
+    "tenant": "Independent Solutions"
+  },
+  {
+    "suite_id": "IRON-5205-104",
+    "building_id": "IRON-5205",
+    "suite_number": "Suite 104",
+    "floor": "1",
+    "square_feet": "1806",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/18PoOC2VHLzgFvSbf6cuwj_7gvk4Swyz_/view?usp=sharing",
+    "tenant": "Zignego Company"
+  },
+  {
+    "suite_id": "IRON-5205-105",
+    "building_id": "IRON-5205",
+    "suite_number": "Suite 105",
+    "floor": "1",
+    "square_feet": "679",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/18PoOC2VHLzgFvSbf6cuwj_7gvk4Swyz_/view?usp=sharing",
+    "tenant": "Community Insurance Information Center"
+  },
+  {
+    "suite_id": "IRON-5205-117",
+    "building_id": "IRON-5205",
+    "suite_number": "Suite 117",
+    "floor": "1",
+    "square_feet": "986",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/18PoOC2VHLzgFvSbf6cuwj_7gvk4Swyz_/view?usp=sharing",
+    "tenant": "Rice Engineering"
+  },
+  {
+    "suite_id": "IRON-5205-118",
+    "building_id": "IRON-5205",
+    "suite_number": "Suite 118",
+    "floor": "1",
+    "square_feet": "172",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/18PoOC2VHLzgFvSbf6cuwj_7gvk4Swyz_/view?usp=sharing",
+    "tenant": "Drivers Ed of WI"
+  },
+  {
+    "suite_id": "IRON-5205-123",
+    "building_id": "IRON-5205",
+    "suite_number": "Suite 123",
+    "floor": "1",
+    "square_feet": "695",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/18PoOC2VHLzgFvSbf6cuwj_7gvk4Swyz_/view?usp=sharing",
+    "tenant": "Charlotte Ghazarian"
+  },
+  {
+    "suite_id": "IRON-5205-202",
+    "building_id": "IRON-5205",
+    "suite_number": "Suite 202",
+    "floor": "2",
+    "square_feet": "1031",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1R9FXM86zmtevGqa9bTAVBml13aE4Rwff/view?usp=sharing",
+    "tenant": "Svetlana Veller Agency"
+  },
+  {
+    "suite_id": "IRON-5205-204",
+    "building_id": "IRON-5205",
+    "suite_number": "Suite 204",
+    "floor": "2",
+    "square_feet": "136",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1R9FXM86zmtevGqa9bTAVBml13aE4Rwff/view?usp=sharing",
+    "tenant": "Capital Business Suite"
+  },
+  {
+    "suite_id": "IRON-5205-212",
+    "building_id": "IRON-5205",
+    "suite_number": "Suite 212",
+    "floor": "2",
+    "square_feet": "136",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1R9FXM86zmtevGqa9bTAVBml13aE4Rwff/view?usp=sharing",
+    "tenant": "Henak Law Office S.C."
+  },
+  {
     "suite_id": "IRON-5215-105",
     "building_id": "IRON-5215",
     "suite_number": "Suite 105",
@@ -199,6 +298,16 @@
     "photos": "https://drive.google.com/file/d/1VatFeUbH7EF2PJHvjy1aUQ6T2asN9Sro/view?usp=sharing"
   },
   {
+    "suite_id": "IRON-5215-202",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 202",
+    "floor": "2",
+    "square_feet": "559",
+    "status": "Available",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Y6RXypx-Sf2YhdsECgVNAAKUkfZ9O4vD/view?usp=sharing"
+  },
+  {
     "suite_id": "IRON-5215-216(F)",
     "building_id": "IRON-5215",
     "suite_number": "Suite 216 (F)",
@@ -213,6 +322,202 @@
     "floor_plan_filename": "https://drive.google.com/file/d/1Y6RXypx-Sf2YhdsECgVNAAKUkfZ9O4vD/view?usp=sharing",
     "photos": "https://drive.google.com/file/d/1hzIUiWk8Oeo8GurJ_Xw8aOEiHNnRAzXg/view?usp=sharing",
     "notes": "Open area office space."
+  },
+  {
+    "suite_id": "IRON-5215-101",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 101",
+    "floor": "1",
+    "square_feet": "1940",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Boy-_kEoH_Q8LKupJD1ks3k8JoAYZFjI/view?usp=sharing",
+    "tenant": "Stepping Stoes Community Service LLC"
+  },
+  {
+    "suite_id": "IRON-5215-102",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 102",
+    "floor": "1",
+    "square_feet": "2038",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Boy-_kEoH_Q8LKupJD1ks3k8JoAYZFjI/view?usp=sharing",
+    "tenant": "Goossen & Schultz CPA's S.C."
+  },
+  {
+    "suite_id": "IRON-5215-103",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 103",
+    "floor": "1",
+    "square_feet": "435",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Boy-_kEoH_Q8LKupJD1ks3k8JoAYZFjI/view?usp=sharing",
+    "tenant": "Jeff Biskowitz d/b/a BiskoTech"
+  },
+  {
+    "suite_id": "IRON-5215-104",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 104",
+    "floor": "1",
+    "square_feet": "139",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Boy-_kEoH_Q8LKupJD1ks3k8JoAYZFjI/view?usp=sharing",
+    "tenant": "Stan Konoov dba Health & Power LLC"
+  },
+  {
+    "suite_id": "IRON-5215-106",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 106",
+    "floor": "1",
+    "square_feet": "767",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Boy-_kEoH_Q8LKupJD1ks3k8JoAYZFjI/view?usp=sharing",
+    "tenant": "Revolutions Couples & Sex Therapy, LLC"
+  },
+  {
+    "suite_id": "IRON-5215-107",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 107",
+    "floor": "1",
+    "square_feet": "139",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Boy-_kEoH_Q8LKupJD1ks3k8JoAYZFjI/view?usp=sharing",
+    "tenant": "Esure Transit"
+  },
+  {
+    "suite_id": "IRON-5215-108",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 108",
+    "floor": "1",
+    "square_feet": "221",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Boy-_kEoH_Q8LKupJD1ks3k8JoAYZFjI/view?usp=sharing",
+    "tenant": "Mirian Organ"
+  },
+  {
+    "suite_id": "IRON-5215-109",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 109",
+    "floor": "1",
+    "square_feet": "209",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Boy-_kEoH_Q8LKupJD1ks3k8JoAYZFjI/view?usp=sharing",
+    "tenant": "Stepping Stoes Community Service LLC"
+  },
+  {
+    "suite_id": "IRON-5215-110",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 110",
+    "floor": "1",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Boy-_kEoH_Q8LKupJD1ks3k8JoAYZFjI/view?usp=sharing"
+  },
+  {
+    "suite_id": "IRON-5215-111",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 111",
+    "floor": "1",
+    "square_feet": "701",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Boy-_kEoH_Q8LKupJD1ks3k8JoAYZFjI/view?usp=sharing",
+    "tenant": "Eve's Wisdom Productions LLC"
+  },
+  {
+    "suite_id": "IRON-5215-112",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 112",
+    "floor": "1",
+    "square_feet": "223",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Boy-_kEoH_Q8LKupJD1ks3k8JoAYZFjI/view?usp=sharing",
+    "tenant": "Goossen & Schultz CPA's S.C."
+  },
+  {
+    "suite_id": "IRON-5215-115",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 115",
+    "floor": "1",
+    "square_feet": "1058",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Boy-_kEoH_Q8LKupJD1ks3k8JoAYZFjI/view?usp=sharing",
+    "tenant": "Silver Spring Psychotherapy Associates"
+  },
+  {
+    "suite_id": "IRON-5215-216(A)",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 216 (A)",
+    "floor": "2",
+    "square_feet": "197",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Y6RXypx-Sf2YhdsECgVNAAKUkfZ9O4vD/view?usp=sharing",
+    "tenant": "Law Office of Melinda Swartz LLC"
+  },
+  {
+    "suite_id": "IRON-5215-216(B)",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 216 (B)",
+    "floor": "2",
+    "square_feet": "185",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Y6RXypx-Sf2YhdsECgVNAAKUkfZ9O4vD/view?usp=sharing",
+    "tenant": "Goodlook Marketing LLC"
+  },
+  {
+    "suite_id": "IRON-5215-216(C)",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 216 (C)",
+    "floor": "2",
+    "square_feet": "192",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Y6RXypx-Sf2YhdsECgVNAAKUkfZ9O4vD/view?usp=sharing",
+    "tenant": "USA Building Supplies"
+  },
+  {
+    "suite_id": "IRON-5215-216(D)",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 216 (D)",
+    "floor": "2",
+    "square_feet": "185",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Y6RXypx-Sf2YhdsECgVNAAKUkfZ9O4vD/view?usp=sharing",
+    "tenant": "Divine Wellness & Counseling"
+  },
+  {
+    "suite_id": "IRON-5215-216(E)",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 216 (E)",
+    "floor": "2",
+    "square_feet": "113",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Y6RXypx-Sf2YhdsECgVNAAKUkfZ9O4vD/view?usp=sharing",
+    "tenant": "William Pauly"
+  },
+  {
+    "suite_id": "IRON-5215-222",
+    "building_id": "IRON-5215",
+    "suite_number": "Suite 222",
+    "floor": "2",
+    "square_feet": "1402",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1Y6RXypx-Sf2YhdsECgVNAAKUkfZ9O4vD/view?usp=sharing",
+    "tenant": "Bykhovsky Law LLC"
   },
   {
     "suite_id": "IRON-5225-101",
@@ -321,6 +626,237 @@
     "notes": "Can be combined with suite 200 to occupy one half of the floor."
   },
   {
+    "suite_id": "IRON-5225-100",
+    "building_id": "IRON-5225",
+    "suite_number": "Suite 100",
+    "floor": "1",
+    "square_feet": "261",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1gc5j7676-rusMukaJnyFLQOk53yNI8D9/view?usp=sharing",
+    "tenant": "Lance Gordon d/b/a Youngevity Life Science"
+  },
+  {
+    "suite_id": "IRON-5225-104",
+    "building_id": "IRON-5226",
+    "suite_number": "Suite 104",
+    "floor": "1",
+    "square_feet": "180",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1gc5j7676-rusMukaJnyFLQOk53yNI8D9/view?usp=sharing",
+    "tenant": "Affinity Tax Resolution"
+  },
+  {
+    "suite_id": "IRON-5225-105",
+    "building_id": "IRON-5227",
+    "suite_number": "Suite 105",
+    "floor": "1",
+    "square_feet": "207",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1gc5j7676-rusMukaJnyFLQOk53yNI8D9/view?usp=sharing",
+    "tenant": "PRC Realty"
+  },
+  {
+    "suite_id": "IRON-5225-106",
+    "building_id": "IRON-5228",
+    "suite_number": "Suite 106",
+    "floor": "1",
+    "square_feet": "473",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1gc5j7676-rusMukaJnyFLQOk53yNI8D9/view?usp=sharing",
+    "tenant": "Alexandra Modell"
+  },
+  {
+    "suite_id": "IRON-5225-108",
+    "building_id": "IRON-5229",
+    "suite_number": "Suite 108",
+    "floor": "1",
+    "square_feet": "188",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1gc5j7676-rusMukaJnyFLQOk53yNI8D9/view?usp=sharing",
+    "tenant": "Nile Xpedite Solutions"
+  },
+  {
+    "suite_id": "IRON-5225-109",
+    "building_id": "IRON-5230",
+    "suite_number": "Suite 109",
+    "floor": "1",
+    "square_feet": "954",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1gc5j7676-rusMukaJnyFLQOk53yNI8D9/view?usp=sharing",
+    "tenant": "For The People Entertainment, LLC"
+  },
+  {
+    "suite_id": "IRON-5225-110",
+    "building_id": "IRON-5231",
+    "suite_number": "Suite 110",
+    "floor": "1",
+    "square_feet": "581",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1gc5j7676-rusMukaJnyFLQOk53yNI8D9/view?usp=sharing",
+    "tenant": "Lance Gordon and Associates"
+  },
+  {
+    "suite_id": "IRON-5225-116",
+    "building_id": "IRON-5232",
+    "suite_number": "Suite 116",
+    "floor": "1",
+    "square_feet": "245",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1gc5j7676-rusMukaJnyFLQOk53yNI8D9/view?usp=sharing",
+    "tenant": "Community Connection, LLC"
+  },
+  {
+    "suite_id": "IRON-5225-117",
+    "building_id": "IRON-5233",
+    "suite_number": "Suite 117",
+    "floor": "1",
+    "square_feet": "254",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1gc5j7676-rusMukaJnyFLQOk53yNI8D9/view?usp=sharing",
+    "tenant": "Solcare"
+  },
+  {
+    "suite_id": "IRON-5225-118",
+    "building_id": "IRON-5234",
+    "suite_number": "Suite 118",
+    "floor": "1",
+    "square_feet": "793",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1gc5j7676-rusMukaJnyFLQOk53yNI8D9/view?usp=sharing",
+    "tenant": "Safe Space LLC"
+  },
+  {
+    "suite_id": "IRON-5225-119",
+    "building_id": "IRON-5235",
+    "suite_number": "Suite 119",
+    "floor": "1",
+    "square_feet": "577",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1gc5j7676-rusMukaJnyFLQOk53yNI8D9/view?usp=sharing",
+    "tenant": "Korbitz Financial Planning, LLC"
+  },
+  {
+    "suite_id": "IRON-5225-120",
+    "building_id": "IRON-5236",
+    "suite_number": "Suite 120",
+    "floor": "1",
+    "square_feet": "602",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/1gc5j7676-rusMukaJnyFLQOk53yNI8D9/view?usp=sharing",
+    "tenant": "Shore Counseling and Consulting Clinic"
+  },
+  {
+    "suite_id": "IRON-5225-201",
+    "building_id": "IRON-5225",
+    "suite_number": "Suite 201",
+    "floor": "2",
+    "square_feet": "329",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/17fFF7Zd7d2rmPZLcSl9q7r8by2OWiGOs/view?usp=sharing",
+    "tenant": "Ahmed Saif"
+  },
+  {
+    "suite_id": "IRON-5225-202",
+    "building_id": "IRON-5225",
+    "suite_number": "Suite 202",
+    "floor": "2",
+    "square_feet": "297",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/17fFF7Zd7d2rmPZLcSl9q7r8by2OWiGOs/view?usp=sharing",
+    "tenant": "Pamela Dowling"
+  },
+  {
+    "suite_id": "IRON-5225-210",
+    "building_id": "IRON-5226",
+    "suite_number": "Suite 210",
+    "floor": "2",
+    "square_feet": "1318",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/17fFF7Zd7d2rmPZLcSl9q7r8by2OWiGOs/view?usp=sharing",
+    "tenant": "Healing Starts Today"
+  },
+  {
+    "suite_id": "IRON-5225-211",
+    "building_id": "IRON-5227",
+    "suite_number": "Suite 211",
+    "floor": "2",
+    "square_feet": "322",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/17fFF7Zd7d2rmPZLcSl9q7r8by2OWiGOs/view?usp=sharing",
+    "tenant": "DBA 333 Studios"
+  },
+  {
+    "suite_id": "IRON-5225-212",
+    "building_id": "IRON-5228",
+    "suite_number": "Suite 212",
+    "floor": "2",
+    "square_feet": "168",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/17fFF7Zd7d2rmPZLcSl9q7r8by2OWiGOs/view?usp=sharing",
+    "tenant": "Growing Wisdom Psychotherapy"
+  },
+  {
+    "suite_id": "IRON-5225-213",
+    "building_id": "IRON-5229",
+    "suite_number": "Suite 213",
+    "floor": "2",
+    "square_feet": "156",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/17fFF7Zd7d2rmPZLcSl9q7r8by2OWiGOs/view?usp=sharing",
+    "tenant": "Brian O'Niell / Wyckoff Chemical Co"
+  },
+  {
+    "suite_id": "IRON-5225-214",
+    "building_id": "IRON-5230",
+    "suite_number": "Sutie 214",
+    "floor": "2",
+    "square_feet": "473",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/17fFF7Zd7d2rmPZLcSl9q7r8by2OWiGOs/view?usp=sharing",
+    "tenant": "Earl E. Bracy Psy. D."
+  },
+  {
+    "suite_id": "IRON-5225-215",
+    "building_id": "IRON-5231",
+    "suite_number": "Suite 215",
+    "floor": "2",
+    "square_feet": "260",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/17fFF7Zd7d2rmPZLcSl9q7r8by2OWiGOs/view?usp=sharing",
+    "tenant": "Nancy J. Helland"
+  },
+  {
+    "suite_id": "IRON-5225-216",
+    "building_id": "IRON-5232",
+    "suite_number": "Suite 216",
+    "floor": "2",
+    "square_feet": "108",
+    "status": "Leased",
+    "brochure_filename": "https://drive.google.com/file/d/1ymiVihs9-hsYmMmbGFgA58GZJxgoLJcp/view",
+    "floor_plan_filename": "https://drive.google.com/file/d/17fFF7Zd7d2rmPZLcSl9q7r8by2OWiGOs/view?usp=sharing",
+    "tenant": "Kathleen Marquardt"
+  },
+  {
     "suite_id": "NLB-207",
     "building_id": "NLB",
     "suite_number": "Suite 207",
@@ -334,7 +870,7 @@
     "brochure_filename": "https://drive.google.com/file/d/13xjjLurVom1GHzJTO4DNAR5morlsmf6r/view",
     "floor_plan_filename": "https://drive.google.com/file/d/1RVWAy7MuzRHRgnkrPWGMQDdudHFgoL9w/view?usp=sharing",
     "photos": "https://drive.google.com/file/d/1AQK_EhK3IsEbgQjQvJtRy2a-zSHHLHE2/view?usp=sharing",
-    "notes": "abundant natural light\r\nsuites feature exposed brick & timber"
+    "notes": "abundant natural light, suites feature exposed brick & timber"
   },
   {
     "suite_id": "NLB-300",
@@ -702,6 +1238,7 @@
     "rate_unit": "/SF/yr",
     "status": "Available",
     "available_date": "Now",
+    "brochure_filename": "https://drive.google.com/file/d/1xcR7GPI8vhUn1Migj0Qo0QGCVtCkbrlE/view",
     "floor_plan_filename": "https://drive.google.com/file/d/1xx7gstqWGm4Lt5YsU9wcmmjEm6dzFfY1/view",
     "photos": "https://drive.google.com/file/d/15A5NrJvbgXpQECV0KFVUFmOo3ObBzqBQ/view"
   }
