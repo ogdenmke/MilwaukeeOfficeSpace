@@ -334,7 +334,7 @@ function initMap(buildings, suites) {
           ? `${availCount} suite${availCount !== 1 ? "s" : ""} available`
           : bSuites.length > 0 ? "No suites available" : "";
       const thumb = b.photo_filename
-        ? `<img class="map-legend-thumb img-fade" src="${imgSrc(b.photo_filename)}" alt="" onload="this.classList.add('loaded')" onerror="this.outerHTML='<div class=\\'map-legend-thumb-placeholder\\'><svg width=\\'16\\' height=\\'16\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><path d=\\'M21 15l-5-5L5 21\\'/></svg></div>'">`
+        ? `<img class="map-legend-thumb img-fade" src="${imgSrc(b.photo_filename)}" alt="" loading="lazy" onload="this.classList.add('loaded')" onerror="this.outerHTML='<div class=\\'map-legend-thumb-placeholder\\'><svg width=\\'16\\' height=\\'16\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><path d=\\'M21 15l-5-5L5 21\\'/></svg></div>'">`
         : `<div class="map-legend-thumb-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`;
       return `<a class="map-legend-item" id="legend-${b.building_id}" href="building.html?id=${b.building_id}"><span class="map-legend-num${isSale ? " sale" : ""}" ${showNum ? "" : 'style="visibility:hidden"'}>${num}</span>${thumb}<div class="map-legend-text"><span class="map-legend-name">${escapeHtml(b.building_name)}</span><span class="map-legend-address">${escapeHtml(b.address)}, ${escapeHtml(b.city)}</span>${availText ? `<span class="map-legend-avail${isSale ? " for-sale" : ""}">${availText}</span>` : ""}</div></a>`;
     }
@@ -367,7 +367,7 @@ function renderContacts(contacts, containerId) {
     <div class="contact-card">
       ${
         c.photo_filename
-          ? `<img class="contact-photo img-fade" src="${imgSrc(c.photo_filename)}" alt="${escapeHtml(c.name)}" onload="this.classList.add('loaded')" onerror="this.outerHTML='<div class=\\'contact-photo-placeholder\\'>${escapeHtml(c.name[0])}</div>'">`
+          ? `<img class="contact-photo img-fade" src="${imgSrc(c.photo_filename)}" alt="${escapeHtml(c.name)}" loading="lazy" onload="this.classList.add('loaded')" onerror="this.outerHTML='<div class=\\'contact-photo-placeholder\\'>${escapeHtml(c.name[0])}</div>'">`
           : `<div class="contact-photo-placeholder">${escapeHtml(c.name[0])}</div>`
       }
       <div class="contact-info">
@@ -393,7 +393,7 @@ function renderFooterContacts(contacts) {
       ${contacts.map((c) => `
         <div class="footer-broker">
           ${c.photo_filename
-            ? `<img class="footer-broker-photo img-fade" src="${imgSrc(c.photo_filename)}" alt="${escapeHtml(c.name)}" onload="this.classList.add('loaded')" onerror="this.outerHTML='<span class=\\'footer-broker-initial\\'>${escapeHtml(c.name[0])}</span>'">`
+            ? `<img class="footer-broker-photo img-fade" src="${imgSrc(c.photo_filename)}" alt="${escapeHtml(c.name)}" loading="lazy" onload="this.classList.add('loaded')" onerror="this.outerHTML='<span class=\\'footer-broker-initial\\'>${escapeHtml(c.name[0])}</span>'">`
             : `<span class="footer-broker-initial">${escapeHtml(c.name[0])}</span>`
           }
           <div class="footer-broker-info">
@@ -1537,7 +1537,7 @@ function renderRecentlyViewed() {
   if (!grid) return;
   grid.innerHTML = recent.map((b) => {
     const thumb = b.photo_filename
-      ? `<img class="recent-thumb img-fade" src="${imgSrc(b.photo_filename)}" alt="" onload="this.classList.add('loaded')" onerror="this.outerHTML='<div class=\\'recent-thumb-placeholder\\'><svg width=\\'14\\' height=\\'14\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><path d=\\'M21 15l-5-5L5 21\\'/></svg></div>'">`
+      ? `<img class="recent-thumb img-fade" src="${imgSrc(b.photo_filename)}" alt="" loading="lazy" onload="this.classList.add('loaded')" onerror="this.outerHTML='<div class=\\'recent-thumb-placeholder\\'><svg width=\\'14\\' height=\\'14\\' viewBox=\\'0 0 24 24\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\'><rect x=\\'3\\' y=\\'3\\' width=\\'18\\' height=\\'18\\' rx=\\'2\\'/><circle cx=\\'8.5\\' cy=\\'8.5\\' r=\\'1.5\\'/><path d=\\'M21 15l-5-5L5 21\\'/></svg></div>'">`
       : `<div class="recent-thumb-placeholder"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`;
     return `<a class="recent-card" href="building.html?id=${b.building_id}">${thumb}<div class="recent-info"><span class="recent-name">${escapeHtml(b.building_name)}</span><span class="recent-address">${escapeHtml(b.address)}, ${escapeHtml(b.city)}</span></div></a>`;
   }).join("");
