@@ -1576,8 +1576,10 @@ function initPageTransitions() {
 
 /* ── Dark mode ── */
 function initDarkMode() {
+  // Always open in light mode regardless of the device's color scheme;
+  // dark mode only applies if the visitor turned it on with the site's toggle.
   const saved = localStorage.getItem("darkMode");
-  if (saved === "true" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+  if (saved === "true") {
     document.documentElement.classList.add("dark");
   }
   const btn = document.getElementById("dark-mode-toggle");
