@@ -922,7 +922,14 @@ async function submitLeadForm(form, successEl, fallbackEl, subject) {
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify(data),
     });
-    if (!resp.ok) throw new Error(`FormSubmit returned ${resp.status}`);
+    const bodyText = await resp.text();
+    let ok = resp.ok;
+    try {
+      const parsed = JSON.parse(bodyText);
+      if (parsed.success === "false" || parsed.success === false) ok = false;
+    } catch (_) { /* non-JSON body, fall back to resp.ok */ }
+    console.log(`FormSubmit response (status ${resp.status}):`, bodyText);
+    if (!ok) throw new Error(`FormSubmit rejected the submission (status ${resp.status}): ${bodyText}`);
     form.style.display = "none";
     successEl.style.display = "flex";
     if (fallbackEl) fallbackEl.style.display = "none";
