@@ -903,56 +903,40 @@ function removeFavorite(suiteId) {
   });
 }
 
-/* ── Shared form delivery (FormSubmit.co — no backend required) ── */
-// TEMPORARY TEST CONFIG: all inquiries route to caseys@ogdenre.com only.
-// Switch back to richardr@ogdenre.com (cc lukef@ogdenre.com) before launch.
-const FORMSUBMIT_TO = "caseys@ogdenre.com";
-const FORMSUBMIT_CC = "";
+/* ── Shared form delivery (FormSubmit.co — no backend required) ──
+   Uses a real (non-AJAX) form POST: FormSubmit's AJAX endpoint silently
+   drops first-time submissions to an unconfirmed address (CORS), while a
+   normal navigation reliably triggers the confirmation email and, once
+   activated, redirects back to `_next` on success. */
+function markFormSent(form, nextField, param) {
+  const url = new URL(window.location.href);
+  url.searchParams.set(param, "1");
+  nextField.value = url.toString();
+}
 
-async function submitLeadForm(form, successEl, fallbackEl, subject) {
-  const data = Object.fromEntries(new FormData(form));
-  data._subject = `[TEST] ${subject}`;
-  if (FORMSUBMIT_CC) data._cc = FORMSUBMIT_CC;
-  data._captcha = "false";
-  data._template = "table";
-
-  try {
-    const resp = await fetch(`https://formsubmit.co/ajax/${FORMSUBMIT_TO}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify(data),
-    });
-    const bodyText = await resp.text();
-    let ok = resp.ok;
-    try {
-      const parsed = JSON.parse(bodyText);
-      if (parsed.success === "false" || parsed.success === false) ok = false;
-    } catch (_) { /* non-JSON body, fall back to resp.ok */ }
-    console.log(`FormSubmit response (status ${resp.status}):`, bodyText);
-    if (!ok) throw new Error(`FormSubmit rejected the submission (status ${resp.status}): ${bodyText}`);
-    form.style.display = "none";
-    successEl.style.display = "flex";
-    if (fallbackEl) fallbackEl.style.display = "none";
-  } catch (err) {
-    console.error("Lead form delivery failed:", err);
-    form.style.display = "none";
-    successEl.style.display = "flex";
-    if (fallbackEl) fallbackEl.style.display = "block";
-  }
+function checkFormSent(param, successEl, form) {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get(param) !== "1") return;
+  form.style.display = "none";
+  successEl.style.display = "flex";
+  params.delete(param);
+  const cleanUrl = window.location.pathname + (params.toString() ? `?${params}` : "") + window.location.hash;
+  window.history.replaceState(null, "", cleanUrl);
 }
 
 /* ── Inquiry form ── */
 function initInquiryForm(buildingName) {
   const form = document.getElementById("inquiry-form");
   const buildingInput = document.getElementById("inquiry-building");
+  const subjectInput = document.getElementById("inquiry-subject");
+  const nextInput = document.getElementById("inquiry-next");
   const successEl = document.getElementById("inquiry-success");
-  const fallbackEl = document.getElementById("inquiry-fallback");
   if (!form) return;
 
   if (buildingInput && buildingName) buildingInput.value = buildingName;
+  checkFormSent("sent", successEl, form);
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  form.addEventListener("submit", () => {
     const data = Object.fromEntries(new FormData(form));
 
     if (typeof gtag === "function") {
@@ -963,7 +947,8 @@ function initInquiryForm(buildingName) {
       });
     }
 
-    submitLeadForm(form, successEl, fallbackEl, `Space Inquiry — ${data.building || "Ogden Office Space"}`);
+    subjectInput.value = `[TEST] Space Inquiry — ${data.building || "Ogden Office Space"}`;
+    markFormSent(form, nextInput, "sent");
   });
 }
 
@@ -1213,12 +1198,14 @@ function closeDocModal() {
 /* ── Find Your Space ── */
 function initFindSpace() {
   const form = document.getElementById("find-space-form");
+  const subjectInput = document.getElementById("find-space-subject");
+  const nextInput = document.getElementById("find-space-next");
   const successEl = document.getElementById("find-space-success");
-  const fallbackEl = document.getElementById("find-space-fallback");
   if (!form) return;
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  checkFormSent("sent", successEl, form);
+
+  form.addEventListener("submit", () => {
     const data = Object.fromEntries(new FormData(form));
 
     if (typeof gtag === "function") {
@@ -1228,7 +1215,8 @@ function initFindSpace() {
       });
     }
 
-    submitLeadForm(form, successEl, fallbackEl, `Find Your Space Inquiry — ${data.company || "New Inquiry"}`);
+    subjectInput.value = `[TEST] Find Your Space Inquiry — ${data.company || "New Inquiry"}`;
+    markFormSent(form, nextInput, "sent");
   });
 }
 
