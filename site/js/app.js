@@ -903,40 +903,40 @@ function removeFavorite(suiteId) {
   });
 }
 
-/* ── Shared form delivery (FormSubmit.co — no backend required) ──
-   Uses a real (non-AJAX) form POST: FormSubmit's AJAX endpoint silently
-   drops first-time submissions to an unconfirmed address (CORS), while a
-   normal navigation reliably triggers the confirmation email and, once
-   activated, redirects back to `_next` on success. */
-function markFormSent(form, nextField, param) {
-  const url = new URL(window.location.href);
-  url.searchParams.set(param, "1");
-  nextField.value = url.toString();
-}
+/* ── Shared form delivery (Google Apps Script Web App) ──
+   Fire-and-forget POST: Apps Script Web Apps don't return readable CORS
+   responses to cross-origin fetch(), so we use mode:"no-cors" and show
+   success optimistically. Google's infrastructure is reliable enough that
+   this is a safe trade — and the fallback contact block stays visible as
+   a backup regardless. */
+const INQUIRY_ENDPOINT = "https://script.google.com/macros/s/AKfycbx3O8V7GoeW57qe2ydeIc-GOifPgPvuzexp5Ey6KMHcRXBi-hx39UswtZC8u4WPN-wBBQ/exec";
 
-function checkFormSent(param, successEl, form) {
-  const params = new URLSearchParams(window.location.search);
-  if (params.get(param) !== "1") return;
+function submitLeadForm(form, successEl, formName) {
+  const data = Object.fromEntries(new FormData(form));
+  data.form = formName;
+
+  fetch(INQUIRY_ENDPOINT, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(data),
+  }).catch((err) => console.error("Lead form delivery failed:", err));
+
   form.style.display = "none";
   successEl.style.display = "flex";
-  params.delete(param);
-  const cleanUrl = window.location.pathname + (params.toString() ? `?${params}` : "") + window.location.hash;
-  window.history.replaceState(null, "", cleanUrl);
 }
 
 /* ── Inquiry form ── */
 function initInquiryForm(buildingName) {
   const form = document.getElementById("inquiry-form");
   const buildingInput = document.getElementById("inquiry-building");
-  const subjectInput = document.getElementById("inquiry-subject");
-  const nextInput = document.getElementById("inquiry-next");
   const successEl = document.getElementById("inquiry-success");
   if (!form) return;
 
   if (buildingInput && buildingName) buildingInput.value = buildingName;
-  checkFormSent("sent", successEl, form);
 
-  form.addEventListener("submit", () => {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
     const data = Object.fromEntries(new FormData(form));
 
     if (typeof gtag === "function") {
@@ -947,8 +947,7 @@ function initInquiryForm(buildingName) {
       });
     }
 
-    subjectInput.value = `[TEST] Space Inquiry — ${data.building || "Ogden Office Space"}`;
-    markFormSent(form, nextInput, "sent");
+    submitLeadForm(form, successEl, "building-inquiry");
   });
 }
 
@@ -1198,14 +1197,11 @@ function closeDocModal() {
 /* ── Find Your Space ── */
 function initFindSpace() {
   const form = document.getElementById("find-space-form");
-  const subjectInput = document.getElementById("find-space-subject");
-  const nextInput = document.getElementById("find-space-next");
   const successEl = document.getElementById("find-space-success");
   if (!form) return;
 
-  checkFormSent("sent", successEl, form);
-
-  form.addEventListener("submit", () => {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
     const data = Object.fromEntries(new FormData(form));
 
     if (typeof gtag === "function") {
@@ -1215,8 +1211,7 @@ function initFindSpace() {
       });
     }
 
-    subjectInput.value = `[TEST] Find Your Space Inquiry — ${data.company || "New Inquiry"}`;
-    markFormSent(form, nextInput, "sent");
+    submitLeadForm(form, successEl, "find-space");
   });
 }
 

@@ -59,16 +59,12 @@
     <section class="inquiry-section" id="find-space-section">
       <h2>Find Your Space</h2>
       <p class="inquiry-subtitle">Tell us what you're looking for and a broker will be in touch.</p>
-      <form class="inquiry-form" id="find-space-form" method="POST" action="https://formsubmit.co/caseys@ogdenre.com">
+      <form class="inquiry-form" id="find-space-form">
         <input type="text" name="name" placeholder="Full Name" required>
         <input type="text" name="company" placeholder="Company Name" required>
         <input type="email" name="email" placeholder="Email Address" required>
         <input type="tel" name="phone" placeholder="Phone Number">
         <textarea name="message" rows="4" placeholder="Tell us about your space needs (number of people, square footage, budget, timeline, preferred location, etc.)"></textarea>
-        <input type="hidden" name="_subject" id="find-space-subject" value="[TEST] Find Your Space Inquiry">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" id="find-space-next" value="">
         <button type="submit" class="inquiry-submit">Submit Inquiry</button>
       </form>
       <div class="find-space-success" id="find-space-success" style="display:none">
