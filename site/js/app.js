@@ -903,11 +903,43 @@ function removeFavorite(suiteId) {
   });
 }
 
+/* ── Shared form delivery (FormSubmit.co — no backend required) ── */
+// TEMPORARY TEST CONFIG: all inquiries route to caseys@ogdenre.com only.
+// Switch back to richardr@ogdenre.com (cc lukef@ogdenre.com) before launch.
+const FORMSUBMIT_TO = "caseys@ogdenre.com";
+const FORMSUBMIT_CC = "";
+
+async function submitLeadForm(form, successEl, fallbackEl, subject) {
+  const data = Object.fromEntries(new FormData(form));
+  data._subject = `[TEST] ${subject}`;
+  if (FORMSUBMIT_CC) data._cc = FORMSUBMIT_CC;
+  data._captcha = "false";
+  data._template = "table";
+
+  try {
+    const resp = await fetch(`https://formsubmit.co/ajax/${FORMSUBMIT_TO}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!resp.ok) throw new Error(`FormSubmit returned ${resp.status}`);
+    form.style.display = "none";
+    successEl.style.display = "flex";
+    if (fallbackEl) fallbackEl.style.display = "none";
+  } catch (err) {
+    console.error("Lead form delivery failed:", err);
+    form.style.display = "none";
+    successEl.style.display = "flex";
+    if (fallbackEl) fallbackEl.style.display = "block";
+  }
+}
+
 /* ── Inquiry form ── */
 function initInquiryForm(buildingName) {
   const form = document.getElementById("inquiry-form");
   const buildingInput = document.getElementById("inquiry-building");
   const successEl = document.getElementById("inquiry-success");
+  const fallbackEl = document.getElementById("inquiry-fallback");
   if (!form) return;
 
   if (buildingInput && buildingName) buildingInput.value = buildingName;
@@ -924,14 +956,7 @@ function initInquiryForm(buildingName) {
       });
     }
 
-    const subject = encodeURIComponent(`Space Inquiry — ${data.building || "Ogden Office Space"}`);
-    const body = encodeURIComponent(
-      `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nPhone: ${data.phone || "N/A"}\n\nBuilding: ${data.building || "N/A"}\n\nMessage:\n${data.message || "N/A"}`
-    );
-    window.location.href = `mailto:richardr@ogdenre.com;lukef@ogdenre.com?subject=${subject}&body=${body}`;
-
-    form.style.display = "none";
-    successEl.style.display = "flex";
+    submitLeadForm(form, successEl, fallbackEl, `Space Inquiry — ${data.building || "Ogden Office Space"}`);
   });
 }
 
@@ -1182,6 +1207,7 @@ function closeDocModal() {
 function initFindSpace() {
   const form = document.getElementById("find-space-form");
   const successEl = document.getElementById("find-space-success");
+  const fallbackEl = document.getElementById("find-space-fallback");
   if (!form) return;
 
   form.addEventListener("submit", (e) => {
@@ -1195,14 +1221,7 @@ function initFindSpace() {
       });
     }
 
-    const subject = encodeURIComponent(`Find Your Space Inquiry — ${data.company || "New Inquiry"}`);
-    const body = encodeURIComponent(
-      `Name: ${data.name}\nCompany: ${data.company}\nEmail: ${data.email}\nPhone: ${data.phone || "N/A"}\n\nSpace Needs:\n${data.message || "N/A"}`
-    );
-    window.location.href = `mailto:richardr@ogdenre.com;lukef@ogdenre.com?subject=${subject}&body=${body}`;
-
-    form.style.display = "none";
-    successEl.style.display = "flex";
+    submitLeadForm(form, successEl, fallbackEl, `Find Your Space Inquiry — ${data.company || "New Inquiry"}`);
   });
 }
 

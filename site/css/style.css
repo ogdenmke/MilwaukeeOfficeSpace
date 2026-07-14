@@ -1809,7 +1809,8 @@ html.dark .dm-icon-sun { display: none; }
   background: var(--red-dark);
 }
 
-.inquiry-success {
+.inquiry-success,
+.find-space-success {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -1818,13 +1819,31 @@ html.dark .dm-icon-sun { display: none; }
   border: 1px solid #bbf7d0;
   border-radius: 8px;
   max-width: 600px;
+  flex-wrap: wrap;
 }
 
-.inquiry-success p {
+.inquiry-success p,
+.find-space-success p {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 0.9rem;
   color: #166534;
   font-weight: 500;
+}
+
+.inquiry-fallback {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #bbf7d0;
+}
+
+.inquiry-fallback p {
+  margin: 0.25rem 0;
+}
+
+.inquiry-fallback a {
+  color: #166534;
+  text-decoration: underline;
 }
 
 /* ── Favorites ── */
